@@ -13,6 +13,9 @@ const routes = [
       path: '/', 
       name: 'home',
       component: Home,
+      meta: {
+        auth: true
+      },
     },
     {
         path: '/scripts',
@@ -40,8 +43,8 @@ const routes = [
       component: ScriptEdit
     },
     {
-      path: '/auth',
-      name: 'auth-index',
+      path: '/login',
+      name: 'login',
       component: AuthIndex,
       meta: {
         name: 'lockedin'
@@ -54,4 +57,8 @@ const router = createRouter({
   routes,
 });
 
-export default router;
+export default (app) => {
+  app.router = router;
+
+  app.use(router);
+}

@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-[68.5px] w-full pl-[52px] pr-[52px] flex flex-col"> 
-            <button class="rounded-[15px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <button @click="register" class="rounded-[15px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.95166" cy="6.55273" r="3.55273" stroke="#3E1821"/>
                     <path d="M7.75981 10.1454C7.56236 10.6528 6.37076 11.5017 4.71453 12.4293C3.0583 13.3569 1.66918 16.0388 1.5 17.0821" stroke="#3E1821"/>
@@ -27,7 +27,7 @@
                 </svg>
                 Skip Sign in
             </button>
-            <button class="rounded-[15px] mt-[14px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <button @click="playAudio" class="rounded-[15px] mt-[14px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.05 20.28C16.07 21.23 15 21.08 13.97 20.63C12.88 20.17 11.88 20.15 10.73 20.63C9.29004 21.25 8.53004 21.07 7.67004 20.28C2.79004 15.25 3.51004 7.59 9.05004 7.31C10.4 7.38 11.34 8.05 12.13 8.11C13.31 7.87 14.44 7.18 15.7 7.27C17.21 7.39 18.35 7.99 19.1 9.07C15.98 10.94 16.72 15.05 19.58 16.2C19.01 17.7 18.27 19.19 17.04 20.29L17.05 20.28ZM12.03 7.25C11.88 5.02 13.69 3.18 15.77 3C16.06 5.58 13.43 7.5 12.03 7.25Z" fill="#3E1821"/>
                 </svg>
@@ -38,3 +38,70 @@
         </div>
     </div>
 </template>
+
+<script>
+import audioFile from '@/assets/Arthur.mp3'
+import { Preferences } from '@capacitor/preferences';
+import { Toast } from '@capacitor/toast';
+
+export default {
+    data() {
+        return {
+            audio: new Audio(audioFile),
+            isPlaying: false,
+            loading: false,
+        }
+    },
+    methods: {
+        playAudio() {
+            this.isPlaying
+            ? this.audio.pause() 
+            : this.audio.play()
+            this.isPlaying = !this.isPlaying
+        },
+        register() {
+            this.loading = true
+            const payload = {
+                    email: `${Date.now()}@backstagebuddy.com`,
+                    password: `${Date.now()}`.substr(0, 8)
+                }
+            this.$auth
+            .register({
+                data: payload,
+            }).then(async ({ data : { data, message }}) => {
+                await this.login(btoa(payload.email + ":" + payload.password), data)
+            }).catch((e) => {
+                Toast.show({ text : 'Error signing up' })
+            })
+        },
+        async login(token, data) {
+      localStorage.removeItem("api_token");
+      localStorage.removeItem("token");
+      this.$auth.token(null, token);
+
+       // this.$auth.watch.loaded = true;
+        this.$auth.token(null, token);
+         await Preferences.set({
+                key: "auth_token_default",
+                value: token,
+              });
+        this.$auth.user(data);
+       // this.$auth.watch.authenticated = true;
+        document.cookie = "rememberMe=false";
+          this.loading = false;
+          this.$router.push('/')
+ 
+    },
+    },
+    mounted() {
+        console.log('Is mounted')
+        this.audio.onplaying = () => {
+            this.isPlaying = true;
+        }
+
+        this.audio.onpause =  () => {
+            this.isPlaying = false;
+        }
+    }
+}
+</script>
