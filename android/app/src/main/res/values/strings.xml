@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Backstage Buddy</string>
+    <string name="title_activity_main">Backstage Buddy</string>
+    <string name="package_name">com.nanonebula.backstage</string>
+    <string name="custom_url_scheme">com.nanonebula.backstage</string>
+</resources>

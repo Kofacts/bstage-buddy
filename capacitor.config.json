@@ -1,0 +1,9 @@
+{
+  "appId": "com.nanonebula.backstage",
+  "appName": "Backstage Buddy",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.0.159:8001",
+    "cleartext": true
+  }
+}
