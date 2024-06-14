@@ -6,7 +6,7 @@ import Navi from '@/components/Navigation/Index.vue'
 <template>
   <div class="pt-10" v-if="$auth.ready()">
     <router-view></router-view>
-    <div v-if="$route.meta.name !== 'lockedin'"> 
+    <div v-if="!$route.path.includes('auth')"> 
       <navi></navi>
     </div>
   </div>

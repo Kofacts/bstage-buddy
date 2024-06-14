@@ -15,7 +15,7 @@
                             </svg>
                             <div class="absolute top-0 h-[278px]  w-[202px] flex flex-col items-between justify-center gap-[45px]">
                                 <span class="text-semi text-[24px] text-center">{{item}}</span>
-                                <span class="text-center text-[16px]">4 pages</span>
+                                <span class="text-center text-[16px]">{{ item.pages?.length || 0 }} page(s)</span>
                             </div>
                         </div>
                     </template>

@@ -16,7 +16,7 @@
         </div>
 
         <div class="mt-[68.5px] w-full pl-[52px] pr-[52px] flex flex-col"> 
-            <button @click="register" class="rounded-[15px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <button @click="autoRegister" class="rounded-[15px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.95166" cy="6.55273" r="3.55273" stroke="#3E1821"/>
                     <path d="M7.75981 10.1454C7.56236 10.6528 6.37076 11.5017 4.71453 12.4293C3.0583 13.3569 1.66918 16.0388 1.5 17.0821" stroke="#3E1821"/>
@@ -59,7 +59,7 @@ export default {
             : this.audio.play()
             this.isPlaying = !this.isPlaying
         },
-        register() {
+        autoRegister() {
             this.loading = true
             const payload = {
                     email: `${Date.now()}@backstagebuddy.com`,

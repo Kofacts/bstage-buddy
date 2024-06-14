@@ -47,7 +47,7 @@ export default (app) => {
         enabled: true,
       },
       forbiddenRedirect: '/403',
-      authRedirect: { path: '/login', name: 'login' }
+      authRedirect: { path: '/auth/login', name: 'login' }
     }
   }));
 }

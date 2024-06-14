@@ -4,11 +4,13 @@
  */
 import {createStore} from 'vuex';
 import { global } from './global';
+import { scripts } from './scripts';
 
 
 const store = createStore({
     modules: {
         global,
+        scripts,
     },
     strict: process.env.NODE_ENV !== 'production'
 });

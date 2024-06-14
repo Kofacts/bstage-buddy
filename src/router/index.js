@@ -6,6 +6,8 @@ import Stats from '@/views/Stats/Index.vue';
 import ScanScript from '@/views/Scripts/Scan.vue';
 import ScriptEdit from '@/views/Scripts/Edit.vue';
 import AuthIndex from '@/views/Auth/Index.vue';
+import Login from '@/views/Auth/Login.vue';
+import Register from '@/views/Auth/Register.vue';
 // import About from '@/views/About.vue';
 
 const routes = [
@@ -20,36 +22,58 @@ const routes = [
     {
         path: '/scripts',
         name: 'scripts',
-        component: Scripts
+        component: Scripts,
+        meta: {
+          auth: true
+        },
     },
     {
         path: '/rehearse',
         name: 'rehearse',
-        component: Rehearse
+        component: Rehearse,
+        meta: {
+          auth: true
+        },
     },
     {
         path: '/stats',
         name: 'stats',
-        component: Stats
+        component: Stats,
+        meta: {
+          auth: true
+        },
     },
     {
       path: '/scan',
       name: 'scan',
-      component: ScanScript
+      component: ScanScript,
+      meta: {
+        auth: true
+      },
     },
     {
       path: '/scan/:id',
       name: 'scan-edit',
-      component: ScriptEdit
+      component: ScriptEdit,
+      meta: {
+        auth: true
+      },
     },
     {
-      path: '/login',
-      name: 'login',
+      path: '/auth',
+      name: 'auth',
       component: AuthIndex,
-      meta: {
-        name: 'lockedin'
-      }
-    }
+    },
+    {
+      path: '/auth/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/auth/register',
+      name: 'register',
+      component: Register,
+    },
 ];
 
 const router = createRouter({

@@ -29,7 +29,7 @@
         </svg>
     </div>
 
-    <!-- <button @click="next" class="carousel-button next-button">›</button> -->
+
   </div>
 </template>
 
@@ -57,10 +57,12 @@ export default {
   methods: {
     next() {
       this.currentIndex = (this.currentIndex + 1) % this.items.length;
+      this.$emit('index', this.currentIndex )
     },
     prev() {
       this.currentIndex =
         (this.currentIndex - 1 + this.items.length) % this.items.length;
+        this.$emit('index', this.currentIndex )
     },
   },
 };
