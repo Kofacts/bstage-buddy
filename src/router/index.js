@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '@/views/Home/Index.vue';
 import Scripts from '@/views/Scripts/Index.vue';
 import Rehearse from '@/views/Rehearse/Index.vue';
+import RehearsePractice from '@/views/Rehearse/Practice.vue';
 import Stats from '@/views/Stats/Index.vue';
 import ScanScript from '@/views/Scripts/Scan.vue';
 import ScriptEdit from '@/views/Scripts/Edit.vue';
@@ -23,6 +24,14 @@ const routes = [
         path: '/rehearse',
         name: 'rehearse',
         component: Rehearse
+    },
+    {
+        path: '/rehearse/:id',
+        name: 'rehearse-practice',
+        component: RehearsePractice,
+        meta: {
+          name: 'lockedin'
+        }
     },
     {
         path: '/stats',

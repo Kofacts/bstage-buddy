@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[45px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">My Performance</h3>
                 <h6 class="text-[35px] text-center text-semi">You are closer to becoming a star!</h6>
@@ -29,7 +29,7 @@
                 </button>
             </div>
         </div>
-        <div v-else class="flex flex-col justify-between h-[80vh] max-h-[80vh] overflow-y-scroll">
+        <div v-else class="flex flex-col justify-between h-[83.4vh] max-h-[83.4vh] overflow-y-scroll">
             <div>
                 <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]"> 
                     <div class="flex flex-col gap-[163px] items-center justify-center">

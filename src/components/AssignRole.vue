@@ -1,5 +1,5 @@
 <template>
-    <div class="model fixed top-[6.7rem] h-[72.2vh] w-full max-h-[72.2vh] overflow-y-scroll"> 
+    <div v-if="show" class="model fixed z-[999] top-[5.7rem] h-[100%] w-full max-h-[100%] pb-44 overflow-y-scroll"> 
         <!-- <div class="bg-nano-dark flex items-center justify-between p-[10px] pb-[15px] pt-[29px]">
             <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2"/>
@@ -44,6 +44,7 @@
 import Characters from '@/components/Cards/Characters.vue';
 export default {
     components: { Characters },
+    props: ['show'],
     data() {
         return {
             step: 2,
@@ -64,6 +65,6 @@ export default {
 
 <style scoped>
 .model {
-    background: rgba(62, 24, 33, 0.9);
+    background: #3e182166;
 }
 </style>

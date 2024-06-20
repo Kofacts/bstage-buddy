@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col  h-[80vh] max-h-[80vh] overflow-y-scroll">
+    <div class="flex flex-col  h-[83.4vh] max-h-[83.4vh] overflow-y-scroll">
         <div>
             <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]"> 
                 <svg width="100" height="76" viewBox="0 0 100 76" fill="none" xmlns="http://www.w3.org/2000/svg">

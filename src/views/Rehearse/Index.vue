@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[17px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">Rehearse</h3>
                 <h6 class="text-[25px] text-center">Scan your play script and let’s get to work!</h6>
@@ -14,7 +14,7 @@
                                 <rect x="0.5" y="5.5" width="195" height="272" fill="#3E1821" stroke="#E7EEBE"/>
                             </svg>
                             <div class="absolute top-0 h-[278px]  w-[202px] flex flex-col items-between justify-center gap-[45px]">
-                                <span class="text-semi text-[24px] text-center">{{item}}</span>
+                                <span class="text-sans text-[24px] text-center pl-[15px] pr-[15px]">{{item}}</span>
                                 <span class="text-center text-[16px]">4 pages</span>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                 
             </div>
         </div>
-        <div v-else class="flex flex-col justify-between h-[80vh] max-h-[80vh] overflow-scroll-y">
+        <div v-else class="flex flex-col justify-between h-[83.4vh] max-h-[83.4vh] overflow-scroll-y">
             <div>
                 <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]"> 
                     <div class="flex flex-col gap-[17px] items-center justify-center">

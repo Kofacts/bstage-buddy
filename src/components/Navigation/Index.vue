@@ -1,5 +1,5 @@
 <template>
-    <div class="border-t-[0.1px] border-nano-light fixed bottom-0 w-full pt-[15px] pl-[30px] pr-[30px] pb-[27px] flex justify-between items-center"> 
+    <div class="border-t-[0.1px] bg-nano-dark z-[999] border-nano-light fixed bottom-0 w-full pt-[15px] pl-[30px] pr-[30px] pb-[27px] flex justify-between items-center"> 
         <router-link :to="{name: 'home'}" class="flex items-center justify-center flex-col gap-[5px]"> 
             <svg width="27" height="28" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
              <path d="M1 27V11.9032L13.61 1L25.8132 11.9032V27H1Z" stroke="#E7EEBE" stroke-width="1.25"/>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col items-center justify-center">
                 <h3 class="text-[30px] text-semi text-center">Script Library</h3>
             </div>
@@ -13,7 +13,7 @@
                                 <rect x="0.5" y="5.5" width="195" height="272" fill="#3E1821" stroke="#E7EEBE"/>
                             </svg>
                             <div class="absolute top-0 h-[278px]  w-[202px] flex flex-col items-between justify-center gap-[45px]">
-                                <span class="text-semi text-[24px] text-center">{{item}}</span>
+                                <span class="text-sans text-[24px] text-center pl-[15px] pr-[15px]">{{item}}</span>
                                 <span class="text-center text-[16px]">4 pages</span>
                             </div>
                         </div>
