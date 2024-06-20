@@ -60,7 +60,7 @@
 
 
         <div class="text-right pt-2">
-                    <router-link :to="`/auth`">Go Back</router-link>
+                    <router-link :to="`/`">Go Back</router-link>
                 </div>
 
 

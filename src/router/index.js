@@ -12,12 +12,10 @@ import Register from '@/views/Auth/Register.vue';
 
 const routes = [
     { 
-      path: '/', 
+      path: '/home', 
       name: 'home',
       component: Home,
-      meta: {
-        auth: true
-      },
+    
     },
     {
         path: '/scripts',
@@ -60,7 +58,7 @@ const routes = [
       },
     },
     {
-      path: '/auth',
+      path: '/',
       name: 'auth',
       component: AuthIndex,
     },

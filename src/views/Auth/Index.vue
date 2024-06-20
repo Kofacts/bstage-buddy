@@ -34,7 +34,7 @@
 
                 Sign up with apple
             </button>
-            <router-link class="text-[19px] mt-[17px] text-center">I have an account</router-link>
+            <router-link :to="`/auth/login`" class="text-[19px] mt-[17px] text-center">I have an account</router-link>
         </div>
     </div>
 </template>
@@ -60,10 +60,11 @@ export default {
             this.isPlaying = !this.isPlaying
         },
         autoRegister() {
+            console.log('was fired')
             this.loading = true
-            const payload = {
-                    email: `${Date.now()}@backstagebuddy.com`,
-                    password: `${Date.now()}`.substr(0, 8)
+            const payload =  {
+                    email: 'samplejuser@backstagebuddy.com', //`${Date.now()}@backstagebuddy.com`,
+                    password: 'password', //`${Date.now()}`.substr(0, 8)
                 }
             this.$auth
             .register({
@@ -89,7 +90,7 @@ export default {
        // this.$auth.watch.authenticated = true;
         document.cookie = "rememberMe=false";
           this.loading = false;
-          this.$router.push('/')
+          this.$router.push('/home')
  
     },
     },
