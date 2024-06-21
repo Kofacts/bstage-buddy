@@ -53,7 +53,12 @@ export const localStore = {
   },
   get(key, defaultVal) {
     let obj = JSON.parse(window.localStorage.getItem('$store') || '{}')
-    return optional(obj, key, defaultVal)
+    let value = window.localStorage.getItem(key)
+    let capacitorValue = window.localStorage.getItem(`CapacitorStorage.${key}`)
+    if(capacitorValue) {
+      window.localStorage.setItem(key, capacitorValue)
+    }
+    return value || optional(obj, key, window.localStorage.getItem(`CapacitorStorage.${key}`) || defaultVal)
   },
 }
 
@@ -98,12 +103,65 @@ export function isValidEmail(email) {
     );
 }
 
-export function isValidHttpUrl(string) {
-  let url;
-  try {
-    url = new URL(string);
-  } catch (_) {
-    return false;
+
+export function parseScript(script) {
+  const pages = script.split(/Page \d+/).filter((page) => page.trim() !== '')
+  const parsedScript = {
+    title: 'Sample Script',
+    pages: [],
   }
-  return url.protocol === "http:" || url.protocol === "https:";
+
+  pages.forEach((page, index) => {
+    const lines = page.trim().split('\n')
+    const parsedPage = { text: page.trim(), number: index + 1, lines: [] }
+
+    let currentCharacter = ''
+    let currentDialogue = ''
+
+    lines.forEach((line) => {
+      line = line.startsWith('(') ? line.split(')').pop() : line
+      const characterMatch = line.match(/^([A-Z0-9\s]+)$/) // line.match(/^[A-Z0-9\s]*$/)
+      if (characterMatch) {
+        if (currentCharacter && currentDialogue) {
+          //@ts-ignore
+          parsedPage.lines.push({
+            character: { name: currentCharacter },
+            content: currentDialogue.trim(),
+          })
+        }
+        currentCharacter = characterMatch[1]
+        currentDialogue = ''
+      } else if (
+        currentCharacter &&
+        line.trim() &&
+        !line.startsWith('(') &&
+        !line.startsWith('SFX:')
+      ) {
+        currentDialogue += ' ' + line.trim()
+      } else if (currentCharacter && currentDialogue && !line.trim()) {
+        //@ts-ignore
+        parsedPage.lines.push({
+          character: { name: currentCharacter },
+          content: currentDialogue.trim(),
+        })
+        currentCharacter = ''
+        currentDialogue = ''
+      }
+    })
+
+    if (currentCharacter && currentDialogue) {
+      // @ts-ignore
+      parsedPage.lines.push({
+        character: { name: currentCharacter },
+        content: currentDialogue.trim(),
+      })
+    }
+
+    if (parsedPage.lines.length > 0) {
+      //@ts-ignore
+      parsedScript.pages.push(parsedPage)
+    }
+  })
+
+  return parsedScript
 }

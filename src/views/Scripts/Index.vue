@@ -25,7 +25,8 @@
                         </template>
                     </carousel>
                     <div class="mt-[19px] flex gap-[11.93px] items-center justify-center">
-                        <svg id="edit" @click="openEditModal" width="42" height="41" viewBox="0 0 42 41" fill="none"
+                        <router-link id="edit" :to="`/scan/${scripts[currentIndex].reference}`">
+                            <svg width="42" height="41" viewBox="0 0 42 41" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.772949" y="0.5" width="40" height="40" rx="10" fill="#E7EEBE" />
                             <path
@@ -35,6 +36,7 @@
                                 d="M22.8505 14.7862L14.3689 23.3485L13.0889 27.7796L13.4616 28.1724L17.9648 26.9445L26.4465 18.3821M22.8505 14.7862L26.4465 11.1902L30.0425 14.7862L26.4465 18.3821M22.8505 14.7862L26.4465 18.3821"
                                 stroke="#3E1821" />
                         </svg>
+                        </router-link>
                         <svg id="delete" @click="triggerDelete(scripts[currentIndex])" width="42" height="41"
                             viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="1.46289" y="0.5" width="40" height="40" rx="10" fill="#E7EEBE" />
@@ -45,7 +47,7 @@
                     </div>
                 </div>
                 <div class="p-[20px] flex flex-col items-center gap-[15px] justify-center">
-                    <button
+                    <router-link :to="`/rehearse/${scripts[currentIndex].reference}`"
                         class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                         <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -54,7 +56,7 @@
                         </svg>
 
                         Rehearse
-                    </button>
+                    </router-link>
                     <router-link :to="{ path: '/scan', query: { trigger: true } }"
                         class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,10 +106,7 @@
                 </div>
             </div>
 
-            <Modal :isVisible="isEditModalVisible" @close="closeEditModal">
-                <h3>Edit Script</h3>
-                <!-- Your edit form goes here -->
-            </Modal>
+          
             <Modal :isVisible="isDeleteModalVisible" @close="closeDeleteModal">
                 <h3 class="text-[25px] text-center">Are you sure you want to permanently delete this script?</h3>
                 <div class="flex flex-col mt-[78px] gap-[15px]">
@@ -159,7 +158,6 @@ export default {
     components: { Carousel, Modal },
     data() {
         return {
-            isEditModalVisible: false,
             isDeleteModalVisible: false,
             loaded: false,
             currentIndex: 0,
@@ -167,12 +165,6 @@ export default {
         }
     },
     methods: {
-        openEditModal() {
-            this.isEditModalVisible = true;
-        },
-        closeEditModal() {
-            this.isEditModalVisible = false;
-        },
         openDeleteModal() {
             this.isDeleteModalVisible = true;
         },

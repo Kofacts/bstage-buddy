@@ -112,6 +112,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { Toast } from '@capacitor/toast';
 import AssignRole from '@/components/AssignRole.vue';
 import { createWorker } from 'tesseract.js';
+import { parseScript } from '@/helpers/global';
 
 export default {
     components: { Carousel, Modal, CarouselPlaceholder, AssignRole },
@@ -124,6 +125,7 @@ export default {
             selectedIndex: 0,
             title: '',
             script: null,
+            pages: [],
         }
     },
     methods: {
@@ -176,20 +178,28 @@ export default {
             const ret = await worker.recognize(src);
             await worker.terminate();
 
-            return ret.data.text
+            let text = ret.data.text
+            let parsed = parseScript(text)
+            console.log(parsed)
+            if(parsed.pages) {
+                this.pages = this.pages.concat(parsed.pages)
+            }
+            return text
         },
         saveScript() {
             this.isSaving = true
             this.$store.dispatch('scripts/create', {
                 language: 'eng',
                 title: this.title,
-                images: this.images,
+                pages: this.pages,
             }).then(({ data, message }) => {
                 Toast.show({ text: message })
                 this.script = data
+                this.$router.push(`/scan/${data.reference}`)
             }).catch((e) => {
                 console.log('e', e)
-                Toast.show({ text: e.message })
+                const message = e?.data?.message || e?.message || e?.statusText || 'An error occured'
+                Toast.show({ text: message })
             }).finally(() => {
                 this.isSaving = false
             })

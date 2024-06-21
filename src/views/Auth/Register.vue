@@ -112,12 +112,14 @@ export default {
         })
     },
     async login(token, data) {
-      localStorage.removeItem("api_token");
-      localStorage.removeItem("token");
+      localStorage.removeItem("CapacitorStorage.auth_token_default");
+      localStorage.removeItem("auth_token_default");
+
       this.$auth.token(null, token);
 
       // this.$auth.watch.loaded = true;
       this.$auth.token(null, token);
+      localStorage.setItem("auth_token_default", token);
       await Preferences.set({
         key: "auth_token_default",
         value: token,

@@ -14,7 +14,7 @@ export default (app) => {
       auth: {
 
         request: function (req, token) {
-          token = token || localStore.get('default_auth_token')
+          token = token || localStore.get('auth_token_default')
           this.drivers.http.setHeaders.call(this, req, {
             Authorization: `Basic ${token}`
           });

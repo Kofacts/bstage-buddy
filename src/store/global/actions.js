@@ -1,67 +1,34 @@
 import axios from 'axios';
 
 export default {
-  getServices({
-    commit
-  }, obj = {}) {
-    return new Promise((resolve, reject) => {
-      let url = `/services?${new URLSearchParams(Object.fromEntries(Object.entries(obj || {}).filter(([_, v]) => _ && v != null))).toString()}`;
-      axios.get(url)
-        .then(async ({
-          data : {data}
-        }) => {
-          commit('SET_SERVICES', data);
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error.response)
-        });
-    });
-  },
-  getNotifications({
-    commit
-  }, obj = {}) {
-    return new Promise((resolve, reject) => {
-      let url = `/customer/notifications?${new URLSearchParams(Object.fromEntries(Object.entries(obj || {}).filter(([_, v]) => _ && v != null))).toString()}`;
-      axios.get(url)
-        .then(async ({
-          data : {data}
-        }) => {
-          commit('SET_NOTIFICATIONS', data);
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error.response)
-        });
-    });
-  },
-  getService({
-    commit
-  }, id) {
-    return new Promise((resolve, reject) => {
-      let url = `/services/${id}`;
-      axios.get(url)
-        .then(async ({
-          data : {data}
-        }) => {
-          commit('SET_SERVICE', data);
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error.response)
-        });
-    });
-  },
-  getCurrencies({
+  getVoices({
     commit
   }) {
     return new Promise((resolve, reject) => {
-      let url = `/currencies`;
+      let url = `/voices`;
       axios.get(url)
         .then(async ({
           data : {data}
         }) => {
-          commit('SET_CURRENCIES', data);
+          commit('SET_VOICES', data);
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error.response)
+        });
+    });
+  },
+
+  getLanguages({
+    commit
+  }) {
+    return new Promise((resolve, reject) => {
+      let url = `/languages`;
+      axios.get(url)
+        .then(async ({
+          data : {data}
+        }) => {
+          commit('SET_LANGUAGES', data);
           resolve(data);
         })
         .catch((error) => {
@@ -85,6 +52,7 @@ export default {
         });
     });
   },
+
   updatePassword(_state, data) {
     return new Promise((resolve, reject) => {
       let url = `/auth/password`;
@@ -114,6 +82,7 @@ export default {
         });
     });
   },
+
   resetPassword(_state, data) {
     return new Promise((resolve, reject) => {
       let url = `/auth/password/reset`;
@@ -128,6 +97,7 @@ export default {
         });
     });
   },
+
   register(_state, data) {
     return new Promise((resolve, reject) => {
       let url = `/auth/register`;

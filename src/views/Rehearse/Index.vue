@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[17px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">Rehearse</h3>
                 <h6 class="text-[25px] text-center">Scan your play script and let’s get to work!</h6>
@@ -31,7 +31,7 @@
                 
             </div>
         </div>
-        <div v-else class="flex flex-col justify-between h-[80vh] max-h-[80vh] overflow-scroll-y">
+        <div v-else class="flex flex-col justify-between h-[83.4vh] max-h-[83.4vh] overflow-scroll-y">
             <div>
                 <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]"> 
                     <div class="flex flex-col gap-[17px] items-center justify-center">
@@ -87,29 +87,27 @@ export default {
     components: { Carousel, Modal, CarouselPlaceholder },
     data() {
         return {
-            scripts: ["Romeo and Juliet"],
-            isEditModalVisible: false,
-            isDeleteModalVisible: false,
-            images: [
-                'https://via.placeholder.com/800x300?text=Slide+1',
-                'https://via.placeholder.com/800x300?text=Slide+2',
-                'https://via.placeholder.com/800x300?text=Slide+3',
-            ],
+            loaded: false,
         }
     },
     methods: {
-        openEditModal() {
-            this.isEditModalVisible = true;
+       
+    },
+    computed: {
+        scripts() {
+            return this.$store.getters['scripts/scripts']
         },
-        closeEditModal() {
-            this.isEditModalVisible = false;
-        },
-        openDeleteModal() {
-            this.isDeleteModalVisible = true;
-        },
-        closeDeleteModal() {
-            this.isDeleteModalVisible = false;
-        },
-    }
+       
+
+    },
+    created() {
+
+        Promise.all([
+            this.$store.dispatch('scripts/fetchScripts'),
+        ]).finally(() => {
+            this.loaded = true
+        })
+
+    },
 }
 </script>

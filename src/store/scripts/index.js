@@ -6,6 +6,7 @@ export const scripts = {
   namespaced: true,
   state: {
     scripts: [],
+    script: {},
   },
   actions,
   getters,

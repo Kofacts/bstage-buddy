@@ -69,8 +69,9 @@ export default {
         async login() {
             const token = btoa(this.body.email + ":" + this.body.password)
             this.loading = true
-            localStorage.removeItem("api_token");
-            localStorage.removeItem("token");
+            localStorage.removeItem("CapacitorStorage.auth_token_default");
+            localStorage.removeItem("auth_token_default");
+
             this.$auth.token(null, token);
             this.$auth.refresh().then(async (data) => {
                 // this.$auth.watch.loaded = true;
@@ -79,6 +80,7 @@ export default {
                     key: "auth_token_default",
                     value: token,
                 });
+                localStorage.setItem("auth_token_default", token);
                 this.$auth.user({ email: this.body.email });
                 // this.$auth.watch.authenticated = true;
                 document.cookie = "rememberMe=false";
