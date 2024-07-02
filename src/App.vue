@@ -1,13 +1,12 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import Navi from '@/components/Navigation/Index.vue'
 </script>
 
 <template>
-  <div class="pt-10" v-if="$auth.ready()">
+  <div class="pt-10" v-if="$auth.ready() && loaded">
     <router-view></router-view>
-    <div v-if="$route.meta.name !== 'lockedin'"> 
-      <navi></navi>
+    <div v-if="!$route.path.includes('auth')"> 
+      <navi v-if="!$route.meta.hideMenu"></navi>
     </div>
   </div>
   <div v-else class="container">Loading...</div>
@@ -18,7 +17,7 @@ import Navi from '@/components/Navigation/Index.vue'
 export default {
   data() {
     return {
-
+      loaded: false,
     };
   },
   methods: {
@@ -27,7 +26,7 @@ export default {
  
   },
   mounted() {
-
+    this.$auth.load().then(() => this.loaded = true).catch((e) => console.log('auth failed', e))
   },
 };
 </script>

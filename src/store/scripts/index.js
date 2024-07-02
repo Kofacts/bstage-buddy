@@ -2,11 +2,11 @@ import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-export const global = {
+export const scripts = {
   namespaced: true,
   state: {
-    voices: [],
-    languages: [],
+    scripts: [],
+    script: {},
   },
   actions,
   getters,

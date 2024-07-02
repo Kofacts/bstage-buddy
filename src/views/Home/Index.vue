@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col  h-[80vh] max-h-[80vh] overflow-y-scroll">
+    <div class="flex flex-col  h-[83.4vh] max-h-[83.4vh] overflow-y-scroll">
         <div>
             <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]">
                 <svg width="100" height="76" viewBox="0 0 100 76" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="p-[20px] pt-[10px] flex items-center justify-center">
-            <button @click="scanPhoto"
+            <router-link :to="{ path: '/scan', query: { trigger: true } }"
                 class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px]">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M15.4081 15.7607H6.59175V5.44556H15.4081V15.7607Z" stroke="#3E1821" />
@@ -58,54 +58,23 @@
                         stroke="#3E1821" />
                 </svg>
                 Scan a script
-            </button>
-            <div style="display: block">
-                <img v-if="imgSrc" :src="imgSrc" width="100%">
-            </div>
-            <div style="display: block" v-if="text">
-                {{ text }}
-            </div>
+            </router-link>
+            
         </div>
     </div>
 </template>
 
 
 <script>
-import { Camera, CameraResultType } from '@capacitor/camera';
-import { createWorker } from 'tesseract.js';
 
 export default {
     data() {
         return {
-            imgSrc: null,
-            text: ''
+           
         }
     },
     methods: {
-        async scanPhoto() {
-            console.log('Fuckk')
-            const image = await Camera.getPhoto({
-                quality: 90,
-                allowEditing: true,
-                resultType: CameraResultType.Uri
-            });
-            console.log(image)
-
-            // image.webPath will contain a path that can be set as an image src.
-            // You can access the original file using image.path, which can be
-            // passed to the Filesystem API to read the raw data of the image,
-            // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-            this.imgSrc = image.webPath;
-            this.imageToText(this.imgSrc)
-
-        },
-        async imageToText(src) {
-            const worker = await createWorker('eng');
-            const ret = await worker.recognize(src);
-            console.log(ret.data.text);
-            this.text = ret.data.text
-            await worker.terminate();
-        }
+       
     }
 }
 </script>
