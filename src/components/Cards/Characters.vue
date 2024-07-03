@@ -32,17 +32,17 @@
             </div>
         </div>
         <div>
-            <select @change="handleVoiceChange"
+            <select @change="handleVoiceChange" :disabled="character.is_self"
                 class="bg-nano-light h-[40px] mt-[20px] w-full text-nano-dark outline-none text-[18px] pl-[15px] pr-[15px]">
-                <option v-for="voice in voices" :key="voice.reference" :value="voice.id">{{ voice.name }}
+                <option :selected="voice.id === character.voice_id" v-for="voice in voices" :key="voice.reference" :value="voice.id">{{ voice.name }}
                 </option>
             </select>
         </div>
         <div v-if="!character.is_self && voice?.audio_url" class="mt-[20px]">
-            <audio-player :key="voice.id" :src="voice.audio_url"></audio-player>
+            <audio-player :name="voice.name" :key="voice.id" :src="voice.audio_url"></audio-player>
         </div>
         <div>
-            <div class="mt-[20px] flex items-center justify-center">
+            <div class="mt-[20px] flex items-center justify-center" v-if="false">
                 <svg @click="isDeleteModalVisible = true" width="41" height="41" viewBox="0 0 41 41" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" y="0.5" width="40" height="40" rx="10" fill="#E7EEBE" />
@@ -164,6 +164,7 @@ export default {
     mounted() {
         Object.assign(this.originalObj, JSON.parse(JSON.stringify(this.character)))
         this.character = JSON.parse(JSON.stringify(this.char))
+        this.voice = this.char.voice
     }
 }
 </script>

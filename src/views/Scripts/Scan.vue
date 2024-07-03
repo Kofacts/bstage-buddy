@@ -40,10 +40,10 @@
                                     d="M21.0006 13.4667V17.5646V17.5646C21.0006 19.3752 19.5328 20.843 17.7222 20.843V20.843H13.6243M21.0006 8.5333V4.43533C21.0006 2.62473 19.5328 1.15694 17.7222 1.15694H13.6243M0.999389 8.5333V4.43533C0.999389 2.62473 2.46717 1.15694 4.27777 1.15694H8.37574M0.999389 13.4667V17.5646C0.999389 19.3752 2.46717 20.843 4.27777 20.843H8.37574"
                                     stroke="#3E1821" />
                             </svg>
-                            Scan scanning
+                            Start scanning
                         </button>
                         <button 
-                            @click="isEnteredTitle = false"
+                            @click="() => { title = ''; isEnteredTitle = false}"
                             class="rounded-[15px] pt-[20px] pb-[20px] pl-[24px] pr-[24px] bg-nano-light w-full w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <line x1="1.96435" y1="1.36149" x2="15.144" y2="14.6659" stroke="#3E1821"/>
@@ -269,7 +269,8 @@ export default {
     },
     mounted() {
         if (this.$route.query.trigger) {
-            // this.scanPhoto()
+            // this.isEnteredTitle = true
+            //  this.scanPhoto()
             this.$router.push({ path: this.$route.path, query: {} })
         }
     }

@@ -4,7 +4,7 @@
             class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px] pt-0 pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20">
                 <div class="flex items-center justify-between pl-[10px] pr-[10px] pb-[15px] bg-nano-dark">
-                    <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
                     </svg>
                     <div>
@@ -60,8 +60,8 @@
                     </div>
 
 
-                    <div class="flex flex-col mb-[10px]"
-                        :class="{ 'ml-20': line.character.is_self }" v-for="(line, i) in script.pages[index].lines" :key="line.reference">
+                    <div class="flex flex-col mb-[10px]" :class="{ 'ml-20': line.character.is_self }"
+                        v-for="(line, i) in script.pages[index].lines" :key="line.reference">
                         <!-- <label class="pt-2">{{ line.character.name }}</label> -->
                         <textarea @focus="() => currentPage = page.number" v-auto-resize
                             class="w-full h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
@@ -71,7 +71,8 @@
                 </div>
             </div>
         </div>
-        <assign-role @charactersChange="handleRoleChange" :key="currentScript.reference" :voices="voices" :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
+        <assign-role @charactersChange="handleRoleChange" :key="currentScript.reference" :voices="voices"
+            :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
 
         <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
@@ -85,7 +86,7 @@
                     </svg>
                     {{ saving ? 'Saving...' : 'Save' }}
                 </button>
-                <button @click="() => {isSavingModalVisible = false; modeType = 'edit'}"
+                <button @click="() => { isSavingModalVisible = false; modeType = 'edit' }"
                     class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="1.96435" y1="1.44914" x2="15.144" y2="14.7536" stroke="#3E1821" />
@@ -199,19 +200,19 @@ export default {
         updateScript() {
             this.saving = true
             this.$store.dispatch('scripts/update', this.script)
-            .then(({ data, message }) => {
-                console.log({ data, message })
-                this.isSavingModalVisible = false
-                Toast.show({ text: message })
-                this.script = data
-                this.modeType = 'edit'
-            }).catch((e) => { 
-                console.log(e)
-                const message = e?.data?.message || e.message || e.statusText || 'An error occured'
-                Toast.show({ text: message })
-            }).finally(() => {
-                this.saving = false
-            })
+                .then(({ data, message }) => {
+                    console.log({ data, message })
+                    this.isSavingModalVisible = false
+                    Toast.show({ text: message })
+                    this.script = data
+                    this.modeType = 'edit'
+                }).catch((e) => {
+                    console.log(e)
+                    const message = e?.data?.message || e.message || e.statusText || 'An error occured'
+                    Toast.show({ text: message })
+                }).finally(() => {
+                    this.saving = false
+                })
         },
         handleRoleChange(val) {
             console.log('role change received', val)
@@ -227,14 +228,14 @@ export default {
         }
     },
     created() {
-
+        this.loaded = this.currentScript?.reference === this.$route.params.reference
         Promise.all([
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
-            this.$store.dispatch('global/getVoices')
-            ]).finally(() => {
+            this.voices.length || this.$store.dispatch('global/getVoices')
+        ]).finally(() => {
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
             this.loaded = true
-
+            this.modeType = this.$route.query.mode || 'edit'
         })
 
     },

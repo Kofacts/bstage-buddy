@@ -20,7 +20,7 @@
         </div>
 
         <div class="mt-[68.5px] w-full pl-[52px] pr-[52px] flex flex-col">
-            <button @click="autoRegister"
+            <button :disabled="button.autoRegister" @click="autoRegister"
                 class="rounded-[15px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.95166" cy="6.55273" r="3.55273" stroke="#3E1821" />
@@ -38,7 +38,7 @@
                         d="M19.8747 8.64853C20.0722 9.156 21.2638 10.0049 22.92 10.9325C24.5762 11.8601 25.9653 14.542 26.1345 15.5853"
                         stroke="#3E1821" />
                 </svg>
-                Skip Sign in
+                {{ button.autoRegister ? 'Loading...' : 'Skip Sign in' }}
             </button>
             <button @click="playAudio"
                 class="rounded-[15px] mt-[14px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
@@ -63,13 +63,16 @@ export default {
     data() {
         return {
             isPlaying: false,
-            loading: false,
+            button: {
+                autoRegister: false,
+                login: false,
+            }
         }
     },
     methods: {
         autoRegister() {
             console.log('was fired')
-            this.loading = true
+            this.button.autoRegister = true
             let payload = {
                 email: `${Date.now()}@backstagebuddy.com`,
                 password: `${Date.now()}`.substr(0, 8)
@@ -102,7 +105,7 @@ export default {
             this.$auth.user(data);
             // this.$auth.watch.authenticated = true;
             document.cookie = "rememberMe=false";
-            this.loading = false;
+            this.button.autoRegister = false;
             this.$router.push('/home')
 
         },

@@ -61,7 +61,7 @@ export default {
 
     },
     created() {
-
+        this.loaded = this.scripts.length > 0
         Promise.all([
             this.$store.dispatch('scripts/fetchScripts'),
         ]).finally(() => {

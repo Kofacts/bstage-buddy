@@ -165,3 +165,41 @@ export function parseScript(script) {
 
   return parsedScript
 }
+
+export function getSimilarityPercentage(a, b) {
+  const entryArray = b
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(/[\s,\.]+/)
+    .filter((s) => !!s)
+  const lineArray = a
+    .replace(/\s+/g, ' ')
+    .trim()
+    .split(/[\s,\.]+/)
+    .filter((s) => !!s)
+
+  let correct = 0
+  let wrong = 0
+
+  for (let i = 0; i < lineArray.length; i++) {
+    if (!entryArray[i]) {
+      wrong++
+      continue
+    }
+    if (entryArray[i].toLowerCase() !== lineArray[i].toLowerCase()) {
+      wrong++
+    } else {
+      correct++
+    }
+  }
+
+  let totalScore = lineArray.length
+  let percent = Number(parseFloat(String((correct / totalScore) * 100)).toFixed(2))
+
+  return {
+    totalScore,
+    correct,
+    wrong,
+    percent,
+  }
+}

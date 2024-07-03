@@ -17,7 +17,7 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
-
+  
   },
   {
     path: '/scripts',
@@ -80,6 +80,9 @@ const routes = [
     path: '/',
     name: 'auth',
     component: AuthIndex,
+    meta: {
+      hideMenu: true,
+    }
   },
   {
     path: '/auth/login',

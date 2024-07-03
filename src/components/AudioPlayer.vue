@@ -1,6 +1,6 @@
 <template>
   <div class="audio-player">
-    <audio ref="audioPlayer" @timeupdate="updateTimeline">
+    <audio :ref="`voice-${name}`" :id="`voice-${name}`" @timeupdate="updateTimeline">
       <source :src="src" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ['src'],
+  props: ['src', 'name'],
   data() {
     return {
       isPlaying: false,
@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     togglePlayPause() {
-      const audio = this.$refs.audioPlayer;
+      const audio = this.$refs[`voice-${this.name}`];
       if (this.isPlaying) {
         audio.pause();
       } else {
@@ -36,7 +36,7 @@ export default {
       this.isPlaying = !this.isPlaying;
     },
     updateTimeline() {
-      const audio = this.$refs.audioPlayer;
+      const audio = this.$refs[`voice-${this.name}`];
       this.progress = (audio.currentTime / audio.duration) * 100;
     }
   },

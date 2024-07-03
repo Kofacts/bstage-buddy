@@ -9,11 +9,11 @@
                 <div class="flex flex-col items-center justify-center m-[46px] mt-0 mb-0 gap-[21px]"> 
                     <h6 class="text-[25px]">{{ script.title }}</h6>
                     <div class="relative w-full border h-[27px] border-nano-light"> 
-                        <div :class="`h-[27px] w-[${Number(completionRate)}%] absolute left-0 bg-nano-light`"></div>
+                        <div :style="`width: ${Number(completionRate)}%`" :class="`h-[27px] absolute left-0 bg-nano-light`"></div>
                     </div>
                     <div class="flex items-center flex-col justify-center text-[18px]"> 
                         <span>{{completionRate}}% completed</span>
-                        <span>Took {{  timeAgo(script.duration) }}</span>
+                        <span>{{ lines.reduce((a, b) => a + b.mistakes, 0) }} mistake(s) to review</span>
                     </div>
                 </div>
             </div>
@@ -86,12 +86,12 @@ export default {
             let lines = this.lines.filter((s) => s.character.is_self)
             let completed = lines.filter((s) => !!s.last_practiced_at)
             let result = (completed.length / lines.length) * 100
-            return parseFloat(result).toFixed(2)
+            return parseInt(result)
         }
 
     },
     created() {
-
+        this.loaded = this.script?.reference === this.$route.params.reference
         Promise.all([
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
         ]).finally(() => {

@@ -25,7 +25,7 @@
                         </template>
                     </carousel>
                     <div class="mt-[19px] flex gap-[11.93px] items-center justify-center">
-                        <router-link id="edit" :to="`/scan/${scripts[currentIndex].reference}`">
+                        <router-link id="edit" :to="`/scan/${scripts[currentIndex].reference}?mode=editScript`">
                             <svg width="42" height="41" viewBox="0 0 42 41" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect x="0.772949" y="0.5" width="40" height="40" rx="10" fill="#E7EEBE" />
@@ -202,8 +202,10 @@ export default {
         }
     },
     mounted() {
-        this.$store.dispatch('scripts/fetchScripts')
-        this.loaded = true
+        this.loaded = this.scripts.length > 0
+        this.$store.dispatch('scripts/fetchScripts').finally(() => {
+            this.loaded = true
+        })
     }
 }
 </script>

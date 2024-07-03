@@ -76,7 +76,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.voices, this.characters)
         if(this.hasSelf) {
             this.step = 2
         }
