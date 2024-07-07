@@ -35,13 +35,56 @@
             <!-- <div class="h-[65px]w-full bg-black sticky top-0 pt-[23px] pl-[17px] pb-[23px] pr-[17px]"> 
                 Worse gang
             </div> -->
+            <div v-if="showMistakes" class="absolute bottom-0 bg-[#3e182145] w-full z-20 h-[93%] pl-[20px] pr-[20px] flex items-end justify-end"> 
+               <div class="bg-nano-light h-[380px] max-h-[380px] overflow-y-scroll relative text-black w-full" style="border-radius: 10px 10px 0px 0px;"> 
+                   <div class="flex flex-col p-[24.62px] pt-[18px] justify-center items-center text-[16px]">
+                    <span>ROMEO:</span>
+                    <span>
+                        Oh dear, my love, <span class="text-[#C3514A]">my wife</span>, Death that hath sucked the honey (of) my <span class="text-[#C3514A]">breath</span>, Hath no power yet upon (the) beauty. Ah, dear Juliet.
+                    </span>
+                   </div>
+
+                   <svg @click="showMistakes=false" class="absolute top-0 right-0 mr-4 mt-4" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="-0.00610352" y="-0.00610352" width="28.0122" height="28.0122" rx="10" fill="#F8FED7"/>
+                        <line x1="8.35355" y1="8.64645" x2="19.3536" y2="19.6464" stroke="#3E1821"/>
+                        <line x1="19.3536" y1="8.35355" x2="8.35355" y2="19.3536" stroke="#3E1821"/>
+                   </svg>
+
+                   <div class="w-full p-[13.5px] flex flex-col gap-[14px]"> 
+                       <div class="flex items-center gap-[20px]"> 
+                            <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.5" y="0.76062" width="40" height="40" rx="10" fill="#C3514A"/>
+                                <path d="M20.5 16.2426V21.7607" stroke="#E7EEBE"/>
+                                <path d="M20.4999 9.62073L31.0133 27.8305H9.98654L20.4999 9.62073Z" stroke="#E7EEBE" stroke-linejoin="round"/>
+                                <circle cx="20.4998" cy="23.7722" r="0.827715" fill="#E7EEBE"/>
+                            </svg>
+                            <span class="text-[18px]">You missed some words</span>
+                       </div>
+                       <div class="flex items-center gap-[20px]"> 
+                            <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.5" y="0.76062" width="40" height="40" rx="10" fill="#C3514A"/>
+                                <path d="M20.5 16.2426V21.7607" stroke="#E7EEBE"/>
+                                <path d="M20.4999 9.62073L31.0133 27.8305H9.98654L20.4999 9.62073Z" stroke="#E7EEBE" stroke-linejoin="round"/>
+                                <circle cx="20.4998" cy="23.7722" r="0.827715" fill="#E7EEBE"/>
+                            </svg>
+                            <span class="text-[18px]">You missed some words</span>
+                       </div>
+                        <div class="flex items-center gap-[20px]"> 
+                            <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="0.5" y="0.76062" width="40" height="40" rx="10" fill="#C3514A"/>
+                                <path d="M20.5 16.2426V21.7607" stroke="#E7EEBE"/>
+                                <path d="M20.4999 9.62073L31.0133 27.8305H9.98654L20.4999 9.62073Z" stroke="#E7EEBE" stroke-linejoin="round"/>
+                                <circle cx="20.4998" cy="23.7722" r="0.827715" fill="#E7EEBE"/>
+                            </svg>
+                            <span class="text-[18px]">You missed some words</span>
+                       </div>
+                   </div>
+
+               </div>
+            </div>
 
             <div :class="{ 'pt-36': modeType == 'rehearse' && isPlayingAudio }"
                 class="rehearse-wraps h-full overflow-y-scroll relative bg-nano-light flex flex-col gap-[10px] text-black pt-16">
-                <div :class="{ 'top-36': modeType == 'rehearse' && isPlayingAudio }"
-                    class="fixed w-full top-24 pl-[20px] pr-[20px]">
-                    {{ currentLine?.page?.number || 1 }}/{{ script.pages?.length || 0 }}
-                </div>
                 <div class="w-1/6 fixed left-0 top-[250px] z-[200]" v-if="isPlayingAudio">
                     <svg width="38" height="30" viewBox="0 0 38 30" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -54,12 +97,19 @@
                 </div>
                 <!-- lines goes here depending on mode-->
                 <div class="mt-5 pb-[50px]" :class="{'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index+1)}" v-for="(page, index) in script.pages" :key="index">
-                    <div :key="`op${index2}`" class="flex-col mb-[10px]" :class="{'bg-[#DCE2B3]' : currentLine?.reference === line.reference, 'pl-10 pr-5': line.character.is_self }"
+                    <div :key="`op${index2}`" class="flex-col relative mb-[10px]" :class="{'bg-[#DCE2B3]' : currentLine?.reference === line.reference, 'pl-10 pr-5': line.character.is_self }"
                         v-for="(line,index2) in script.pages[index].lines">
                         <!-- {{ line.character.name }} -->
+                        <button @click="showMistakes=true" class="absolute bg-[#C3514A] -top-2 left-4 h-[60.673px] w-[40px] flex flex-col items-center justify-center rounded-[10px]" v-if="line.character.is_self ">
+                            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 8.06128V13.5794" stroke="#E7EEBE"/>
+                                <path d="M12.9999 1.43945L23.5133 19.6492H2.48654L12.9999 1.43945Z" stroke="#E7EEBE" stroke-linejoin="round"/>
+                                <circle cx="12.9998" cy="15.5909" r="0.827715" fill="#E7EEBE"/>
+                            </svg>
+                            <span class="text-[11px] text-nano-light font-[700]">13</span>
+                        </button>
                         <div class=" h-auto outline-none p-[10px] pt-2.5 pb-2.5 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
-                            :class="{ 'bg-[#F8FED7]': line.character.is_self }">{{ line.content }}</div>
-
+                            :class="{ 'bg-[#F8FED7] pl-5': line.character.is_self }">{{ line.content }}</div>
                     </div>
 
 
@@ -68,68 +118,6 @@
 
             <!-- animated icon showing height-->
 
-        </div>
-
-        <div
-            class="border-t-[0.1px] border-t border-nano-dark z-[999] h-[127px] bg-nano-light fixed bottom-0 w-full pt-[15px] pl-[30px] pr-[30px] flex justify-between items-center">
-            <div class="flex items-center justify-around w-full gap-[12.8px]">
-                <div class="w-[33.33%] flex justify-center items-center">
-                    <span class="text-black text-[18px]">1.0x</span>
-                </div>
-                <div class="w-[33.33%] flex justify-center items-center">
-                    <div v-if="!isPlayingAudio && !isEnded" class="flex items-center flex-col">
-                        <button @click="startRehearsal" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
-                            <svg width="72" height="72" viewBox="0 0 72 72" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="36" cy="36" r="36" fill="#3E1821" />
-                                <path
-                                    d="M19.3945 36.5732C27.5086 38.1138 33.8927 44.0308 35.6556 51.6384C35.6944 51.7939 35.8078 51.9141 35.9597 51.969C36.0174 51.9898 36.0738 51.9989 36.1395 52C36.3688 51.998 36.5697 51.8443 36.6154 51.6289C38.2492 43.9928 44.5335 37.9865 52.616 36.3303C52.8456 36.2832 53.0002 36.0958 53 35.875C52.9978 35.6592 52.8344 35.4701 52.6055 35.4269C44.4914 33.8863 38.1073 27.9693 36.3444 20.3617C36.2922 20.1505 36.0971 19.9951 35.8605 20.0001C35.6312 20.0021 35.4303 20.1558 35.3846 20.3713C33.7508 28.0074 27.4685 34.0087 19.384 35.6698C19.1544 35.7169 18.9998 35.9044 19 36.1251C19.0022 36.3409 19.1676 36.5251 19.3945 36.5732Z"
-                                    fill="#E5EEB9" stroke="#E7EEBE" />
-                            </svg>
-                        </button>
-                        <span class="text-[13px] text-nano-dark">rehearse</span>
-                    </div>
-                    <div v-else class="flex gap-[8.9px] items-center">
-                        <div class="flex items-center flex-col" v-if="isPaused">
-                            <button @click="isPaused = false" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
-                                <svg width="73" height="72" viewBox="0 0 73 72" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="36.0842" cy="36" r="36" fill="#3E1821" />
-                                    <rect x="28.0842" y="24" width="5" height="24" fill="#E7EEBE" />
-                                    <rect x="39.0842" y="24" width="5" height="24" fill="#E7EEBE" />
-                                </svg>
-                            </button>
-                            <span class="text-[13px] text-nano-dark">pause</span>
-                        </div>
-                        <div v-else class="flex items-center flex-col">
-                            <button @click="isPaused = false" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
-                                <svg width="73" height="72" viewBox="0 0 73 72" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="36.0842" cy="36" r="36" fill="#3E1821"></circle>
-                                    <polygon points="30,24 30,48 50,36" fill="#E7EEBE"></polygon>
-                                </svg>
-
-                            </button>
-                            <span class="text-[13px] text-nano-dark">resume</span>
-                        </div>
-                        <div v-if="!isEnded" class="flex items-center flex-col">
-                            <button @click="() => { isEnded = true; isPlaying = false; endTime = Date.now() }"
-                                class="w-[72px] h-[72px] bg-nano-dark rounded-full">
-                                <svg width="73" height="72" viewBox="0 0 73 72" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="24" y="24" width="23" height="23" fill="#E7EEBE" />
-                                </svg>
-                            </button>
-                            <span class="text-[13px] text-nano-dark">end</span>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="w-[33.33%] flex justify-center items-center text-black">
-                    <router-link :to="`/scan/${script.reference}`" class="text-black text-[18px]">edit</router-link>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -152,6 +140,7 @@ export default {
             isDeleteModalVisible: false,
             isSavingModalVisible: false,
             isPlayingAudio: false,
+            showMistakes: false,
             isSaving: false,
             index: 0,
             modeType: 'rehearse',
