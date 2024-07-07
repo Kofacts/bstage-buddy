@@ -3,6 +3,8 @@ import Home from '@/views/Home/Index.vue';
 import Scripts from '@/views/Scripts/Index.vue';
 import Rehearse from '@/views/Rehearse/Index.vue';
 import RehearsePractice from '@/views/Rehearse/Practice.vue';
+import RehearseResults from '@/views/Rehearse/Results.vue';
+import RehearseReview from '@/views/Rehearse/Review.vue';
 import Stats from '@/views/Stats/Index.vue';
 import StatsShow from '@/views/Stats/Show.vue';
 import ScanScript from '@/views/Scripts/Scan.vue';
@@ -43,6 +45,16 @@ const routes = [
       auth: true,
       hideMenu: true,
     }
+  },
+  {
+    path: '/rehearse/:reference/results',
+    name: 'rehearse-results',
+    component: RehearseResults
+  },
+  {
+    path: '/rehearse/:reference/results/review',
+    name: 'rehearse-results-review',
+    component: RehearseReview
   },
   {
     path: '/stats',

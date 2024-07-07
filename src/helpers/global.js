@@ -166,30 +166,43 @@ export function parseScript(script) {
   return parsedScript
 }
 
-export function getSimilarityPercentage(a, b) {
+export function highlightErrors(line) {
+  let b = line.entry_content
+  let a = line.content
+ 
   const entryArray = b
-    .replace(/\s+/g, ' ')
-    .trim()
-    .split(/[\s,\.]+/)
-    .filter((s) => !!s)
-  const lineArray = a
-    .replace(/\s+/g, ' ')
-    .trim()
-    .split(/[\s,\.]+/)
-    .filter((s) => !!s)
+  .replace(/\s+/g, ' ')
+  .trim()
+  .split(/[\s,\.]+/)
+  .filter((s) => !!s)
+  .map((s) => s.replace(/[^a-zA-Z0-9]/g, ''))
+const lineArray = a
+  .replace(/\s+/g, ' ')
+  .trim()
+  .split(/[\s,\.]+/)
+  .filter((s) => !!s)
+  .map((s) => s.replace(/[^a-zA-Z0-9]/g, ''))
 
   let correct = 0
   let wrong = 0
+  let html = []
+  let errors = []
 
   for (let i = 0; i < lineArray.length; i++) {
     if (!entryArray[i]) {
       wrong++
+      //                         Oh dear, my love, <span class="text-[#C3514A]">my wife</span>, Death that hath sucked the honey (of) my <span class="text-[#C3514A]">breath</span>, Hath no power yet upon (the) beauty. Ah, dear Juliet.
+      html.push( `<span class="text-[#C3514A]">${lineArray[i]}</span>`)
+      errors.push(`<span class="text-[#C3514A]">${lineArray[i]}</span> missing`)
       continue
     }
     if (entryArray[i].toLowerCase() !== lineArray[i].toLowerCase()) {
       wrong++
+       html.push(`<span class="text-[#C3514A]">${lineArray[i]}</span>`)
+       errors.push(`Got <span class="text-[#C3514A]">${entryArray[i]}</span> instead of <b>${lineArray[i]}</b>`)
     } else {
       correct++
+      html.push(`<span class="text-[#C3514A]">${lineArray[i]}</span>`)
     }
   }
 
@@ -197,9 +210,12 @@ export function getSimilarityPercentage(a, b) {
   let percent = Number(parseFloat(String((correct / totalScore) * 100)).toFixed(2))
 
   return {
+    ...line,
+    html: html.join(' '),
     totalScore,
     correct,
     wrong,
+    errors,
     percent,
   }
 }

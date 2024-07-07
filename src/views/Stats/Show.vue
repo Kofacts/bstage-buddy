@@ -13,12 +13,12 @@
                     </div>
                     <div class="flex items-center flex-col justify-center text-[18px]"> 
                         <span>{{completionRate}}% completed</span>
-                        <span>{{ lines.reduce((a, b) => a + b.mistakes, 0) }} mistake(s) to review</span>
+                        <span>{{ mistakes }} mistake(s) to review</span>
                     </div>
                 </div>
             </div>
-            <div class="p-[20px] flex flex-col items-center gap-[15px] justify-center"> 
-                <button class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <div  class="p-[20px] flex flex-col items-center gap-[15px] justify-center"> 
+                <router-link v-if="mistakes" :to="`/rehearse/${script.reference}/results`" class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="21" height="19" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10.4985 7.03076V12.0308" stroke="#3E1821" stroke-linejoin="round"/>
                         <path d="M10.4985 1.03076L20.0248 17.5308H0.972256L10.4985 1.03076Z" stroke="#3E1821" stroke-linejoin="round"/>
@@ -26,7 +26,7 @@
                     </svg>
 
                     Review mistakes
-                </button>
+                </router-link>
             </div>
         </div>
     </div>
@@ -87,6 +87,9 @@ export default {
             let completed = lines.filter((s) => !!s.last_practiced_at)
             let result = (completed.length / lines.length) * 100
             return parseInt(result)
+        },
+        mistakes() {
+            return this.lines.reduce((a, b) => a + b.mistakes, 0)
         }
 
     },
