@@ -64,7 +64,7 @@
                     <!-- <div @click="editPage(index)" class="h-40 w-32" v-for="(image, index) in images" :key="index">
                         <img style="width: 202; height: 278" :src="image.dataUrl" />
                     </div> -->
-                    <carousel-custom @index="currentIndex" :items="images">
+                    <carousel-custom :items="images">
                         <template v-slot:default="{ item }"> 
                             <img class="object-cover bg-[#fff]" :src="item.dataUrl" />
 
