@@ -170,7 +170,6 @@ export default {
         }
     },
     created() {
-        this.loaded = this.script?.reference === this.$route.params.reference
         Promise.all([
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
         ]).finally(() => {

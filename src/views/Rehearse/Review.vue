@@ -5,7 +5,7 @@
             class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px] pt-0 pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20">
                 <div class="flex items-center justify-start gap-[70px] pl-[10px] pr-[10px] pb-[15px] bg-nano-dark">
-                    <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
                     </svg>
                     <div>
@@ -39,7 +39,7 @@
                <div class="bg-nano-light h-[380px] max-h-[380px] overflow-y-scroll relative text-black w-full" style="border-radius: 10px 10px 0px 0px;"> 
                    <div class="flex flex-col p-[24.62px] pt-[18px] justify-center items-center text-[16px]">
                     <span>{{mistakeLine.character.name}}:</span>
-                    <span v-html="mistakeLine.html">
+                    <span class="text-[#C3514A]" v-html="mistakeLine.entry_content">
 
                     </span>
                    </div>
