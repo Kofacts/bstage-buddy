@@ -58,6 +58,7 @@
 <script>
 import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 export default {
     data() {
@@ -81,10 +82,6 @@ export default {
                 .register({
                     data: payload,
                 }).then(async ({ data: { data } }) => {
-                    let payload = {
-                        email: 'samplejuser@backstagebuddy.com', //`${Date.now()}@backstagebuddy.com`,
-                        password: 'password', //`${Date.now()}`.substr(0, 8)
-                    }
                     await this.login(btoa(payload.email + ":" + payload.password), data)
                 }).catch((e) => {
                     Toast.show({ text: 'Error signing up' })
@@ -109,9 +106,42 @@ export default {
             this.$router.push('/home')
 
         },
+        startTts() {
+            const speak = async () => {
+            await TextToSpeech.speak({
+                text: 'This is a sample text.',
+                lang: 'en-US',
+                rate: 1.0,
+                pitch: 1.0,
+                volume: 1.0,
+                category: 'ambient',
+            });
+        };
+
+        const stop = async () => {
+            await TextToSpeech.stop();
+        };
+
+        const getSupportedLanguages = async () => {
+            const languages = await TextToSpeech.getSupportedLanguages();
+        };
+
+        const getSupportedVoices = async () => {
+            const voices = await TextToSpeech.getSupportedVoices();
+        };
+
+        const isLanguageSupported = async (lang) => {
+            const isSupported = await TextToSpeech.isLanguageSupported({ lang });
+        };
+
+        speak().then(async () => {
+            console.log('languages', await getSupportedLanguages())
+            console.log('voices', await getSupportedVoices())
+        })
+        }
     },
     mounted() {
-        console.log('Is mounted')
+        this.startTts()
     }
 }
 </script>
