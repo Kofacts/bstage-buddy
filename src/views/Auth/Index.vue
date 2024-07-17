@@ -81,10 +81,6 @@ export default {
                 .register({
                     data: payload,
                 }).then(async ({ data: { data } }) => {
-                    let payload = {
-                        email: 'samplejuser@backstagebuddy.com', //`${Date.now()}@backstagebuddy.com`,
-                        password: 'password', //`${Date.now()}`.substr(0, 8)
-                    }
                     await this.login(btoa(payload.email + ":" + payload.password), data)
                 }).catch((e) => {
                     Toast.show({ text: 'Error signing up' })
@@ -111,7 +107,6 @@ export default {
         },
     },
     mounted() {
-        console.log('Is mounted')
     }
 }
 </script>

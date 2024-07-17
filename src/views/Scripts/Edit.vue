@@ -228,7 +228,6 @@ export default {
         }
     },
     created() {
-        this.loaded = this.currentScript?.reference === this.$route.params.reference
         Promise.all([
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
             this.voices.length || this.$store.dispatch('global/getVoices')
