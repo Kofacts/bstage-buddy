@@ -208,6 +208,15 @@ export default {
             this.isEditModalVisible = true
         },
         async scanPhoto() {
+            let permission = await Camera.checkPermissions()
+      
+            if(permission.camera !== 'granted' && permission.photos !== 'granted') {
+                permission = await Camera.requestPermissions()
+            }
+            if(permission.camera !== 'granted' && permission.photos !== 'granted') {
+                Toast.show({ text: `Please grant permission to camera or photos` })
+                return 
+            }
             this.isSaving = true
             let image = {}
             try {
