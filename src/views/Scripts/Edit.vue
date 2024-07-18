@@ -136,7 +136,7 @@
                     </svg>
                     Assign characters
                 </button>
-                <button
+                                    <router-link :to="`/rehearse/${script.reference}`"
                     class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -144,7 +144,7 @@
                             stroke="#3E1821" />
                     </svg>
                     Rehearse
-                </button>
+                </router-link>
             </div>
         </div>
     </div>

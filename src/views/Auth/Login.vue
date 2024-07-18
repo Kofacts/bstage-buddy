@@ -85,7 +85,7 @@ export default {
                 // this.$auth.watch.authenticated = true;
                 document.cookie = "rememberMe=false";
                 this.loading = false;
-                this.$router.push('/')
+                this.$router.push('/scripts')
             }).catch((e) => {
                 this.loading = false
                 Toast.show({ text: e.message })
