@@ -251,7 +251,7 @@ export default {
         saveScript() {
             this.isSaving = true
             this.$store.dispatch('scripts/create', {
-                language: 'eng',
+                language: 'en',
                 title: this.title,
                 pages: this.pages,
             }).then(({ data, message }) => {
