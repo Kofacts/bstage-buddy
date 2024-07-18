@@ -1,20 +1,23 @@
 <template>
   <div class="flex flex-col h-[100vh] max-h-[100vh] overflow-y-scroll pb-[60px] items-center justify-center pt-[29px] h-full">
-    <div class="t-[68.5px] w-full pl-[52px] pr-[52px] flex flex-col">
+    <div class="t-[68.5px] w-full pl-[20px] pr-[20px] flex flex-col">
+      <div> 
+          <h3 class="text-[30px] text-semi text-center">Register to Account</h3>
+      </div>
 
 
-      <form class="flex-col w-full mt-4" @submit.prevent="signup">
+      <form class="flex-col w-full mt-[79px]" @submit.prevent="signup">
         <label class="block flex-col w-full">
-          <span class="text-white-700 text-sm">Email <sup>*</sup></span>
-          <input type="email" class="form-input mt-1 block w-full rounded-md focus:border-yellow-600"
+          <span class="text-white-700 text-[18px] text-center w-full">Email <sup>*</sup></span>
+          <input type="email" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
             v-model="body.email" name="email" placeholder="Enter your Email" />
          
         </label>
 
         <label class="block mt-3">
-          <span class="text-white-700 text-sm">Password <sup>*</sup></span>
+          <span class="text-white-700 text-[18px] text-center w-full">Password <sup>*</sup></span>
           <div class="mt-2 relative rounded-md shadow-sm">
-            <input :type="passwordType" class="form-input mt-1 block w-full rounded-md focus:border-yellow-600"
+            <input :type="passwordType" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
               v-model="body.password" name="password" data-vv-as="password" ref="password"
               placeholder="Enter your Password" />
 
@@ -27,9 +30,9 @@
         </label>
 
         <label class="block mt-3">
-          <span class="text-gray-700 text-sm">Confirm Password <sup>*</sup></span>
+          <span class="text-white-700 text-[18px] text-center w-full">Confirm Password <sup>*</sup></span>
           <div class="mt-2 relative rounded-md shadow-sm">
-            <input :type="passwordType" class="form-input mt-1 block w-full rounded-md focus:border-yellow-600"
+            <input :type="passwordType" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
               v-model="body.confirm_password" name="confirm_password" 
              placeholder="Enter your Password" />
 
@@ -44,16 +47,16 @@
 
         <div class="flex mt-4 gap-2">
           <label class="block flex-col w-1/2">
-            <span class="text-white-700 text-sm">First Name</span>
-            <input type="text" class="form-input mt-1 block w-full rounded-md focus:border-yellow-600"
-              v-model="body.first_name" name="first_name" />
+            <span class="text-white-700 text-[18px] text-center w-full">First Name</span>
+            <input type="text" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
+              v-model="body.first_name" name="first_name" placeholder="Enter First Name"/>
            
           </label>
 
           <label class="block flex-col w-1/2">
-            <span class="text-white-700 text-sm">Last Name</span>
-            <input type="text" class="form-input mt-1 block w-full rounded-md focus:border-yellow-600"
-              v-model="body.last_name" name="last_name" />
+            <span class="text-white-700  text-[18px] text-center w-full">Last Name</span>
+            <input type="text" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
+              v-model="body.last_name" name="last_name" placeholder="Enter Last Name"/>
           
           </label>
         </div>
