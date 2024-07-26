@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import { subSeconds, formatDistanceToNow } from 'date-fns';
 export default {
 
     data() {
@@ -58,7 +58,8 @@ export default {
     },
     methods: {
        timeAgo(seconds) {
-        return moment().subtract(seconds, 'seconds').fromNow(true)
+            const date = subSeconds(new Date(), seconds);
+            return formatDistanceToNow(date, { addSuffix: false });
        }
     },
     computed: {

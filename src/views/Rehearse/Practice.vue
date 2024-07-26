@@ -55,11 +55,11 @@
                     :class="{ 'pt-80': false, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
                     <div :key="`op${index2}`" class="flex-col mb-[10px]"
-                        :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character.is_self }"
+                        :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
                         v-for="(line, index2) in script.pages[index].lines" :id="`line-${line.reference}`">
                         <!-- {{ line.character.name }} -->
                         <div class=" h-auto outline-none p-[10px] pt-2.5 pb-2.5 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
-                            :class="{ 'bg-[#F8FED7]': line.character.is_self }">{{ line.content }}</div>
+                            :class="{ 'bg-[#F8FED7]': line.character?.is_self }">{{ line.content }}</div>
 
                     </div>
 
@@ -392,13 +392,14 @@ export default {
                 //console.log(new Date().toLocaleString(), this.currentLine.reference, 'next line found');
                 const vm = this;
 
-                if (this.currentLine.character.is_self) {
+                if (this.currentLine.character?.is_self) {
                     //console.log(new Date().toLocaleString(), this.currentLine.reference, 'is self: start recording');
                     this._recording[this.platform].startRecording(vm);
                 } else {
                     console.log(new Date().toLocaleString(), this.currentLine?.reference, 'is AI: start playing');
                     const audio = new Audio(this.currentLine.audio_url);
                     audio.play();
+                    audio.muted = !this.currentLine.character;
 
                     audio.addEventListener("ended", function () {
                         console.log(new Date().toLocaleString(), vm.currentLine?.reference, "audio playing ended");
@@ -468,7 +469,6 @@ export default {
     },
     mounted() {
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
-
     }
 }
 </script>

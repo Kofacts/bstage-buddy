@@ -60,7 +60,7 @@
                     </div>
 
 
-                    <div class="flex flex-col mb-[10px]" :class="{ 'ml-20': line.character.is_self }"
+                    <div class="flex flex-col mb-[10px]" :class="{ 'ml-20': line.character?.is_self }"
                         v-for="(line, i) in script.pages[index].lines" :key="line.reference">
                         <!-- <label class="pt-2">{{ line.character.name }}</label> -->
                         <textarea @focus="() => currentPage = page.number" v-auto-resize
@@ -232,6 +232,7 @@ export default {
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
             this.voices.length || this.$store.dispatch('global/getVoices')
         ]).finally(() => {
+            console.log(this.currentScript)
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
             this.loaded = true
             this.modeType = this.$route.query.mode || 'edit'

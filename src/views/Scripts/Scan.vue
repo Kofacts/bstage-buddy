@@ -15,26 +15,29 @@
             </svg>
             <h6 class="text-[25px]">Loading...</h6>
         </div>
-      
+
         <AssignRole v-else-if="script"></AssignRole>
 
         <div v-else>
 
             <!-- enter title first-->
-            <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[58.35px] pl-[37px] pr-[37px]" v-if="!isEnteredTitle"> 
+            <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[58.35px] pl-[37px] pr-[37px]"
+                v-if="!isEnteredTitle">
                 <div class="flex flex-col gap-[45px] p-[35px] pt-0 pb-0">
                     <h3 class="text-[30px] text-semi text-center">Script Library</h3>
                     <!-- <h6 class="text-[35px] text-center text-semi">You are closer to becoming a star!</h6> -->
                 </div>
                 <h6 class="text-[24px] leading-[32px] text-center">Name the text you are about to add</h6>
 
-                <div class="w-full pl-[14px] pr-[14px] flex flex-col gap-[86.4px]"> 
-                    <textarea v-model="title" class="w-full bg-[#4A232C] outline-none p-4 text-[20px] text-sans h-[160px]"></textarea>
+                <div class="w-full pl-[14px] pr-[14px] flex flex-col gap-[86.4px]">
+                    <textarea v-model="title"
+                        class="w-full bg-[#4A232C] outline-none p-4 text-[20px] text-sans h-[160px]"></textarea>
 
-                    <div class="flex flex-col gap-[15px]"> 
-                        <button @click="() => {scanPhoto(); isEnteredTitle = true }"
+                    <div class="flex flex-col gap-[15px]">
+                        <button @click="() => { scanPhoto(); isEnteredTitle = true }"
                             class="rounded-[15px] pt-[20px] pb-[20px] pl-[24px] pr-[24px] bg-nano-light w-full  w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
-                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.4081 15.7607H6.59175V5.44556H15.4081V15.7607Z" stroke="#3E1821" />
                                 <path
                                     d="M21.0006 13.4667V17.5646V17.5646C21.0006 19.3752 19.5328 20.843 17.7222 20.843V20.843H13.6243M21.0006 8.5333V4.43533C21.0006 2.62473 19.5328 1.15694 17.7222 1.15694H13.6243M0.999389 8.5333V4.43533C0.999389 2.62473 2.46717 1.15694 4.27777 1.15694H8.37574M0.999389 13.4667V17.5646C0.999389 19.3752 2.46717 20.843 4.27777 20.843H8.37574"
@@ -42,12 +45,14 @@
                             </svg>
                             Start scanning
                         </button>
-                        <button 
-                            @click="() => { title = ''; isEnteredTitle = false}"
+                        <button @click="() => { title = ''; isEnteredTitle = false }"
                             class="rounded-[15px] pt-[20px] pb-[20px] pl-[24px] pr-[24px] bg-nano-light w-full w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <line x1="1.96435" y1="1.36149" x2="15.144" y2="14.6659" stroke="#3E1821"/>
-                                <line y1="-0.5" x2="18.7273" y2="-0.5" transform="matrix(-0.703768 0.71043 0.71043 0.703768 14.7888 1.71338)" stroke="#3E1821"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
+                                fill="none">
+                                <line x1="1.96435" y1="1.36149" x2="15.144" y2="14.6659" stroke="#3E1821" />
+                                <line y1="-0.5" x2="18.7273" y2="-0.5"
+                                    transform="matrix(-0.703768 0.71043 0.71043 0.703768 14.7888 1.71338)"
+                                    stroke="#3E1821" />
                             </svg>
 
                             Cancel
@@ -65,23 +70,31 @@
                         <img style="width: 202; height: 278" :src="image.dataUrl" />
                     </div> -->
                     <carousel-custom :items="images">
-                        <template v-slot:default="{ item }"> 
+                        <template v-slot:default="{ item }">
                             <img class="object-cover bg-[#fff]" :src="item.dataUrl" />
 
-                            <div class="absolute bottom-2 right-2 flex gap-[6.7px]"> 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41" fill="none">
-                                    <rect width="41" height="41" rx="10" fill="#E7EEBE"/>
-                                    <path d="M28.4996 14.5003H12.5004M18.5691 14.0004V13.4314C18.5691 12.365 19.4336 11.5005 20.5 11.5005V11.5005C21.5664 11.5005 22.4309 12.365 22.4309 13.4314V14.0004M14.1555 14.5003L15.2589 29.4996H25.7411L26.8445 14.5003H14.1555Z" stroke="#3E1821"/>
+                            <div class="absolute bottom-2 right-2 flex gap-[6.7px]">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41"
+                                    fill="none">
+                                    <rect width="41" height="41" rx="10" fill="#E7EEBE" />
+                                    <path
+                                        d="M28.4996 14.5003H12.5004M18.5691 14.0004V13.4314C18.5691 12.365 19.4336 11.5005 20.5 11.5005V11.5005C21.5664 11.5005 22.4309 12.365 22.4309 13.4314V14.0004M14.1555 14.5003L15.2589 29.4996H25.7411L26.8445 14.5003H14.1555Z"
+                                        stroke="#3E1821" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43"
+                                    fill="none">
                                     <g clip-path="url(#clip0_1306_2644)">
-                                        <rect x="1.78172" y="1.01245" width="40" height="41" rx="10" fill="#E7EEBE"/>
-                                        <path d="M12.5364 22.0079C12.5364 27.2084 16.6821 31.4359 21.7818 31.4359C26.8815 31.4359 31.0272 27.2261 31.0272 22.0079C31.0272 16.7898 26.8815 12.58 21.7818 12.58C18.5902 12.58 15.7801 14.225 14.1149 16.7368" stroke="#3E1821" stroke-miterlimit="10"/>
-                                        <path d="M13.4039 11.5895V17.3383H19.024" stroke="#3E1821" stroke-miterlimit="10"/>
+                                        <rect x="1.78172" y="1.01245" width="40" height="41" rx="10" fill="#E7EEBE" />
+                                        <path
+                                            d="M12.5364 22.0079C12.5364 27.2084 16.6821 31.4359 21.7818 31.4359C26.8815 31.4359 31.0272 27.2261 31.0272 22.0079C31.0272 16.7898 26.8815 12.58 21.7818 12.58C18.5902 12.58 15.7801 14.225 14.1149 16.7368"
+                                            stroke="#3E1821" stroke-miterlimit="10" />
+                                        <path d="M13.4039 11.5895V17.3383H19.024" stroke="#3E1821"
+                                            stroke-miterlimit="10" />
                                     </g>
                                     <defs>
                                         <clipPath id="clip0_1306_2644">
-                                        <rect width="42.025" height="42.025" fill="white" transform="translate(0.769287 0.5)"/>
+                                            <rect width="42.025" height="42.025" fill="white"
+                                                transform="translate(0.769287 0.5)" />
                                         </clipPath>
                                     </defs>
                                 </svg>
@@ -160,7 +173,7 @@
                 </div>
             </Modal>
         </div>
-        
+
     </div>
 </template>
 
@@ -182,7 +195,7 @@ export default {
             images: [],
             isEditModalVisible: false,
             isDeleteModalVisible: false,
-            isEnteredTitle:false,
+            isEnteredTitle: false,
             isSaving: false,
             selectedIndex: 0,
             title: '',
@@ -209,13 +222,13 @@ export default {
         },
         async scanPhoto() {
             let permission = await Camera.checkPermissions()
-      
-            if(permission.camera !== 'granted' && permission.photos !== 'granted') {
+
+            if (permission.camera !== 'granted' && permission.photos !== 'granted') {
                 permission = await Camera.requestPermissions()
             }
-            if(permission.camera !== 'granted' && permission.photos !== 'granted') {
+            if (permission.camera !== 'granted' && permission.photos !== 'granted') {
                 Toast.show({ text: `Please grant permission to camera or photos` })
-                return 
+                return
             }
             this.isSaving = true
             let image = {}
@@ -231,11 +244,7 @@ export default {
                 this.isSaving = false
                 return
             }
-            image.text = await this.imageToText(image.dataUrl)
-
-            if (!this.images.length) {
-                // this.title = image.text.split('\n\n')[0]
-            }
+            //image.text = await this.imageToText(image.dataUrl)
 
             // image.webPath will contain a path that can be set as an image src.
             // You can access the original file using image.path, which can be
@@ -251,14 +260,22 @@ export default {
 
             let text = ret.data.text
             let parsed = parseScript(text)
-            console.log(parsed)
-            if(parsed.pages) {
+
+            if (parsed.pages) {
                 this.pages = this.pages.concat(parsed.pages)
             }
             return text
         },
-        saveScript() {
+        async saveScript() {
             this.isSaving = true
+            try {
+                this.pages = this.pages.length || await this.extractTexts(this.images)
+            } catch (e) {
+                console.log('extractTexts', e)
+                Toast.show({ text: e.message })
+                this.isSaving = false
+                return
+            }
             this.$store.dispatch('scripts/create', {
                 language: 'en',
                 title: this.title,
@@ -268,12 +285,28 @@ export default {
                 this.script = data
                 this.$router.push(`/scan/${data.reference}`)
             }).catch((e) => {
-                console.log('e', e)
+                console.log('scripts/create', e)
                 const message = e?.data?.message || e?.message || e?.statusText || 'An error occured'
                 Toast.show({ text: message })
             }).finally(() => {
                 this.isSaving = false
             })
+        },
+        async extractTexts(images) {
+            let fullText = ''
+
+            let queue = []
+            for (let i in images) {
+                queue.push(this.imageToText(images[i].dataUrl))
+            }
+
+            let texts = await Promise.all(queue)
+            for (let i in texts) {
+                fullText += `Page ${i + 1}\n${texts[i]}`
+            }
+
+            let parsed = parseScript(fullText)
+            return parsed.pages
         }
     },
     mounted() {
