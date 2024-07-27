@@ -125,6 +125,7 @@ export function parseScript(script) {
         .trim()
         .split(' ')
       let inBracket = line.match(/\[([^\]]*)\]/)?.[1]
+      let upperCaseOnly = /^[A-Z\s!-/:-@[-`{-~]+$/.test(line)
       let firstPart = splitLine[0]
       let characterMatch =
         splitLine.length > 1 &&
@@ -147,6 +148,14 @@ export function parseScript(script) {
           characterMatch = splitComma[0].trim()
         }
       }
+
+      if (!characterMatch && upperCaseOnly) {
+        let name = line.replace(/\([^)]*\)/g, '').trim()
+        if (name.split(' ').length < 2) {
+          characterMatch = name
+        }
+      }
+
       if (characterMatch) {
         if (currentCharacter.trim().length && currentDialogue.trim().length) {
           // @ts-ignore
@@ -159,14 +168,20 @@ export function parseScript(script) {
         let dialogue = line.split(':')
         dialogue.shift()
         currentDialogue = dialogue.join(':').trim()
-      } else if (line.trim().length > 2 && (line.startsWith('(') || line.startsWith('{'))) {
+      } else if (
+        line.trim().length > 2 &&
+        (line.startsWith('=') || line.startsWith('(') || line.startsWith('{'))
+      ) {
         currentDialogue += line.trim()
 
-        if (currentDialogue && line.endsWith(')')) {
+        if (currentDialogue && (line.startsWith('=') || line.endsWith(')'))) {
           // @ts-ignore
           parsedPage.lines.push({
             character: { name: '' },
-            content: line.replace(/\[.*?\]/g, '').trim(),
+            content: line
+              .replace(/\[.*?\]/g, '')
+              .replace('=', '')
+              .trim(),
           })
           currentCharacter = ''
           currentDialogue = ''
