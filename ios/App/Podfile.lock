@@ -1,28 +1,52 @@
 PODS:
-  - Capacitor (5.7.5):
+  - Capacitor (6.1.0):
     - CapacitorCordova
-  - CapacitorCamera (5.0.0):
+  - CapacitorCamera (6.0.0):
     - Capacitor
-  - CapacitorCordova (5.7.5)
+  - CapacitorClipboard (6.0.0):
+    - Capacitor
+  - CapacitorCordova (6.1.0)
+  - CapacitorPreferences (6.0.0):
+    - Capacitor
+  - CapacitorToast (6.0.0):
+    - Capacitor
+  - MozartecCapacitorMicrophone (6.0.0):
+    - Capacitor
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
+  - "CapacitorClipboard (from `../../node_modules/@capacitor/clipboard`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
+  - "MozartecCapacitorMicrophone (from `../../node_modules/@mozartec/capacitor-microphone`)"
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorCamera:
     :path: "../../node_modules/@capacitor/camera"
+  CapacitorClipboard:
+    :path: "../../node_modules/@capacitor/clipboard"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorPreferences:
+    :path: "../../node_modules/@capacitor/preferences"
+  CapacitorToast:
+    :path: "../../node_modules/@capacitor/toast"
+  MozartecCapacitorMicrophone:
+    :path: "../../node_modules/@mozartec/capacitor-microphone"
 
 SPEC CHECKSUMS:
-  Capacitor: 7d42085cb786b2d3ea9ac8a17ebd7e3305be7b72
-  CapacitorCamera: 347de0404ad65462cd348d1e62419e8f763c38ae
-  CapacitorCordova: c946a6052b547e1e185fc46862003f7b9130ead1
+  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
+  CapacitorCamera: b61f125d92a0ef75d7becb7956fed7dd13187ee0
+  CapacitorClipboard: 80282f684154124b9019ebf401235b70b0cf4994
+  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
+  CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
+  MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
 
-PODFILE CHECKSUM: 39250892ef0344d4847cd4c683520cd02a8223b6
+PODFILE CHECKSUM: 18bde45b757234ca16a1d721c37d1af8f2a1504f
 
 COCOAPODS: 1.15.2

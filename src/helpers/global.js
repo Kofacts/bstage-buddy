@@ -103,57 +103,112 @@ export function isValidEmail(email) {
     );
 }
 
-
 export function parseScript(script) {
   const pages = script.split(/Page \d+/).filter((page) => page.trim() !== '')
-  const parsedScript = {
-    title: 'Sample Script',
+  let parsedScript
+  parsedScript = {
+    title: script.split('\n')[1],
     pages: [],
   }
 
   pages.forEach((page, index) => {
     const lines = page.trim().split('\n')
-    const parsedPage = { text: page.trim(), number: index + 1, lines: [] }
+    let parsedPage
+    parsedPage = { text: page.trim(), number: index + 1, lines: [] }
 
     let currentCharacter = ''
     let currentDialogue = ''
 
-    lines.forEach((line) => {
-      line = line.startsWith('(') ? line.split(')').pop() : line
-      const characterMatch = line.match(/^([A-Z0-9\s]+)$/) // line.match(/^[A-Z0-9\s]*$/)
+    lines.forEach((line, i) => {
+      let splitLine = line
+        .replace(/\([^)]*\)/g, '')
+        .trim()
+        .split(' ')
+      let inBracket = line.match(/\[([^\]]*)\]/)?.[1]
+      let upperCaseOnly = /^[A-Z\s!-/:-@[-`{-~]+$/.test(line)
+      let firstPart = splitLine[0]
+      let characterMatch =
+        splitLine.length > 1 &&
+        (firstPart.includes(':') || splitLine[1] === ':') &&
+        !line.trim().startsWith('[')
+          ? firstPart.replace(':', '')
+          : null
+
+      if (!characterMatch && inBracket) {
+        let splitComma = inBracket.split(',')
+        let nextLine = lines.find((s, i2) => i2 > i && s.trim().length)
+        if (
+          (nextLine?.startsWith('[') && nextLine?.endsWith(']')) ||
+          (nextLine?.startsWith('(') && nextLine?.endsWith(')')) ||
+          (nextLine?.startsWith('{') && nextLine?.endsWith('}'))
+        ) {
+          characterMatch = null
+          //currentCharacter = ''
+        } else {
+          characterMatch = splitComma[0].trim()
+        }
+      }
+
+      if (!characterMatch && upperCaseOnly) {
+        let name = line.replace(/\([^)]*\)/g, '').trim()
+        if (name.split(' ').length < 2) {
+          characterMatch = name
+        }
+      }
+
       if (characterMatch) {
-        if (currentCharacter && currentDialogue) {
-          //@ts-ignore
+        if (currentCharacter.trim().length && currentDialogue.trim().length) {
+          // @ts-ignore
           parsedPage.lines.push({
             character: { name: currentCharacter },
-            content: currentDialogue.trim(),
+            content: currentDialogue.replace(/\[.*?\]/g, '').trim(),
           })
         }
-        currentCharacter = characterMatch[1]
-        currentDialogue = ''
+        currentCharacter = characterMatch
+        let dialogue = line.split(':')
+        dialogue.shift()
+        currentDialogue = dialogue.join(':').trim()
       } else if (
-        currentCharacter &&
-        line.trim() &&
-        !line.startsWith('(') &&
-        !line.startsWith('SFX:')
+        line.trim().length > 2 &&
+        (line.startsWith('=') || line.startsWith('(') || line.startsWith('{'))
       ) {
-        currentDialogue += ' ' + line.trim()
-      } else if (currentCharacter && currentDialogue && !line.trim()) {
-        //@ts-ignore
+        currentDialogue += line.trim()
+
+        if (currentDialogue && (line.startsWith('=') || line.endsWith(')'))) {
+          // @ts-ignore
+          parsedPage.lines.push({
+            character: { name: '' },
+            content: line
+              .replace(/\[.*?\]/g, '')
+              .replace('=', '')
+              .trim(),
+          })
+          currentCharacter = ''
+          currentDialogue = ''
+        }
+      } else if (line.trim().length > 2 && (line.endsWith(')') || line.endsWith('}'))) {
+        currentDialogue += line.trim()
+
+        // @ts-ignore
         parsedPage.lines.push({
-          character: { name: currentCharacter },
-          content: currentDialogue.trim(),
+          character: { name: '' },
+          content: currentDialogue.replace(/\[.*?\]/g, '').trim(),
         })
         currentCharacter = ''
         currentDialogue = ''
+      } else if (currentCharacter && !currentDialogue.includes('END OF ')) {
+        currentDialogue += `${currentDialogue.endsWith('\n') ? '' : '\n'}${line
+          .replace(/\([^)]*\)/g, '')
+          .replace(/\[.*?\]/g, '')
+          .trim()}`
       }
     })
 
-    if (currentCharacter && currentDialogue) {
+    if (currentCharacter.trim().length && currentDialogue.trim().length) {
       // @ts-ignore
       parsedPage.lines.push({
         character: { name: currentCharacter },
-        content: currentDialogue.trim(),
+        content: currentDialogue.replace(/\[.*?\]/g, '').trim(),
       })
     }
 

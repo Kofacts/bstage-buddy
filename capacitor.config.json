@@ -1,9 +1,21 @@
 {
   "appId": "com.nanonebula.backstage",
-  "appName": "Backstage Buddy",
+  "appName": "BackStageBuddy",
   "webDir": "www",
-  "server": {
-    "url": "http://192.168.0.159:8001",
+  "bundledWebRuntime": false,
+  "allowMixedContent" :  true,
+  "plugins": {
+
+  },
+  "ios": {
+    "scheme": "BackStageBuddy"
+  },
+  "android": {
+    "allowMixedContent": true 
+  },
+   "server": {
+    "allowNavigation": ["*.backstagebuddy.com"],
+    "androidScheme": "http",
     "cleartext": true
   }
 }

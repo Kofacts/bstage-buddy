@@ -246,6 +246,7 @@ export default {
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
             this.voices.length || this.$store.dispatch('global/getVoices')
         ]).finally(() => {
+            console.log(this.currentScript)
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
             this.loaded = true
             this.modeType = this.$route.query.mode || 'edit'
