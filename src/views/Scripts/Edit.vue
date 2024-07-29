@@ -66,7 +66,7 @@
                     </div>
 
                     <!-- line modal-->
-                    <add-dialogue :key="page.reference" v-if="showDialogue" :script="addLine.script" :page="addLine.page" :order="addLine.order" :characters="currentScript.characters" :showDialogue="showDialogue" @closeDialogue="showDialogue = false" @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
+                    <add-dialogue :key="page.reference" v-show="showDialogue && addLine.script" :script="addLine.script" :page="addLine.page" :order="addLine.order" :characters="currentScript.characters" :showDialogue="showDialogue" @closeDialogue="showDialogue = false" @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
 
 
                     <div :class="{ 'top-40': modeType == 'editScript' }" class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
@@ -193,7 +193,8 @@ export default {
             isSaving: true,
             modeType: 'edit',
             showDialogue: false,
-            script: {}
+            script: {},
+            addLine: {}
         }
     },
     directives: {
