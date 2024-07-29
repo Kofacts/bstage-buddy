@@ -162,7 +162,7 @@ export default {
         }
     },
     mounted() {
-        Object.assign(this.originalObj, JSON.parse(JSON.stringify(this.character)))
+        Object.assign(this.originalObj, JSON.parse(JSON.stringify(this.character || {})))
         this.character = JSON.parse(JSON.stringify(this.char))
         this.voice = this.char.voice
     }

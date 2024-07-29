@@ -57,7 +57,7 @@
                     <div :key="`op${index2}`" class="flex-col mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
                         v-for="(line, index2) in script.pages[index].lines" :id="`line-${line.reference}`">
-                        <!-- {{ line.character.name }} -->
+                        <!-- {{ line.character?.name || 'Direction' }} -->
                         <div class=" h-auto outline-none p-[10px] pt-2.5 pb-2.5 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
                             :class="{ 'bg-[#F8FED7]': line.character?.is_self }">{{ line.content }}</div>
 

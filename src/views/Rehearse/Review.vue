@@ -38,7 +38,7 @@
             <div v-if="showMistakes" class="absolute bottom-0 bg-[#3e182145] w-full z-20 h-[93%] pl-[20px] pr-[20px] flex items-end justify-end"> 
                <div class="bg-nano-light h-[380px] max-h-[380px] overflow-y-scroll relative text-black w-full" style="border-radius: 10px 10px 0px 0px;"> 
                    <div class="flex flex-col p-[24.62px] pt-[18px] justify-center items-center text-[16px]">
-                    <span>{{mistakeLine.character.name}}:</span>
+                    <span>{{mistakeLine.character?.name || "Direction"}}:</span>
                     <span class="text-[#C3514A]" v-html="mistakeLine.entry_content">
 
                     </span>
@@ -80,9 +80,9 @@
                 </div>
                 <!-- lines goes here depending on mode-->
                 <div class="mt-5 pb-[50px]" :class="{'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index+1)}" v-for="(page, index) in script.pages" :key="index">
-                    <div :key="`op${index2}`" class="flex-col relative mb-[10px]" :class="{'bg-[#DCE2B3]' : currentLine?.reference === line.reference, 'pl-10 pr-5': line.character.is_self }"
+                    <div :key="`op${index2}`" class="flex-col relative mb-[10px]" :class="{'bg-[#DCE2B3]' : currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
                         v-for="(line,index2) in script.pages[index].lines">
-                        <!-- {{ line.character.name }} -->
+                        <!-- {{ line.character?.name || 'Direction' }} -->
                         <button v-if="line.mistakes" @click="() => { mistakeLine = highlightErrors(line); showMistakes=true }" class="absolute bg-[#C3514A] -top-2 left-4 h-[60.673px] w-[40px] flex flex-col items-center justify-center rounded-[10px]">
                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13 8.06128V13.5794" stroke="#E7EEBE"/>
@@ -92,7 +92,7 @@
                             <span class="text-[11px] text-nano-light font-[700]">{{ line.mistakes }}</span>
                         </button>
                         <div class=" h-auto outline-none p-[10px] pt-2.5 pb-2.5 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
-                            :class="{ 'bg-[#F8FED7] pl-5': line.character.is_self }">{{ line.content }}</div>
+                            :class="{ 'bg-[#F8FED7] pl-5': line.character?.is_self }">{{ line.content }}</div>
                     </div>
 
 
@@ -351,7 +351,7 @@ export default {
                 console.log(new Date().toLocaleString(), this.currentLine.reference, 'next line found');
                 const vm = this;
 
-                if (this.currentLine.character.is_self) {
+                if (this.currentLine.character?.is_self) {
                     console.log(new Date().toLocaleString(), this.currentLine.reference, 'is self: start recording');
                     this._recording[this.platform].startRecording(vm);
                 } else {

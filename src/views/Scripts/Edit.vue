@@ -53,13 +53,22 @@
             <div id="script-wrapper" :class="{ 'pt-36': modeType == 'editScript' }"
                 class="h-[10000px] relative bg-nano-light flex flex-col gap-[10px] text-black pt-16 pl-[20px] pr-[20px]">
                 <!-- lines goes here depending on mode-->
+              
+
                 <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
                     <div class="flex items-end justify-end mb-4"> 
-                        <button @click="showDialogue=true" class=" rounded-b-[20px] bg-[#f8ffd2] pt-1.5 pb-1.5 pl-2.5 pr-2.5">+ Add a line</button>
+                        <button @click="triggerAddDialog({
+                            script: script.reference,
+                            page: page.reference,
+                            order: script.pages[index].lines[script.pages[index].lines.length - 1].order || script.pages[index].lines.length,
+                            index,
+                        })" class=" rounded-b-[20px] bg-[#f8ffd2] pt-1.5 pb-1.5 pl-2.5 pr-2.5">+ Add a line</button>
                     </div>
 
                     <!-- line modal-->
-                    <add-dialogue :showDialogue="showDialogue" @closeDialogue="showDialogue = false"></add-dialogue>
+                    <add-dialogue :key="page.reference" v-if="showDialogue" :script="addLine.script" :page="addLine.page" :order="addLine.order" :characters="currentScript.characters" :showDialogue="showDialogue" @closeDialogue="showDialogue = false" @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
+
+
                     <div :class="{ 'top-40': modeType == 'editScript' }" class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
                         {{ currentPage }}/{{ script.pages?.length }}
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
@@ -107,7 +116,7 @@
         <assign-role @charactersChange="handleRoleChange" :key="currentScript.reference" :voices="voices"
             :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
-
+    
         <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
             <h3 class="text-[25px] text-center">Do you want to save the edition changes?</h3>
             <div class="flex flex-col mt-[78px] gap-[15px]">
@@ -254,6 +263,11 @@ export default {
         handleRoleChange(val) {
             console.log('role change received', val)
             this.script.characters = val
+        },
+        triggerAddDialog(payload) {
+            this.addLine = {}
+            this.showDialogue = true
+            this.addLine = payload
         }
     },
     computed: {
