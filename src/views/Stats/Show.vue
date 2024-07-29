@@ -84,7 +84,7 @@ export default {
             return lines
         },
         completionRate() {
-            let lines = this.lines.filter((s) => s.character.is_self)
+            let lines = this.lines.filter((s) => s.character?.is_self)
             let completed = lines.filter((s) => !!s.last_practiced_at)
             let result = (completed.length / lines.length) * 100
             return parseInt(result)

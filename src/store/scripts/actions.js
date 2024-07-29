@@ -89,4 +89,18 @@ export default {
         });
     });
   },
+  addLine({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      let url = `/scripts/${payload.reference}/lines`;
+      axios.postForm(url, payload)
+        .then(async ({
+          data
+        }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error.response)
+        });
+    });
+  },
 }
