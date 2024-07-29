@@ -4,7 +4,8 @@
             class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px] pt-0 pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20">
                 <div class="flex items-center justify-between pl-[10px] pr-[10px] pb-[15px] bg-nano-dark">
-                    <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
                     </svg>
                     <div>
@@ -53,10 +54,10 @@
             <div id="script-wrapper" :class="{ 'pt-36': modeType == 'editScript' }"
                 class="h-[10000px] relative bg-nano-light flex flex-col gap-[10px] text-black pt-16 pl-[20px] pr-[20px]">
                 <!-- lines goes here depending on mode-->
-              
+
 
                 <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
-                    <div class="flex items-end justify-end mb-4"> 
+                    <div class="flex items-end justify-end mb-4">
                         <button @click="triggerAddDialog({
                             script: script.reference,
                             page: page.reference,
@@ -66,28 +67,63 @@
                     </div>
 
                     <!-- line modal-->
-                    <add-dialogue :key="page.reference" v-show="showDialogue && addLine.script" :script="addLine.script" :page="addLine.page" :order="addLine.order" :characters="currentScript.characters" :showDialogue="showDialogue" @closeDialogue="showDialogue = false" @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
+                    <add-dialogue :key="page.reference" v-show="showDialogue && addLine.script" :script="addLine.script"
+                        :page="addLine.page" :order="addLine.order" :characters="currentScript.characters"
+                        :showDialogue="showDialogue" @closeDialogue="showDialogue = false"
+                        @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
 
 
-                    <div :class="{ 'top-40': modeType == 'editScript' }" class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
+                    <div :class="{ 'top-40': modeType == 'editScript' }"
+                        class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
                         {{ currentPage }}/{{ script.pages?.length }}
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
 
+                    <draggable v-model="script.pages[index].lines" group="people" @start="drag = true" @end="drag = false"
+                        @change="handleOrderChange" item-key="id">
+                        <template #item="{ element }">
+                            <div class="relative" :class="{ 'ml-20': element.character?.is_self }">
+                                <button
+                                    class="absolute -left-3 top-2 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
+                                    <svg fill="black" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
+                                        stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m2.394 15.759s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm0-3.113s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm10.271-9.455c-.246-.128-.471-.191-.692-.191-.223 0-.443.065-.675.191l-8.884 5.005c-.276.183-.414.444-.414.698 0 .256.139.505.414.664l8.884 5.006c.221.133.447.203.678.203.223 0 .452-.065.689-.203l8.884-5.006c.295-.166.451-.421.451-.68 0-.25-.145-.503-.451-.682zm-8.404 5.686 7.721-4.349 7.72 4.349-7.72 4.35z"
+                                            fill-rule="nonzero" />
+                                    </svg>
+                                </button>
+                                <!-- <label class="pt-2">{{ line.character.name }}</label> -->
+                                <textarea @focus="() => currentPage = page.number" v-auto-resize
+                                    class="w-[92%] mx-auto h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
+                                    style="background:#DCE2B3" v-model="element.content"></textarea>
+                                <button
+                                    class="absolute right-0 top-0 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
+                                    <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
+                                        stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z"
+                                            fill-rule="nonzero" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </template>
+                    </draggable>
 
-                    <div class="flex flex-col relative mb-[10px]" :class="{ 'ml-20': line.character?.is_self }"
-                        v-for="(line, i) in script.pages[index].lines.filter((s) => !s.deleted)" :key="line.reference">
-                        <button class="absolute left-0 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
-                            <svg fill="black" width="18" height="18"  clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m2.394 15.759s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm0-3.113s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm10.271-9.455c-.246-.128-.471-.191-.692-.191-.223 0-.443.065-.675.191l-8.884 5.005c-.276.183-.414.444-.414.698 0 .256.139.505.414.664l8.884 5.006c.221.133.447.203.678.203.223 0 .452-.065.689-.203l8.884-5.006c.295-.166.451-.421.451-.68 0-.25-.145-.503-.451-.682zm-8.404 5.686 7.721-4.349 7.72 4.349-7.72 4.35z" fill-rule="nonzero"/></svg>
-                        </button>
-                        <!-- <label class="pt-2">{{ line.character?.name || "Direction" }}</label> -->
-                        <textarea @focus="() => currentPage = page.number" v-auto-resize
-                            class="w-[92%] mx-auto h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
-                            style="background:#DCE2B3" v-model="script.pages[index].lines[i].content"></textarea>
-                        <button @click="script.pages[index].lines[i].deleted = true" class="absolute right-0 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
-                            <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z" fill-rule="nonzero"/></svg>
-                        </button>
-                    </div>
+                    <!-- <div class="flex flex-col relative mb-[10px]" :class="{ 'ml-20': line.character.is_self }"
+                            v-for="(line, i) in script.pages[index].lines" :key="line.reference">
+                            <button class="absolute left-0 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
+                                <svg fill="black" width="18" height="18"  clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m2.394 15.759s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm0-3.113s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm10.271-9.455c-.246-.128-.471-.191-.692-.191-.223 0-.443.065-.675.191l-8.884 5.005c-.276.183-.414.444-.414.698 0 .256.139.505.414.664l8.884 5.006c.221.133.447.203.678.203.223 0 .452-.065.689-.203l8.884-5.006c.295-.166.451-.421.451-.68 0-.25-.145-.503-.451-.682zm-8.404 5.686 7.721-4.349 7.72 4.349-7.72 4.35z" fill-rule="nonzero"/></svg>
+                            </button> -->
+                    <!-- <label class="pt-2">{{ line.character.name }}</label> -->
+                    <!-- <textarea @focus="() => currentPage = page.number" v-auto-resize
+                                class="w-[92%] mx-auto h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
+                                style="background:#DCE2B3" v-model="script.pages[index].lines[i].content"></textarea>
+                            <button class="absolute right-0 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
+                                <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z" fill-rule="nonzero"/></svg>
+                            </button>
+                        </div> -->
                     <hr>
                 </div>
             </div>
@@ -95,7 +131,7 @@
         <assign-role @charactersChange="handleRoleChange" :key="currentScript.reference" :voices="voices"
             :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
-    
+
         <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
             <h3 class="text-[25px] text-center">Do you want to save the edition changes?</h3>
             <div class="flex flex-col mt-[78px] gap-[15px]">
@@ -157,7 +193,7 @@
                     </svg>
                     Assign characters
                 </button>
-                                    <router-link :to="`/rehearse/${script.reference}`"
+                <router-link :to="`/rehearse/${script.reference}`"
                     class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -178,9 +214,10 @@ import CarouselPlaceholder from '@/components/CarouselPlaceholder.vue';
 import AssignRole from '@/components/AssignRole.vue';
 import AddDialogue from '@/components/AddDialogue.vue';
 import { Toast } from '@capacitor/toast';
+import draggable from "vuedraggable";
 
 export default {
-    components: { Carousel, Modal, CarouselPlaceholder, AssignRole, AddDialogue },
+    components: { Carousel, Modal, CarouselPlaceholder, AssignRole, AddDialogue, draggable },
     data() {
         return {
             images: [],
@@ -194,7 +231,8 @@ export default {
             modeType: 'edit',
             showDialogue: false,
             script: {},
-            addLine: {}
+            addLine: {},
+            drag: false,
         }
     },
     directives: {
@@ -225,10 +263,14 @@ export default {
             this.saving = true
             this.$store.dispatch('scripts/update', this.script)
                 .then(({ data, message }) => {
-                    console.log({ data, message })
                     this.isSavingModalVisible = false
                     Toast.show({ text: message })
-                    this.script = data
+                    Object.assign(this.script, JSON.parse(JSON.stringify(data)))
+                    this.script.pages = this.script.pages.map((_, i) => {
+                        this.script.pages[i].lines.sort((a, b) => a.order - b.order)
+
+                        return this.script.pages[i]
+                    }).sort((a, b) => a.number - b.number)
                     this.modeType = 'edit'
                 }).catch((e) => {
                     console.log(e)
@@ -246,6 +288,18 @@ export default {
             this.addLine = {}
             this.showDialogue = true
             this.addLine = payload
+        },
+        handleOrderChange(a, b) {
+            this.script.pages = this.script.pages.map((page, i) => {
+                page.lines = page.lines.map((s, j) => {
+                    let line = s
+                    delete line.audio_url
+                    line.order = i + 1 + j
+                    return line
+                })
+
+                return page
+            })
         }
     },
     computed: {
@@ -261,8 +315,12 @@ export default {
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
             this.voices.length || this.$store.dispatch('global/getVoices')
         ]).finally(() => {
-            console.log(this.currentScript)
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
+            this.script.pages = this.script.pages.map((_, i) => {
+                this.script.pages[i].lines.sort((a, b) => a.order - b.order)
+
+                return this.script.pages[i]
+            }).sort((a, b) => a.number - b.number)
             this.loaded = true
             this.modeType = this.$route.query.mode || 'edit'
         })
