@@ -7,7 +7,7 @@
                     <h3 class="text-[30px] text-semi text-center">Script Library</h3>
                 </div>
                 <div>
-                    <carousel @index="currentIndex" :items="scripts">
+                    <carousel @index="(val) => currentIndex = val" :items="scripts">
                         <template v-slot:default="{ item }">
                             <div class="relative">
                                 <svg width="202" height="278" viewBox="0 0 202 278" fill="none"
