@@ -273,7 +273,6 @@ export default {
                })
                return page
             })
-            console.log('edit payload', payload)
             this.$store.dispatch('scripts/update', payload)
                 .then(({ data, message }) => {
                     this.isSavingModalVisible = false
