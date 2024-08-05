@@ -266,11 +266,14 @@ export default {
                       
             payload.pages = payload.pages.map((page) => {
                page.lines = page.lines.map((line) => {
-                delete line.audio_url
-                return line
+                let newLine = {}
+                Object.assign(newLine, line)
+                delete newLine.audio_url
+                return newLine
                })
                return page
             })
+            console.log('edit payload', payload)
             this.$store.dispatch('scripts/update', payload)
                 .then(({ data, message }) => {
                     this.isSavingModalVisible = false
