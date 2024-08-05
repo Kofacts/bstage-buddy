@@ -269,6 +269,10 @@ export default {
                 let newLine = {}
                 Object.assign(newLine, line)
                 delete newLine.audio_url
+
+                if(newLine.character?.voice) {
+                    delete newLine.character.voice
+                }
                 return newLine
                })
                return page
