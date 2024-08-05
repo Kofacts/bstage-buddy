@@ -261,12 +261,23 @@ export default {
     methods: {
         updateScript() {
             this.saving = true
-            this.$store.dispatch('scripts/update', this.script)
+            let payload = {}
+            Object.assign(payload, this.script)
+                      
+            payload.pages = payload.pages.map((page) => {
+               page.lines = page.lines.map((line) => {
+                delete line.audio_url
+                return line
+               })
+               return page
+            })
+            this.$store.dispatch('scripts/update', payload)
                 .then(({ data, message }) => {
                     this.isSavingModalVisible = false
                     Toast.show({ text: message })
                     Object.assign(this.script, JSON.parse(JSON.stringify(data)))
                     this.script.pages = this.script.pages.map((_, i) => {
+     
                         this.script.pages[i].lines.sort((a, b) => a.order - b.order)
 
                         return this.script.pages[i]
@@ -274,7 +285,7 @@ export default {
                     this.modeType = 'edit'
                 }).catch((e) => {
                     console.log(e)
-                    const message = e?.data?.message || e.message || e.statusText || 'An error occured'
+                    const message = e?.data?.message || e.message || e.statusText || 'An error occurred'
                     Toast.show({ text: message })
                 }).finally(() => {
                     this.saving = false
