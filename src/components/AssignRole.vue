@@ -30,9 +30,9 @@
                     <svg clip-rule="evenodd" height="18" width="18" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
                 </button>
             </div>
-            <characters @characterEdit="({ updateIndex, newVal }) => charactersEdit[updateIndex] = newVal" v-for="(character,index) in characters" :voices="voices" :key="index" :char="character" :charIndex="index"></characters>
+            <characters @characterEdit="({ updateIndex, newVal }) => charactersEdit[updateIndex] = newVal" v-for="(character,index) in charactersEdit" :voices="voices" :key="index" :char="character" :charIndex="index"></characters>
 
-            <div class="flex flex-col items-center justify-center gap-[20.25px] mt-[32px]" @click="characters.push({name: ''})"> 
+            <div class="flex flex-col items-center justify-center gap-[20.25px] mt-[32px]" @click="charactersEdit.push({name: ''})"> 
                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="20.5" cy="20.2393" r="20" fill="#E7EEBE"/>
                     <line x1="20.9999" y1="10.2928" x2="20.9999" y2="30.1857" stroke="#3E1821"/>
