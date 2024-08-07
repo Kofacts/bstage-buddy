@@ -7,7 +7,7 @@
                 <h6 class="text-[25px] text-center" v-else>Scan your play script and let’s get to work!</h6>
             </div>
             <div>
-                <carousel :items="scripts"  @index="currentIndex">
+                <carousel :items="scripts"  @index="(val) => currentIndex = val">
                     <template v-slot:default="{ item }">
                         <div class="relative">
                             <svg width="202" height="278" viewBox="0 0 202 278" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -54,10 +54,10 @@
                 <div class="mt-5 pb-[50px]"
                     :class="{ 'pt-80': false, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
-                    <div :key="`op${index2}`" class="flex-col mb-[10px]"
+                    <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
                         v-for="(line, index2) in script.pages[index].lines" :id="`line-${line.reference}`">
-                        <!-- {{ line.character?.name || 'Direction' }} -->
+                        {{ line.character?.name || 'Direction' }}
                         <div class=" h-auto outline-none p-[10px] pt-2.5 pb-2.5 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
                             :class="{ 'bg-[#F8FED7]': line.character?.is_self }">{{ line.content }}</div>
 
