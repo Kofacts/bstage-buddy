@@ -85,7 +85,7 @@
                     <draggable v-model="script.pages[index].lines" group="people" @start="drag = true" @end="drag = false"
                         @change="handleOrderChange" item-key="id">
                         <template #item="{ element }">
-                            <div class="relative" :class="{ 'ml-20': element.character?.is_self }">
+                            <div v-if="!element.deleted" class="relative" :class="{ 'ml-20': element.character?.is_self }">
                                 <button
                                     class="absolute -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
                                     <svg fill="black" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
@@ -103,7 +103,7 @@
                                         style="background:#DCE2B3" v-model="element.content"></textarea>
                                 </div>
                                 <button
-                                    @click="this.$store.dispatch('scripts/deleteLine',{reference: element.reference})"
+                                    @click="deleteLine(element, index)"
                                     class="absolute right-0 top-12 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
                                     <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
@@ -265,6 +265,17 @@ export default {
         }
     },
     methods: {
+        deleteLine(element, pageIndex) {
+            let r = confirm('Are you sure to delete this line?')
+            if(!r) {
+                return
+            }
+            let index = this.script.pages[pageIndex].lines.findIndex((s) => s.reference === element.reference)
+
+            if(index > -1) {
+                this.script.pages[pageIndex].lines[index].deleted = true
+            }
+        },
         updateScript() {
             this.saving = true
             let payload = {}
