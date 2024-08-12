@@ -15,10 +15,10 @@
                             v-model="script.title" />
                     </div>
                     <div>
-                    <svg @click="isSavingModalVisible = true" width="26" height="20" viewBox="0 0 26 20" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.19995 11.4082L7.90583 18L25.2 1" stroke="#E7EEBE" stroke-width="2" />
-                    </svg>
+                        <svg @click="isSavingModalVisible = true" width="26" height="20" viewBox="0 0 26 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.19995 11.4082L7.90583 18L25.2 1" stroke="#E7EEBE" stroke-width="2" />
+                        </svg>
                     </div>
                 </div>
                 <div v-show="modeType == 'editScript'"
@@ -60,7 +60,8 @@
 
                 <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
                     <div class="flex items-end gap-2  justify-end mb-4">
-                        <button @click="modeType = 'assign'" class=" rounded-b-[20px] bg-[#f8ffd2] pt-1.5 pb-1.5 pl-2.5 pr-2.5">+ Add Character</button>
+                        <button @click="modeType = 'assign'"
+                            class=" rounded-b-[20px] bg-[#f8ffd2] pt-1.5 pb-1.5 pl-2.5 pr-2.5">+ Add Character</button>
                         <button @click="triggerAddDialog({
                             script: script.reference,
                             page: page.reference,
@@ -70,9 +71,10 @@
                     </div>
 
                     <!-- line modal-->
-                    <add-dialogue :key="page.reference" v-show="showDialogue && addLine.script" :script="addLine?.script"
-                        :page="addLine.page" :order="addLine.order" :characters="currentScript.characters"
-                        :showDialogue="showDialogue" @closeDialogue="showDialogue = false"
+                    <add-dialogue :key="page.reference" v-show="showDialogue && addLine.script"
+                        :script="addLine?.script" :page="addLine.page" :order="addLine.order"
+                        :characters="currentScript.characters" :showDialogue="showDialogue"
+                        @closeDialogue="showDialogue = false"
                         @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
 
 
@@ -82,10 +84,11 @@
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
 
-                    <draggable v-model="script.pages[index].lines" group="people" @start="drag = true" @end="drag = false"
-                        @change="handleOrderChange" item-key="id">
+                    <draggable v-model="script.pages[index].lines" group="people" @start="drag = true"
+                        @end="drag = false" @change="handleOrderChange" item-key="id">
                         <template #item="{ element }">
-                            <div v-if="!element.deleted" class="relative" :class="{ 'ml-20': element.character?.is_self }">
+                            <div v-if="!element.deleted" class="relative"
+                                :class="{ 'ml-20': element.character?.is_self }">
                                 <button
                                     class="absolute -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
                                     <svg fill="black" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
@@ -102,8 +105,7 @@
                                         class="w-[92%] mx-auto h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
                                         style="background:#DCE2B3" v-model="element.content"></textarea>
                                 </div>
-                                <button
-                                    @click="deleteLine(element, index)"
+                                <button @click="deleteLine(element, index)"
                                     class="absolute right-0 top-12 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
                                     <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
@@ -134,8 +136,8 @@
                 </div>
             </div>
         </div>
-        <assign-role @closeCharModal="modeType = ''" @charactersChange="handleRoleChange" :key="currentScript.reference" :voices="voices"
-            :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
+        <assign-role @closeCharModal="modeType = ''" @charactersChange="handleRoleChange" :key="currentScript.reference"
+            :voices="voices" :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
 
         <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
@@ -149,7 +151,7 @@
                     </svg>
                     {{ saving ? 'Saving...' : 'Save' }}
                 </button>
-                <button @click="() => { isSavingModalVisible = false; modeType = 'edit' }"
+                <button @click="cancelUpdate()"
                     class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="1.96435" y1="1.44914" x2="15.144" y2="14.7536" stroke="#3E1821" />
@@ -265,14 +267,25 @@ export default {
         }
     },
     methods: {
+        cancelUpdate() {
+            Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
+            this.script.pages = this.script.pages.map((_, i) => {
+
+                this.script.pages[i].lines.sort((a, b) => a.order - b.order)
+
+                return this.script.pages[i]
+            }).sort((a, b) => a.number - b.number)
+            this.isSavingModalVisible = false;
+            this.modeType = 'edit'
+        },
         deleteLine(element, pageIndex) {
             let r = confirm('Are you sure to delete this line?')
-            if(!r) {
+            if (!r) {
                 return
             }
             let index = this.script.pages[pageIndex].lines.findIndex((s) => s.reference === element.reference)
 
-            if(index > -1) {
+            if (index > -1) {
                 this.script.pages[pageIndex].lines[index].deleted = true
             }
         },
@@ -280,19 +293,19 @@ export default {
             this.saving = true
             let payload = {}
             Object.assign(payload, this.script)
-                      
-            payload.pages = payload.pages.map((page) => {
-               page.lines = page.lines.map((line) => {
-                let newLine = {}
-                Object.assign(newLine, line)
-                delete newLine.audio_url
 
-                if(newLine.character?.voice) {
-                    delete newLine.character.voice
-                }
-                return newLine
-               })
-               return page
+            payload.pages = payload.pages.map((page) => {
+                page.lines = page.lines.map((line) => {
+                    let newLine = {}
+                    Object.assign(newLine, line)
+                    delete newLine.audio_url
+
+                    if (newLine.character?.voice) {
+                        delete newLine.character.voice
+                    }
+                    return newLine
+                })
+                return page
             })
             this.$store.dispatch('scripts/update', payload)
                 .then(({ data, message }) => {
@@ -300,7 +313,7 @@ export default {
                     Toast.show({ text: message })
                     Object.assign(this.script, JSON.parse(JSON.stringify(data)))
                     this.script.pages = this.script.pages.map((_, i) => {
-     
+
                         this.script.pages[i].lines.sort((a, b) => a.order - b.order)
 
                         return this.script.pages[i]
