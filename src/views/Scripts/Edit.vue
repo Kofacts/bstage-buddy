@@ -103,6 +103,7 @@
                                         style="background:#DCE2B3" v-model="element.content"></textarea>
                                 </div>
                                 <button
+                                    @click="this.$store.dispatch('scripts/deleteLine',{reference: element.reference})"
                                     class="absolute right-0 top-12 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
                                     <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"

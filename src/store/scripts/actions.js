@@ -103,4 +103,18 @@ export default {
         });
     });
   },
+  deleteLine({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      let url = `/scripts/${payload.reference}/lines`;
+      axios.delete(url, payload)
+        .then(async ({
+          data
+        }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error.response)
+        });
+    });
+  },
 }

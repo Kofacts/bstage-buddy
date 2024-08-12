@@ -1,7 +1,7 @@
 <template>
     <div class="bg-[#4A232C] p-[22px] rounded-[10px]">
         <div class="bg-transparent relative border-b border-nano-light text-[25px] ">
-            <input type="text" @input="handleNameChange" :value="character.name" class="bg-transparent outline-none text-center w-full" />
+            <input type="text" @input="handleNameChange" :value="character.name" placeholder="Enter Character" class="bg-transparent outline-none text-center w-full" />
             <svg class="absolute top-0 right-0" width="19" height="19" viewBox="0 0 19 19" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
