@@ -32,15 +32,18 @@
             </div>
         </div>
         <div>
+          
             <select @change="handleVoiceChange" :disabled="character.is_self"
                 class="bg-nano-light h-[40px] mt-[20px] w-full text-nano-dark outline-none text-[18px] pl-[15px] pr-[15px]">
                 <option :selected="voice.id === character.voice_id" v-for="voice in voices" :key="voice.reference" :value="voice.id">{{ voice.name }}
                 </option>
             </select>
+            
         </div>
         <div v-if="!character.is_self && voice?.audio_url" class="mt-[20px]">
             <audio-player :name="voice.name" :key="voice.id" :src="voice.audio_url"></audio-player>
         </div>
+
         <div>
             <div class="mt-[20px] flex items-center justify-center" v-if="false">
                 <svg @click="isDeleteModalVisible = true" width="41" height="41" viewBox="0 0 41 41" fill="none"
@@ -148,6 +151,16 @@ export default {
             character.voice_id = Number(e.target.value)
             this.voice = this.voices.find((s) => s.id === character.voice_id)
             console.log('voice', this.voice)
+            this.notify(character)
+        },
+        handleDelete(e) {
+            let r = confirm(`Are you sure to delete character ${this.character?.name || ''}?`)
+            if(!r) {
+                return
+            }
+            const character = JSON.parse(JSON.stringify(this.character))
+            character.deleted = true
+            console.log('handleDelete', { e, character }, e.target.value)
             this.notify(character)
         },
         notify(character) {

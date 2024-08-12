@@ -26,7 +26,15 @@ export default {
  
   },
   mounted() {
-    this.$auth.load().then(() => this.loaded = true).catch((e) => console.log('auth failed', e))
+    this.$auth.load().then(() => {
+      //console.log('user', this.$auth.user(), this.$route.path)
+      if(this.$auth.user()?.email && this.$route.path == '/') {
+        this.$router.push('/home')
+      } else if(!this.$auth.user()?.email && this.$route.path == '/') {
+        this.$router.push('/auth/login')
+      }
+      this.loaded = true
+  }).catch((e) => console.log('auth failed', e))
   },
 };
 </script>

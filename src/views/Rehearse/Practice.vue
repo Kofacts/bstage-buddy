@@ -211,6 +211,9 @@ export default {
             _recording: {
                 web: {
                     startRecording: async (vm) => {
+                        if(!navigator.mediaDevices) {
+                            return
+                        }
                         const stream = await navigator.mediaDevices.getUserMedia({
                             audio: true
                         })
@@ -300,7 +303,8 @@ export default {
                     }
                 },
             },
-            audio: null
+            audio: null,
+            audios: [],
         }
     },
     directives: {
@@ -399,6 +403,7 @@ export default {
                     console.log(new Date().toLocaleString(), this.currentLine?.reference, 'is AI: start playing');
                     const audio = new Audio(this.currentLine.audio_url);
                     audio.play();
+                    this.audios.push(audio)
                     audio.muted = !this.currentLine.character;
 
                     audio.addEventListener("ended", function () {
@@ -411,7 +416,14 @@ export default {
                 this.endRehearsal()
             }
         },
+        endAllAudios() {
+            this.audios.forEach(audio => {
+                audio.pause();         // Stop the audio
+                audio.currentTime = 0; // Reset the audio to the beginning
+            });
+        },
         endRehearsal() {
+            this.endAllAudios();
             this.isEnded = true;
             this.endTime = Date.now();
             this.isPlayingAudio = false;
@@ -426,6 +438,8 @@ export default {
             if (newVal) {
                 console.log(new Date().toLocaleString(), 'paused has been played');
                 this.runLoop()
+            } else {
+                this.endAllAudios()
             }
 
         },
@@ -433,6 +447,8 @@ export default {
             console.log('isPaused', newVal)
             if (!newVal) {
                 this.runLoop()
+            } else {
+                this.endAllAudios()
             }
         }
     },
@@ -469,6 +485,9 @@ export default {
     },
     mounted() {
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
+    },
+    beforeUnmount() {
+        this.endAllAudios()
     }
 }
 </script>
