@@ -34,7 +34,7 @@
         <div>
 
           <button @click="handleDelete"
-                                    class="mt-2 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
+                                    class="mt-2 float-right flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
                                     <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -171,13 +171,17 @@ export default {
             const character = JSON.parse(JSON.stringify(this.character))
             character.deleted = true
             console.log('handleDelete', { e, character }, e.target.value)
+            this.$store.dispatch('scripts/deleteCharacter',this.character.reference)
+                .then(msg => {
+                    this.$router.go(0);
+                })
             this.notify(character)
         },
         notify(character) {
             console.log('ready', character)
             if(JSON.stringify(this.originalObj) !== JSON.stringify(character)) {
-                this.$emit('characterEdit', {updateIndex: this.charIndex, newVal: character})
-                console.log('notified')
+                // this.$emit('characterEdit', {updateIndex: this.charIndex, newVal: character})
+                console.log('notified', character)
             } else {
                 console.log('not notified')
             }

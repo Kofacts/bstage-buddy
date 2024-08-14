@@ -75,6 +75,20 @@ export default {
         });
     });
   },
+  deleteCharacter(_state, reference) {
+    return new Promise((resolve, reject) => {
+      let url = `/characters/${reference}`;
+      axios.delete(url)
+        .then(async ({
+          data
+        }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error.response)
+        });
+    });
+  },
   savePractice({ commit }, payload) {
     return new Promise((resolve, reject) => {
       let url = `/script_lines/${payload.reference}/practice`;
