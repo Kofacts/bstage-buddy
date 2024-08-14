@@ -21,7 +21,7 @@
                         <span class="text-black w-[33.33%] flex justify-center items-center"
                             :style="`font-weight: ${currentLine?.character?.is_self === false ? 700 : 300}`">Buddy</span>
                         <div class="w-[33.33%] flex justify-center items-center">
-                            <span class="w-4 h-4 rounded-full flex bg-[#C3514A]"></span>
+                            <span class="w-4 h-4 rounded-full flex bg-gray" :class="{'bg-[#C3514A]': currentLine?.character?.is_self === true}"></span>
                         </div>
                         <span class="w-[33.33%] flex justify-center items-center text-black"
                             :style="`font-weight: ${currentLine?.character?.is_self === true ? 700 : 300}`">My
