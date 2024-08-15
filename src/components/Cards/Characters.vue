@@ -180,7 +180,7 @@ export default {
         notify(character) {
             console.log('ready', character)
             if(JSON.stringify(this.originalObj) !== JSON.stringify(character)) {
-                // this.$emit('characterEdit', {updateIndex: this.charIndex, newVal: character})
+                this.$emit('characterEdit', {updateIndex: this.charIndex, newVal: character})
                 console.log('notified', character)
             } else {
                 console.log('not notified')
