@@ -173,7 +173,8 @@ export default {
             console.log('handleDelete', { e, character }, e.target.value)
             this.$store.dispatch('scripts/deleteCharacter',this.character.reference)
                 .then(msg => {
-                    this.$router.go(0);
+                    //this.$router.go(0);
+                    window.location.reload()
                 })
             this.notify(character)
         },
