@@ -12,6 +12,8 @@ import ScriptEdit from '@/views/Scripts/Edit.vue';
 import AuthIndex from '@/views/Auth/Index.vue';
 import Login from '@/views/Auth/Login.vue';
 import Register from '@/views/Auth/Register.vue';
+import ForgotPassword from '@/views/Auth/ForgotPassword.vue';
+import ResetPassword from '@/views/Auth/ResetPassword.vue';
 // import About from '@/views/About.vue';
 
 const routes = [
@@ -105,6 +107,16 @@ const routes = [
     path: '/auth/register',
     name: 'register',
     component: Register,
+  },
+  {
+    path: '/auth/forgot-password',
+    name: 'forgot-password',
+    component: ForgotPassword,
+  },
+  {
+    path: '/auth/reset-password',
+    name: 'reset-password',
+    component: ResetPassword,
   },
 ];
 

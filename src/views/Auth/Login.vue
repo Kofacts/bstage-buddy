@@ -29,8 +29,10 @@
                     </div>
                 
                 </label>
-                <div class="text-right pt-2">
-                    <router-link :to="`/auth/register`">Register</router-link>
+                <div class="py-4">
+                    <router-link class="float-left" :to="`/auth/forgot-password`">Forgot Password?</router-link>
+           
+                    <router-link class="float-right" :to="`/auth/register`">Register</router-link>
                 </div>
 
 
