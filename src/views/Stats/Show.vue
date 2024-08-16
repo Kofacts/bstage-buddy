@@ -12,7 +12,7 @@
                         <div :style="`width: ${Number(completionRate)}%`" :class="`h-[27px] absolute left-0 bg-nano-light`"></div>
                     </div>
                     <div class="flex items-center flex-col justify-center text-[18px]"> 
-                        <span>{{completionRate}}% completed</span>
+                        <span>{{completionRate || 0}}% completed</span>
                         <span>{{ mistakes }} mistake(s) to review</span>
                     </div>
                 </div>
@@ -86,7 +86,8 @@ export default {
         completionRate() {
             let lines = this.lines.filter((s) => s.character?.is_self)
             let completed = lines.filter((s) => !!s.last_practiced_at)
-            let result = (completed.length / lines.length) * 100
+            let result = ((completed.length || 1)/ (lines.length || 1)) * 100
+
             return parseInt(result)
         },
         mistakes() {

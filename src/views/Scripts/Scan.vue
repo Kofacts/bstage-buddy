@@ -286,7 +286,7 @@ export default {
                 this.$router.push(`/scan/${data.reference}`)
             }).catch((e) => {
                 console.log('scripts/create', e)
-                const message = e?.data?.message || e?.message || e?.statusText || 'An error occured'
+                const message = e?.data?.message || e?.message || e?.statusText || 'An error occurred'
                 Toast.show({ text: message })
             }).finally(() => {
                 this.isSaving = false

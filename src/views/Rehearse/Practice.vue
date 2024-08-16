@@ -472,8 +472,7 @@ export default {
                 })))
             })
             return lines
-        }
-
+        },
     },
     created() {
         Promise.all([
