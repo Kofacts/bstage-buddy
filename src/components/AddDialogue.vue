@@ -4,14 +4,14 @@
                 placeholder="Select Character"
                 class="bg-nano-light h-[40px] mt-[20px] w-full text-nano-dark rounded-[10px] outline-none text-[18px] pl-[15px] pr-[15px]">
                 <option  value="" disabled selected>Select Character</option>
-                <option v-for="character in characters" :key="character.reference" :value="character.reference">{{ character.name }}
+                <option v-for="character in characters.filter(n => n !== '')" :key="character.reference" :value="character.reference">{{ character.name }}
                 </option>
             </select>
             <textarea  v-auto-resize v-model="payload.content"
             class="w-full mx-auto h-[100px] outline-none p-[10px] mt-4 pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
             style="background:#DCE2B3" placeholder="Line goes here"></textarea>
 
-            <button :disabled="saving" @click="submit"  class="mt-6 rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <button :disabled="saving || payload.character == ''" :class="{'opacity-40': payload.character == '' }" @click="submit"  class="mt-6 rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0.778564 8.395L5.3729 12.9112L17.2214 1.26416" stroke="#3E1821"
                             stroke-linejoin="round" />
