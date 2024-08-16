@@ -36,11 +36,11 @@
             </div> -->
 
             <div :class="{ 'pt-36': modeType == 'rehearse' && isPlayingAudio }"
-                class="rehearse-wraps h-full overflow-y-scroll relative bg-nano-light flex flex-col gap-[10px] text-black pt-16">
-                <div :class="{ 'top-36': modeType == 'rehearse' && isPlayingAudio }"
+                class="rehearse-wraps h-full overflow-y-scroll relative bg-nano-light flex flex-col gap-[10px] text-black pt-8">
+                <!-- <div :class="{ 'top-36': modeType == 'rehearse' && isPlayingAudio }"
                     class="fixed w-full top-24 pl-[20px] pr-[20px]">
                     {{ currentLine?.page?.number || 1 }}/{{ script.pages?.length || 0 }}
-                </div>
+                </div> -->
                 <div class="w-1/6 fixed left-0 top-[200px] z-[200]" v-if="isPlayingAudio">
                     <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M-1 1H23C30.732 1 37 7.26801 37 15C37 22.732 30.732 29 23 29H-1V1Z" fill="#3E1821"
@@ -54,6 +54,9 @@
                 <div class="mt-5 pb-[50px]"
                     :class="{ 'pt-80': false, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
+                    <div class="sticky top-8 pl-4"> 
+                         {{ index+1|| 1 }}/{{ script.pages?.length || 0 }}
+                    </div>
                     <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
                         v-for="(line, index2) in script.pages[index].lines" :id="`line-${line.reference}`">
