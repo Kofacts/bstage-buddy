@@ -261,6 +261,7 @@ export default {
                             //console.log('checkPermissionsResult: ' + JSON.stringify(checkPermissionsResult));
                         } catch (error) {
                             //console.error('checkPermissions Error: ' + JSON.stringify(error));
+                            Toast.show({ text: 'Failed to check for permission'})
                         }
                     },
                     requestPermissions: async () => {
@@ -269,6 +270,7 @@ export default {
                             //console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
                         } catch (error) {
                             //console.error('requestPermissions Error: ' + JSON.stringify(error));
+                            Toast.show({ text: 'Failed to request permission'})
                         }
                     },
                     startRecording: async (vm) => {
@@ -278,16 +280,16 @@ export default {
                             vm.recording = await Microphone.startRecording();
                             //console.log('startRecordingResult: ' + JSON.stringify(this.recording));
                             setTimeout((vm) => {
-                            vm.capacitor.stopRecoding(vm)
+                            vm._recording.capacitor.stopRecording(vm)
                             //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'recording queued to stop')
-                        }, (vm.currentLine?.duration || 2) * 1000, vm)
+                        }, ((vm.currentLine?.duration || 2) + 2) * 1000, vm, vm.recorder, vm)
                         } catch (error) {
                             //console.error('startRecordingResult Error: ' + JSON.stringify(error));
                         }
                     },
                     stopRecording: async (vm) => {
                         try {
-                            vm.recording = await Microphone.stopRecording();
+                            await Microphone.stopRecording();
                             vm.base64 = vm.recording.base64String
                             vm.duration = vm.recording.duration
 
@@ -297,6 +299,7 @@ export default {
                                 duration: vm.duration,
                                 total_duration: (Date.now() - vm.startTime) / 1000
                             })
+                            vm.runLoop()
                         } catch (error) {
                             console.error('recordingResult Error: ' + JSON.stringify(error));
                         }
@@ -367,10 +370,10 @@ export default {
             this.$store.dispatch('scripts/savePractice', payload)
                 .then(({ message }) => {
                     //console.log('message', message)
-                    Toast.show({ text: message })
+                    //Toast.show({ text: message })
                 }).catch((e) => {
                     console.log('savePractice', e)
-                    Toast.show({ text: e.message })
+                   // Toast.show({ text: e.message })
                 })
         },
         startRehearsal() {
