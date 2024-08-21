@@ -103,7 +103,7 @@ export default {
           Toast.show({ text: message })
         }).catch((e) => {
 
-          const message = e?.data?.message || e?.message || e?.statusText || 'Error resetting password. Please try again.'
+          const message = 'Error resetting password. Please try again.'
           Toast.show({ text: message })
           this.$router.push({ path: '/auth/login' })
         }).finally(() => {

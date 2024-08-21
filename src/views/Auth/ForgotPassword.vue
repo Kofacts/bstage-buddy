@@ -56,7 +56,7 @@ export default {
                     this.$router.push({ path: '/auth/reset-password', query: {email: this.body.email } })
                 }).catch((e) => {
 
-                    const message = e?.data?.message || e?.message || e?.statusText || 'Error resetting password. Please try again.'
+                    const message = 'Error triggering password reset. Please try again.'
                     Toast.show({ text: message })
                 }).finally(() => {
                     this.loading = false;
