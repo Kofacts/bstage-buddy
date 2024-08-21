@@ -40,7 +40,7 @@
                 </svg>
                 {{ button.autoRegister ? 'Loading...' : 'Skip Sign in' }}
             </button>
-            <button @click="playAudio"
+            <button  v-if="false"
                 class="rounded-[15px] mt-[14px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -83,6 +83,7 @@ export default {
                 }).then(async ({ data: { data } }) => {
                     await this.login(btoa(payload.email + ":" + payload.password), data)
                 }).catch((e) => {
+                    this.button.autoRegister = false
                     Toast.show({ text: 'Error signing up' })
                 })
         },
