@@ -31,10 +31,11 @@
 
                 <div class="w-full pl-[14px] pr-[14px] flex flex-col gap-[86.4px]">
                     <textarea v-model="title"
+                        placeholder="Enter a title for script"
                         class="w-full bg-[#4A232C] outline-none p-4 text-[20px] text-sans h-[160px]"></textarea>
 
                     <div class="flex flex-col gap-[15px]">
-                        <button @click="() => { scanPhoto(); isEnteredTitle = true }"
+                        <button :disabled="title == ''" :class="{'opacity-50': title == ''}" @click="() => { scanPhoto(); isEnteredTitle = true }"
                             class="rounded-[15px] pt-[20px] pb-[20px] pl-[24px] pr-[24px] bg-nano-light w-full  w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                             <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -45,7 +46,7 @@
                             </svg>
                             Start scanning
                         </button>
-                        <button @click="() => { title = ''; isEnteredTitle = false }"
+                        <button @click="() => { $router.push({name: 'scripts'}) }"
                             class="rounded-[15px] pt-[20px] pb-[20px] pl-[24px] pr-[24px] bg-nano-light w-full w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"
                                 fill="none">
@@ -70,18 +71,18 @@
                         <img style="width: 202; height: 278" :src="image.dataUrl" />
                     </div> -->
                     <carousel-custom :items="images">
-                        <template v-slot:default="{ item }">
+                        <template v-slot:default="{ item,index }">
                             <img class="object-cover bg-[#fff]" :src="item.dataUrl" />
 
                             <div class="absolute bottom-2 right-2 flex gap-[6.7px]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41"
+                                <svg class="cursor-pointer" @click="images.splice(index,1)" xmlns="http://www.w3.org/2000/svg" width="41" height="41" viewBox="0 0 41 41"
                                     fill="none">
                                     <rect width="41" height="41" rx="10" fill="#E7EEBE" />
                                     <path
                                         d="M28.4996 14.5003H12.5004M18.5691 14.0004V13.4314C18.5691 12.365 19.4336 11.5005 20.5 11.5005V11.5005C21.5664 11.5005 22.4309 12.365 22.4309 13.4314V14.0004M14.1555 14.5003L15.2589 29.4996H25.7411L26.8445 14.5003H14.1555Z"
                                         stroke="#3E1821" />
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43"
+                                <svg @click="deleteAndScan(index)"  xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43"
                                     fill="none">
                                     <g clip-path="url(#clip0_1306_2644)">
                                         <rect x="1.78172" y="1.01245" width="40" height="41" rx="10" fill="#E7EEBE" />
@@ -204,6 +205,13 @@ export default {
         }
     },
     methods: {
+        deleteAndScan(index) {
+            console.log(index)
+            // this.images.splice(index, 1);// First, remove the image
+            if (this.images.length > 0) {
+                this.scanPhoto(index); // Scan the image that replaced the deleted one
+            }
+        },
         openEditModal() {
             this.isEditModalVisible = true;
         },
@@ -220,7 +228,7 @@ export default {
             this.selectedIndex = index
             this.isEditModalVisible = true
         },
-        async scanPhoto() {
+        async scanPhoto(replaceIndex = null) {
             let permission = await Camera.checkPermissions()
 
             if (permission.camera !== 'granted' && permission.photos !== 'granted') {
@@ -250,7 +258,14 @@ export default {
             // You can access the original file using image.path, which can be
             // passed to the Filesystem API to read the raw data of the image,
             // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-            this.images.push(image);
+            
+            // Replace the image at the specified index or push if no index is provided
+            if (replaceIndex !== null && replaceIndex < this.images.length) {
+                this.images.splice(replaceIndex, 1, image); // Replace the image at the index
+            } else {
+                this.images.push(image); // Add the image to the end of the array
+            }
+
             this.isSaving = false
         },
         async imageToText(src) {

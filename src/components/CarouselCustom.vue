@@ -14,7 +14,7 @@
           v-for="(item, index) in items"
           :key="index"
         >
-          <slot :item="item"></slot>
+          <slot :item="item" :index="index"></slot>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@
                         </svg>
                     </div>
                 </div>
-                <div v-show="modeType == 'editScript'"
+                <!-- <div v-show="modeType == 'editScript'"
                     class="h-[65px] w-full bg-[#3e1821d4] sticky top-0 pt-[23px] pl-[17px] pb-[23px] pr-[17px]">
                     <div class="flex items-center justify-between">
                         <svg width="142" height="19" viewBox="0 0 142 19" fill="none"
@@ -46,7 +46,7 @@
                                 stroke="#E7EEBE" stroke-width="2" />
                         </svg>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- <div class="h-[65px]w-full bg-black sticky top-0 pt-[23px] pl-[17px] pb-[23px] pr-[17px]"> 
@@ -59,6 +59,9 @@
 
 
                 <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
+                    <div class="sticky top-20"> 
+                        {{ index+1 }}/{{ script.pages?.length }}
+                    </div>
                     <div class="flex items-end gap-2  justify-end mb-4">
                         <button @click="modeType = 'assign'"
                             class=" rounded-b-[20px] bg-[#f8ffd2] pt-1.5 pb-1.5 pl-2.5 pr-2.5">+ Add Character</button>
@@ -78,9 +81,9 @@
                         @newLine="(val) => script.pages[addLine.index].lines.push(val)"></add-dialogue>
 
 
-                    <div :class="{ 'top-40': modeType == 'editScript' }"
+                    <div :class="{ 'top-24': modeType == 'editScript' }"
                         class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
-                        {{ currentPage }}/{{ script.pages?.length }}
+                        <!-- {{ currentPage }}/{{ script.pages?.length }} -->
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
 
