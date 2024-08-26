@@ -85,6 +85,7 @@ export default {
                 }).catch((e) => {
                     this.button.autoRegister = false
                     Toast.show({ text: 'Error signing up' })
+                    console.log(e.message)
                 })
         },
         async login(token, data) {

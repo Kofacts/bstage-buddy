@@ -14,7 +14,8 @@
     "allowMixedContent": true 
   },
    "server": {
-    "allowNavigation": ["*.backstagebuddy.com"],
+    "url": "http://localhost:81",
+    "allowNavigation": ["*.mybackstagebuddy.com"],
     "androidScheme": "http",
     "cleartext": true
   }
