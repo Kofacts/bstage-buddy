@@ -133,7 +133,18 @@ export default {
     },
     computed: {
         script() {
-            return this.$store.getters['scripts/script']
+            let s = JSON.parse(JSON.stringify(this.$store.getters['scripts/script']))
+            let pages = (s.pages || []).map((page) => {
+                let lines = page.lines
+                lines.sort((a, b) => a.order - b.order)
+                page.lines = lines
+
+                return page
+            })
+            pages.sort((a, b) => a.number - b.number)
+            s.pages = pages
+
+            return s
         },
         chartData() {
             return {
@@ -163,6 +174,7 @@ export default {
                     return line
                 })))
             })
+            lines.sort((a, b) => a.order - b.order)
             return lines
         },
         mistakes() {
