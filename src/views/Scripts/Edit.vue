@@ -355,7 +355,7 @@ export default {
     },
     computed: {
         currentScript() {
-            return this.$store.getters['scripts/script']
+          return this.$store.getters['scripts/script']
         },
         voices() {
             return this.$store.getters['global/voices']
@@ -366,12 +366,17 @@ export default {
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
             this.voices.length || this.$store.dispatch('global/getVoices')
         ]).finally(() => {
-            Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
-            this.script.pages = this.script.pages.map((_, i) => {
-                this.script.pages[i].lines.sort((a, b) => a.order - b.order)
+            let s = JSON.parse(JSON.stringify(this.$store.getters['scripts/script']))
+            let pages = (s.pages || []).map((page) => {
+                let lines = page.lines
+                lines.sort((a, b) => a.order - b.order)
+                page.lines = lines
 
-                return this.script.pages[i]
-            }).sort((a, b) => a.number - b.number)
+                return page
+            })
+            pages.sort((a, b) => a.number - b.number)
+            s.pages = pages
+            this.script = s
             this.loaded = true
             this.modeType = this.$route.query.mode || 'edit'
         })

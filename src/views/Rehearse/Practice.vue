@@ -4,7 +4,8 @@
         <div
             class="h-[83.4vh]  max-h-[83.4vh] overflow-y-scroll p-[10px] pt-0 pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20 ">
-                <div class="flex items-center justify-start gap-[70px] pl-[10px] pr-[10px] pb-[15px] pt-[20px]  bg-nano-dark">
+                <div
+                    class="flex items-center justify-start gap-[70px] pl-[10px] pr-[10px] pb-[15px] pt-[20px]  bg-nano-dark">
                     <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
@@ -21,7 +22,8 @@
                         <span class="text-black w-[33.33%] flex justify-center items-center"
                             :style="`font-weight: ${currentLine?.character?.is_self === false ? 700 : 300}`">Buddy</span>
                         <div class="w-[33.33%] flex justify-center items-center">
-                            <span class="w-4 h-4 rounded-full flex bg-gray" :class="{'bg-[#C3514A]': currentLine?.character?.is_self === true}"></span>
+                            <span class="w-4 h-4 rounded-full flex bg-gray"
+                                :class="{ 'bg-[#C3514A]': currentLine?.character?.is_self === true }"></span>
                         </div>
                         <span class="w-[33.33%] flex justify-center items-center text-black"
                             :style="`font-weight: ${currentLine?.character?.is_self === true ? 700 : 300}`">My
@@ -54,8 +56,8 @@
                 <div class="mt-12 pb-[50px]"
                     :class="{ 'pt-80': false, 'mt-24 pt-4': modeType == 'rehearse' && isPlayingAudio, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
-                    <div class="sticky top-12 pl-4" :class="{'top-24': modeType == 'rehearse' && isPlayingAudio}"> 
-                         {{ index+1|| 1 }}/{{ script.pages?.length || 0 }}
+                    <div class="sticky top-12 pl-4" :class="{ 'top-24': modeType == 'rehearse' && isPlayingAudio }">
+                        {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
                     </div>
                     <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
@@ -117,7 +119,7 @@
                             <span class="text-[13px] text-nano-dark">resume</span>
                         </div>
                         <div v-if="!isEnded" class="flex items-center flex-col">
-                            <button @click="{isSavingModalVisible = true; isPaused = true }"
+                            <button @click="{ isSavingModalVisible = true; isPaused = true }"
                                 class="w-[72px] h-[72px] bg-nano-dark rounded-full">
                                 <svg width="73" height="72" viewBox="0 0 73 72" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -214,7 +216,7 @@ export default {
             _recording: {
                 web: {
                     startRecording: async (vm) => {
-                        if(!navigator.mediaDevices) {
+                        if (!navigator.mediaDevices) {
                             return
                         }
                         const stream = await navigator.mediaDevices.getUserMedia({
@@ -264,7 +266,7 @@ export default {
                             //console.log('checkPermissionsResult: ' + JSON.stringify(checkPermissionsResult));
                         } catch (error) {
                             //console.error('checkPermissions Error: ' + JSON.stringify(error));
-                            Toast.show({ text: 'Failed to check for permission'})
+                            Toast.show({ text: 'Failed to check for permission' })
                         }
                     },
                     requestPermissions: async () => {
@@ -273,7 +275,7 @@ export default {
                             //console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
                         } catch (error) {
                             //console.error('requestPermissions Error: ' + JSON.stringify(error));
-                            Toast.show({ text: 'Failed to request permission'})
+                            Toast.show({ text: 'Failed to request permission' })
                         }
                     },
                     startRecording: async (vm) => {
@@ -283,9 +285,9 @@ export default {
                             vm.recording = await Microphone.startRecording();
                             //console.log('startRecordingResult: ' + JSON.stringify(this.recording));
                             setTimeout((vm) => {
-                            vm._recording.capacitor.stopRecording(vm)
-                            //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'recording queued to stop')
-                        }, ((vm.currentLine?.duration || 2) + 2) * 1000, vm, vm.recorder, vm)
+                                vm._recording.capacitor.stopRecording(vm)
+                                //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'recording queued to stop')
+                            }, ((vm.currentLine?.duration || 2) + 2) * 1000, vm, vm.recorder, vm)
                         } catch (error) {
                             //console.error('startRecordingResult Error: ' + JSON.stringify(error));
                         }
@@ -376,7 +378,7 @@ export default {
                     //Toast.show({ text: message })
                 }).catch((e) => {
                     console.log('savePractice', e)
-                   // Toast.show({ text: e.message })
+                    // Toast.show({ text: e.message })
                 })
         },
         startRehearsal() {
@@ -460,12 +462,24 @@ export default {
     },
     computed: {
         script() {
-            return this.$store.getters['scripts/script']
+            let s = JSON.parse(JSON.stringify(this.$store.getters['scripts/script']))
+            let pages = (s.pages || []).map((page) => {
+                let lines = page.lines
+                lines.sort((a, b) => a.order - b.order)
+                page.lines = lines
+
+                return page
+            })
+            pages.sort((a, b) => a.number - b.number)
+            s.pages = pages
+
+            return s
         },
         lines() {
             let lines = []
             let index = 0
-            const pages = this.script.pages || []
+            let pages = this.script.pages || []
+            pages.sort((a, b) => a.number - b.number)
             pages.forEach((page) => {
                 lines = lines.concat(page.lines.map((e => {
                     let line = JSON.parse(JSON.stringify(e))
@@ -477,6 +491,7 @@ export default {
                     return line
                 })))
             })
+            lines.sort((a, b) => a.order - b.order)
             return lines
         },
     },
