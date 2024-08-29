@@ -32,7 +32,7 @@
                 <div class="w-full pl-[14px] pr-[14px] flex flex-col gap-[86.4px]">
                     <textarea v-model="title"
                         placeholder="Enter a title for script"
-                        class="w-full bg-[#4A232C] outline-none p-4 text-[20px] text-sans h-[160px]"></textarea>
+                        class="w-full bg-[#4A232C] placeholder-[#838868] outline-none p-4 text-[20px] text-sans h-[160px]"></textarea>
 
                     <div class="flex flex-col gap-[15px]">
                         <button :disabled="title == ''" :class="{'opacity-50': title == ''}" @click="() => { scanPhoto(); isEnteredTitle = true }"

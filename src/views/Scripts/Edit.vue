@@ -2,7 +2,7 @@
     <div :class="`relative${loaded ? '' : ' blur'}`">
         <div
             class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px]  pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
-            <div class="fixed top-8 w-full z-20">
+            <div class="fixed top-8 w-full z-20 ">
                 <div class="flex items-center justify-between pl-[10px] pt-[29px] pr-[10px] pb-[15px] bg-nano-dark">
                     <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@
 
 
                     <div :class="{ 'top-24': modeType == 'editScript' }"
-                        class="fixed flex justify-between items-center left-0 pl-4 pr-4 w-full top-24">
+                        class="fixed flex justify-between items-center left-0 pl-4 pt-[50px] pr-4 w-full top-24">
                         <!-- {{ currentPage }}/{{ script.pages?.length }} -->
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
@@ -165,14 +165,11 @@
                 </button>
             </div>
         </Modal>
-
-        <div class="fixed h-[100vh]  z-50 w-full top-0" v-show="modeType == 'edit'">
-            <div class="h-[60vh]" @click="modeType = ''">
-
-            </div>
-            <div v-if="modeType == 'edit'"
-                class="h-[40vh] flex flex-col gap-[15px] relative -top-[12vh] bg-[#3e182166] rounded-t-[10px] pt-[24.5px] pb-[24.5px] pl-[51px] pr-[51px]">
-                <button @click="modeType = 'editScript'"
+        
+        <div class="fixed h-[15vh] flex items-center justify-center   z-50 w-full bottom-0">
+            <div
+                class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[24.5px] pl-[14px] pr-[14px]">
+                <!-- <button @click="modeType = 'editScript'"
                     class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -183,9 +180,9 @@
                             stroke="#3E1821" />
                     </svg>
                     Edit Script
-                </button>
+                </button> -->
                 <button @click="modeType = 'assign'"
-                    class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+                    class="rounded-[15px] bg-nano-light w-[50%] pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="27" height="17" viewBox="0 0 27 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="8.45166" cy="6.05273" r="3.55273" stroke="#3E1821" />
                         <path
@@ -202,10 +199,10 @@
                             d="M19.3745 8.14853C19.5719 8.656 20.7635 9.50489 22.4197 10.4325C24.076 11.3601 25.4651 14.042 25.6343 15.0853"
                             stroke="#3E1821" />
                     </svg>
-                    Assign characters
+                    Cast
                 </button>
                 <router-link :to="`/rehearse/${script.reference}`"
-                    class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+                    class="rounded-[15px] bg-nano-light w-[50%] pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="23" height="21" viewBox="0 0 23 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M1.3033 10.852C6.28583 11.7981 10.2061 15.4315 11.2886 20.103C11.3124 20.1985 11.382 20.2723 11.4754 20.306C11.5108 20.3188 11.5454 20.3244 11.5857 20.325C11.7265 20.3238 11.8499 20.2294 11.878 20.0971C12.8812 15.4081 16.7402 11.7199 21.7034 10.7029C21.8444 10.6739 21.9393 10.5589 21.9392 10.4233C21.9378 10.2908 21.8375 10.1746 21.6969 10.1481C16.7144 9.20211 12.7941 5.5687 11.7116 0.897162C11.6795 0.767456 11.5597 0.672027 11.4144 0.675122C11.2736 0.676351 11.1503 0.770728 11.1222 0.903024C10.1189 5.59206 6.2612 9.27726 1.29684 10.2973C1.15582 10.3262 1.06091 10.4413 1.06104 10.5769C1.0624 10.7094 1.16395 10.8225 1.3033 10.852Z"
