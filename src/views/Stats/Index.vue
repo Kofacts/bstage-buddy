@@ -1,6 +1,6 @@
 <template>
     <div :class="{ blur: !loaded}">
-        <div v-for="script in scripts" :key="script.reference" class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div v-for="script in scripts" :key="script.reference" class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[99px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[45px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">My Performance</h3>
                 <h6 class="text-[35px] text-center text-semi">You are closer to becoming a star!</h6>

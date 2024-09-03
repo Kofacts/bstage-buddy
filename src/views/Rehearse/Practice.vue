@@ -5,7 +5,7 @@
             class="h-[83.4vh]  max-h-[83.4vh] overflow-y-scroll p-[10px] pt-0 pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20 ">
                 <div
-                    class="flex items-center justify-start gap-[70px] pl-[10px] pr-[10px] pb-[15px] pt-[20px]  bg-nano-dark">
+                    class="flex items-center justify-start gap-[70px] pl-[10px] pr-[10px] pb-[15px] pt-[99px]  bg-nano-dark">
                     <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
@@ -43,7 +43,7 @@
                     class="fixed w-full top-24 pl-[20px] pr-[20px]">
                     {{ currentLine?.page?.number || 1 }}/{{ script.pages?.length || 0 }}
                 </div> -->
-                <div class="w-1/6 fixed left-0 top-[200px] z-[200]" v-if="isPlayingAudio">
+                <div class="w-1/6 fixed left-0 top-[320px] z-[200]" v-if="isPlayingAudio">
                     <svg width="38" height="30" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M-1 1H23C30.732 1 37 7.26801 37 15C37 22.732 30.732 29 23 29H-1V1Z" fill="#3E1821"
                             stroke="#3E1821" />
@@ -53,10 +53,10 @@
                     </svg>
                 </div>
                 <!-- lines goes here depending on mode-->
-                <div class="mt-12 pb-[50px]"
+                <div class="mt-40 pb-[500px]"
                     :class="{ 'pt-80': false, 'mt-24 pt-4': modeType == 'rehearse' && isPlayingAudio, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
-                    <div class="sticky top-12 pl-4" :class="{ 'top-24': modeType == 'rehearse' && isPlayingAudio }">
+                    <div class="sticky top-32 pl-4" :class="{ 'top-24': modeType == 'rehearse' && isPlayingAudio }">
                         {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
                     </div>
                     <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"

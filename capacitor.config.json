@@ -5,7 +5,15 @@
   "bundledWebRuntime": false,
   "allowMixedContent" :  true,
   "plugins": {
-
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#3E1821",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": false,
+      "splashImmersive": false
+    }
   },
   "ios": {
     "scheme": "BackStageBuddy"
@@ -14,7 +22,7 @@
     "allowMixedContent": true 
   },
    "server": {
-    "url": "http://localhost:81",
+    "url": "http://192.168.1.137:81/",
     "allowNavigation": ["*.mybackstagebuddy.com"],
     "androidScheme": "http",
     "cleartext": true

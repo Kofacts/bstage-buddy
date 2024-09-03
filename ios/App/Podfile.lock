@@ -5,11 +5,17 @@ PODS:
     - Capacitor
   - CapacitorClipboard (6.0.0):
     - Capacitor
+  - CapacitorCommunityAdmob (6.0.0):
+    - Capacitor
+    - Google-Mobile-Ads-SDK (= 11.3.0)
   - CapacitorCordova (6.1.0)
   - CapacitorPreferences (6.0.0):
     - Capacitor
   - CapacitorToast (6.0.0):
     - Capacitor
+  - Google-Mobile-Ads-SDK (11.3.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (2.5.0)
   - MozartecCapacitorMicrophone (6.0.0):
     - Capacitor
 
@@ -17,10 +23,16 @@ DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
   - "CapacitorClipboard (from `../../node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityAdmob (from `../../node_modules/@capacitor-community/admob`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - "MozartecCapacitorMicrophone (from `../../node_modules/@mozartec/capacitor-microphone`)"
+
+SPEC REPOS:
+  trunk:
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -29,6 +41,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/camera"
   CapacitorClipboard:
     :path: "../../node_modules/@capacitor/clipboard"
+  CapacitorCommunityAdmob:
+    :path: "../../node_modules/@capacitor-community/admob"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorPreferences:
@@ -42,11 +56,14 @@ SPEC CHECKSUMS:
   Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
   CapacitorCamera: b61f125d92a0ef75d7becb7956fed7dd13187ee0
   CapacitorClipboard: 80282f684154124b9019ebf401235b70b0cf4994
+  CapacitorCommunityAdmob: 59456f0c29033d710ef90ef81044ad0eeab3caf6
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
   CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
+  Google-Mobile-Ads-SDK: 301a16c461c331ba34ff4dab40a22ab7c147af61
+  GoogleUserMessagingPlatform: 6b4f48a370e77ce121d034c908cc6ee4fdafaf13
   MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
 
-PODFILE CHECKSUM: 18bde45b757234ca16a1d721c37d1af8f2a1504f
+PODFILE CHECKSUM: 8c8a6791d3dbc05784a25fdb348c37f88eaf377a
 
 COCOAPODS: 1.15.2

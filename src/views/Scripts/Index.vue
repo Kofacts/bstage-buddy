@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="loaded">
-            <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]"
+            <div class="h-[80vh] max-h-[80vh] overflow-y-scroll pt-[99px] flex flex-col gap-[47px]"
                 v-if="scripts.length > 0">
                 <div class="flex flex-col items-center justify-center">
                     <h3 class="text-[30px] text-semi text-center">Script Library</h3>

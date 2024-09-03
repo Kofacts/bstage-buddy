@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[29px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[99px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[17px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">Rehearse</h3>
                 <h6 class="text-[25px] text-center" v-if="scripts.length > 0">Pick a script, let's make you a star!</h6>

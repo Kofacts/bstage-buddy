@@ -13,6 +13,10 @@ package="com.nanonebula.backstage">
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <meta-data
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="@string/admob_app_id"/>
+
 
         <service
             android:name="com.google.android.gms.metadata.ModuleDependencies"

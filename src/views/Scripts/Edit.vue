@@ -3,7 +3,7 @@
         <div
             class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px]  pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20 ">
-                <div class="flex items-center justify-between pl-[10px] pt-[29px] pr-[10px] pb-[15px] bg-nano-dark">
+                <div class="flex items-center justify-between pl-[10px] pt-[99px] pr-[10px] pb-[15px] bg-nano-dark">
                     <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2" />
