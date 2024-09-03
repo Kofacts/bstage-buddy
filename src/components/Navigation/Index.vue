@@ -17,13 +17,13 @@
             </svg>
             <span class="text-[14px]">Script</span>
         </router-link>
-        <router-link :to="{name: 'rehearse'}" class="flex items-center justify-center flex-col gap-[5px]"> 
+        <router-link :to="{path: '/rehearse'}" class="flex items-center justify-center flex-col gap-[5px]"> 
             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.43382 13.0894C7.03788 11.4943 11.4013 7.06497 12.9057 1.43484C14.5005 7.03827 18.9346 11.4039 24.5653 12.9104C18.9626 14.5031 14.5987 18.9354 13.0943 24.5653C11.4995 18.9615 7.06491 14.5957 1.43382 13.0894Z" stroke="#E7EEBE" stroke-width="1.25"/>
             </svg>
             <span class="text-[14px]">Rehersal</span>
         </router-link>
-        <router-link :to="{name: 'stats'}" class="flex items-center justify-center flex-col gap-[5px]"> 
+        <router-link :to="{path: '/stats'}" class="flex items-center justify-center flex-col gap-[5px]"> 
             <svg width="39" height="33" viewBox="0 0 39 33" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M21.1631 2.7248L24.9923 3.35454M24.9923 3.35454L24.3557 7.14252M24.9923 3.35454L9.36214 14.4084M4.18652 2.43043L4.18652 28.0303L35.2403 28.0303M10.0091 20.3503L10.0091 28.0303M22.9482 12.6704L22.9482 28.0303M29.4177 8.83038L29.4177 28.0303M16.4786 17.7903L16.4786 28.0303" stroke="#E7EEBE"/>
             </svg>

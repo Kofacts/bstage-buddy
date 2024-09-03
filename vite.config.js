@@ -30,6 +30,9 @@ export default ({ mode }) => {
     },
     build: {
       outDir: 'www', // This is the default directory Capacitor uses
+      rollupOptions: {
+        external: ['@capacitor/admob'],
+      },
     }
   })
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="audio-player">
-    <audio ref="audioPlayer" @timeupdate="updateTimeline">
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <audio :ref="`voice-${name}`" :id="`voice-${name}`" @timeupdate="updateTimeline">
+      <source :src="src" type="audio/mpeg">
       Your browser does not support the audio element.
     </audio>
     <div class="controls">
@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  props: ['src', 'name'],
   data() {
     return {
       isPlaying: false,
@@ -26,7 +27,7 @@ export default {
   },
   methods: {
     togglePlayPause() {
-      const audio = this.$refs.audioPlayer;
+      const audio = this.$refs[`voice-${this.name}`];
       if (this.isPlaying) {
         audio.pause();
       } else {
@@ -35,8 +36,13 @@ export default {
       this.isPlaying = !this.isPlaying;
     },
     updateTimeline() {
-      const audio = this.$refs.audioPlayer;
+      const audio = this.$refs[`voice-${this.name}`];
       this.progress = (audio.currentTime / audio.duration) * 100;
+    }
+  },
+  watch: {
+    src (newVal) {
+      console.log('audio has changed', newVal.length)
     }
   }
 };

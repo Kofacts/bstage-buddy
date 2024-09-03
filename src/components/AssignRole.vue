@@ -1,5 +1,5 @@
 <template>
-    <div v-if="show" class="model fixed z-[999] top-[5.7rem] h-[100%] w-full max-h-[100%] pb-44 overflow-y-scroll"> 
+    <div class="model fixed z-[999] top-[5.7rem] h-[100%] w-full max-h-[100%] pb-44 overflow-y-scroll"> 
         <!-- <div class="bg-nano-dark flex items-center justify-between p-[10px] pb-[15px] pt-[29px]">
             <svg width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.5 22L2 11.5L12.5 1" stroke="#E7EEBE" stroke-width="2"/>
@@ -10,9 +10,9 @@
             </svg>
         </div> -->
 
-        <div class="mt-[54px] p-[27.98px] flex flex-col gap-[83px]" v-if="step == 1"> 
+        <div class="mt-[54px] p-[27.98px] flex flex-col gap-[83px]" v-if="!hasSelf && step === 1"> 
             <h6 class="text-[25px] text-center">Now, pick a character for your practice and let your Buddy do the rest</h6>
-            <button class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+            <button @click="step = 2" class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.95166" cy="6.55273" r="3.55273" stroke="#3E1821"/>
                     <path d="M7.75981 10.1454C7.56236 10.6528 6.37076 11.5017 4.71453 12.4293C3.0583 13.3569 1.66918 16.0388 1.5 17.0821" stroke="#3E1821"/>
@@ -25,9 +25,14 @@
             </button>
         </div>
         <div  class="pl-[28px]  pr-[28px] flex flex-col gap-[19.25px] pt-[34px] pb-[34px]" v-if="step == 2"> 
-            <characters v-for="(n,index) in values" :key="index" :value="n"></characters>
+            <div class="flex items-center justify-center">
+                <button @click="$emit('closeCharModal')" class="bg-white w-8 h-8 text-black rounded-full flex items-center justify-center">
+                    <svg clip-rule="evenodd" height="18" width="18" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12 10.93 5.719-5.72c.146-.146.339-.219.531-.219.404 0 .75.324.75.749 0 .193-.073.385-.219.532l-5.72 5.719 5.719 5.719c.147.147.22.339.22.531 0 .427-.349.75-.75.75-.192 0-.385-.073-.531-.219l-5.719-5.719-5.719 5.719c-.146.146-.339.219-.531.219-.401 0-.75-.323-.75-.75 0-.192.073-.384.22-.531l5.719-5.719-5.72-5.719c-.146-.147-.219-.339-.219-.532 0-.425.346-.749.75-.749.192 0 .385.073.531.219z"/></svg>
+                </button>
+            </div>
+            <characters @characterEdit="({ updateIndex, newVal }) => charactersEdit[updateIndex] = newVal" v-for="(character,index) in charactersEdit.filter((s) => !s.deleted)" :voices="voices" :key="index" :char="character" :charIndex="index"></characters>
 
-            <div class="flex flex-col items-center justify-center gap-[20.25px] mt-[32px]" @click="values.push({name: ''})"> 
+            <div class="flex flex-col items-center justify-center gap-[20.25px] mt-[32px]" @click="charactersEdit.push({name: ''})"> 
                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="20.5" cy="20.2393" r="20" fill="#E7EEBE"/>
                     <line x1="20.9999" y1="10.2928" x2="20.9999" y2="30.1857" stroke="#3E1821"/>
@@ -44,10 +49,10 @@
 import Characters from '@/components/Cards/Characters.vue';
 export default {
     components: { Characters },
-    props: ['show'],
+    props: ['voices', 'characters'],
     data() {
         return {
-            step: 2,
+            step: 1,
             values: [
                 {
                     name: 'Otilo',
@@ -57,7 +62,31 @@ export default {
                 }
             ],
             isSavable: false,
-            canGoBack: true
+            canGoBack: true,
+            charactersEdit: []
+        }
+    },
+    watch: {
+        charactersEdit: {
+            handler(newVal) {
+                console.log('emitting to parent')
+                this.$emit('charactersChange', newVal)
+            },
+            deep: true
+        },
+    },
+    computed: {
+        hasSelf() {
+            return !!(this.characters || []).find((s) => s.is_self)
+        }
+    },
+    mounted() {
+        if(this.hasSelf) {
+            this.step = 2
+        }
+        if(this.characters) {
+            console.log('ready')
+            Object.assign(this.charactersEdit, JSON.parse(JSON.stringify(this.characters)))
         }
     }
 }

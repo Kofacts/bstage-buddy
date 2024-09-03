@@ -1,9 +1,30 @@
 {
   "appId": "com.nanonebula.backstage",
-  "appName": "Backstage Buddy",
+  "appName": "BackStageBuddy",
   "webDir": "www",
-  "server": {
-    "url": "http://192.168.0.159:8001",
+  "bundledWebRuntime": false,
+  "allowMixedContent" :  true,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#3E1821",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": false,
+      "splashImmersive": false
+    }
+  },
+  "ios": {
+    "scheme": "BackStageBuddy"
+  },
+  "android": {
+    "allowMixedContent": true 
+  },
+   "server": {
+    "url": "http://192.168.1.137:81/",
+    "allowNavigation": ["*.mybackstagebuddy.com"],
+    "androidScheme": "http",
     "cleartext": true
   }
 }

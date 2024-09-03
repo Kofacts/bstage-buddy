@@ -9,7 +9,12 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-admob')
     implementation project(':capacitor-camera')
+    implementation project(':capacitor-clipboard')
+    implementation project(':capacitor-preferences')
+    implementation project(':capacitor-toast')
+    implementation project(':mozartec-capacitor-microphone')
 
 }
 
