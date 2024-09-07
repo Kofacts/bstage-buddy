@@ -3,7 +3,7 @@
   "appName": "BackStageBuddy",
   "webDir": "www",
   "bundledWebRuntime": false,
-  "allowMixedContent" :  true,
+  "allowMixedContent": false,
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 3000,
@@ -19,12 +19,6 @@
     "scheme": "BackStageBuddy"
   },
   "android": {
-    "allowMixedContent": true 
-  },
-   "server": {
-    "url": "http://192.168.1.137:81/",
-    "allowNavigation": ["*.mybackstagebuddy.com"],
-    "androidScheme": "http",
-    "cleartext": true
+    "allowMixedContent": false
   }
 }
