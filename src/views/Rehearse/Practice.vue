@@ -84,7 +84,8 @@
                 </div>
                 <div class="w-[33.33%] flex justify-center items-center">
                     <div v-if="!isPlayingAudio && !isEnded" class="flex items-center flex-col">
-                        <button :disabled="!micReady" @click="startRehearsal" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
+                        <button :disabled="!micReady" @click="startRehearsal"
+                            class="w-[72px] h-[72px] bg-nano-dark rounded-full">
                             <svg width="72" height="72" viewBox="0 0 72 72" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="36" cy="36" r="36" fill="#3E1821" />
@@ -93,7 +94,7 @@
                                     fill="#E5EEB9" stroke="#E7EEBE" />
                             </svg>
                         </button>
-                        <span class="text-[13px] text-nano-dark">{{micReady ? 'rehearse' : 'no mic' }}</span>
+                        <span class="text-[13px] text-nano-dark">{{ micReady ? 'rehearse' : 'no mic' }}</span>
                     </div>
                     <div v-else class="flex gap-[8.9px] items-center">
                         <div class="flex items-center flex-col" v-if="!isPaused">
@@ -216,6 +217,31 @@ export default {
             micReady: false,
             _recording: {
                 web: {
+                    checkPermissions: async (vm) => {
+                        try {
+                            const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
+                            return permissionStatus.state === 'granted';
+                        } catch (err) {
+                            console.error('Error checking microphone permission:', err);
+                            Toast.show({ text: 'Failed to check for microphone permission' })
+                            return false;
+                        }
+                    },
+                    requestPermissions: async (vm) => {
+                        try {
+                            // Request permission by attempting to access the microphone
+                            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                            if (stream) {
+                                // Permission granted
+                                return true;
+                            }
+                        } catch (err) {
+                            console.error('Microphone permission denied:', err);
+                            Toast.show({ text: 'Failed to request for microphone permission' })
+                            return false;
+                        }
+                    },
                     startRecording: async (vm) => {
                         if (!navigator.mediaDevices) {
                             return
@@ -510,18 +536,16 @@ export default {
     },
     mounted() {
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
-        if(this._recording[this.platform].checkPermissions) {
-            
-            this._recording[this.platform].checkPermissions().then((granted) => {
+        if (this._recording[this.platform].checkPermissions) {
 
-                if(!granted && this._recording[this.platform].requestPermissions) {
+            this._recording[this.platform].checkPermissions().then((granted) => {
+                this.micReady = granted
+                if (!granted && this._recording[this.platform].requestPermissions) {
                     this._recording[this.platform].requestPermissions().then((granted) => {
                         this.micReady = granted
                     })
                 }
             })
-        } else {
-            this.micReady = true
         }
     },
     beforeUnmount() {
