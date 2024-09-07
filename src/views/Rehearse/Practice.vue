@@ -84,7 +84,7 @@
                 </div>
                 <div class="w-[33.33%] flex justify-center items-center">
                     <div v-if="!isPlayingAudio && !isEnded" class="flex items-center flex-col">
-                        <button @click="startRehearsal" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
+                        <button :disabled="!micReady" @click="startRehearsal" class="w-[72px] h-[72px] bg-nano-dark rounded-full">
                             <svg width="72" height="72" viewBox="0 0 72 72" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="36" cy="36" r="36" fill="#3E1821" />
@@ -93,7 +93,7 @@
                                     fill="#E5EEB9" stroke="#E7EEBE" />
                             </svg>
                         </button>
-                        <span class="text-[13px] text-nano-dark">rehearse</span>
+                        <span class="text-[13px] text-nano-dark">{{micReady ? 'rehearse' : 'no mic' }}</span>
                     </div>
                     <div v-else class="flex gap-[8.9px] items-center">
                         <div class="flex items-center flex-col" v-if="!isPaused">
@@ -213,6 +213,7 @@ export default {
             blob: null,
             base64: null,
             duration: 0,
+            micReady: false,
             _recording: {
                 web: {
                     startRecording: async (vm) => {
@@ -263,19 +264,23 @@ export default {
                     checkPermissions: async () => {
                         try {
                             const checkPermissionsResult = await Microphone.checkPermissions();
+                            return checkPermissionsResult.microphone === 'granted'
                             //console.log('checkPermissionsResult: ' + JSON.stringify(checkPermissionsResult));
                         } catch (error) {
                             //console.error('checkPermissions Error: ' + JSON.stringify(error));
                             Toast.show({ text: 'Failed to check for permission' })
+                            return false
                         }
                     },
                     requestPermissions: async () => {
                         try {
                             const requestPermissionsResult = await Microphone.requestPermissions();
+                            return checkPermissionsResult.microphone === 'granted'
                             //console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
                         } catch (error) {
                             //console.error('requestPermissions Error: ' + JSON.stringify(error));
                             Toast.show({ text: 'Failed to request permission' })
+                            return false
                         }
                     },
                     startRecording: async (vm) => {
@@ -387,12 +392,12 @@ export default {
         },
         runLoop() {
             if (this.isEnded || !this.isPlayingAudio) {
-                console.log(new Date().toLocaleString(), 'already ended');
+                //console.log(new Date().toLocaleString(), 'already ended');
                 return;
             }
 
             if (this.isPaused) {
-                console.log(new Date().toLocaleString(), 'is paused');
+                //console.log(new Date().toLocaleString(), 'is paused');
                 return;
             }
 
@@ -415,7 +420,7 @@ export default {
                     audio.muted = !this.currentLine.character;
 
                     audio.addEventListener("ended", function () {
-                        console.log(new Date().toLocaleString(), vm.currentLine?.reference, "audio playing ended");
+                        //console.log(new Date().toLocaleString(), vm.currentLine?.reference, "audio playing ended");
                         vm.runLoop();
                     });
                 }
@@ -441,10 +446,10 @@ export default {
     },
     watch: {
         isPlayingAudio(newVal) {
-            console.log(new Date().toLocaleString(), 'isPlayingAudio', newVal)
+            //console.log(new Date().toLocaleString(), 'isPlayingAudio', newVal)
 
             if (newVal) {
-                console.log(new Date().toLocaleString(), 'paused has been played');
+                //console.log(new Date().toLocaleString(), 'paused has been played');
                 this.runLoop()
             } else {
                 this.endAllAudios()
@@ -452,7 +457,7 @@ export default {
 
         },
         isPaused(newVal) {
-            console.log('isPaused', newVal)
+            //console.log('isPaused', newVal)
             if (!newVal) {
                 this.runLoop()
             } else {
@@ -505,6 +510,19 @@ export default {
     },
     mounted() {
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
+        if(this._recording[this.platform].checkPermissions) {
+            
+            this._recording[this.platform].checkPermissions().then((granted) => {
+
+                if(!granted && this._recording[this.platform].requestPermissions) {
+                    this._recording[this.platform].requestPermissions().then((granted) => {
+                        this.micReady = granted
+                    })
+                }
+            })
+        } else {
+            this.micReady = true
+        }
     },
     beforeUnmount() {
         this.endAllAudios()

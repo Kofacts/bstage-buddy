@@ -42,7 +42,7 @@ export default {
   },
   watch: {
     src (newVal) {
-      console.log('audio has changed', newVal.length)
+      //console.log('audio has changed', newVal.length)
     }
   }
 };

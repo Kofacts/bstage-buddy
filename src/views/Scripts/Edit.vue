@@ -321,18 +321,18 @@ export default {
                     this.modeType = ''
                     // this.isSavingModalVisible = false;
                 }).catch((e) => {
-                    console.log(e)
+                    //console.log(e)
                     const message = e?.data?.message || e.message || e.statusText || 'An error occurred'
                     Toast.show({ text: message })
                 }).finally(() => {
                     this.modeType = ''
                     this.saving = false
 
-                    console.log(this.modeType)
+                    //console.log(this.modeType)
                 })
         },
         handleRoleChange(val) {
-            console.log('role change received', val)
+            //console.log('role change received', val)
             this.script.characters = val
         },
         triggerAddDialog(payload) {

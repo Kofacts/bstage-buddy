@@ -28,7 +28,7 @@ const initializeAdMob = async () => {
         appId: ADMOB_APP_ID,
       });
   
-      console.log('AdMob initialized successfully');
+      //console.log('AdMob initialized successfully');
     } catch (error) {
       console.error('Error initializing AdMob:', error);
     }

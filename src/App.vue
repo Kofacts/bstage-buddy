@@ -91,7 +91,7 @@ export default {
       let namesWithBanner = this.namesWithBanner
       
       if (this.routeNameMatches(namesWithBanner)) {
-          console.log('Landed')
+          //console.log('Landed')
         this.showBannerAd();
       } else {
         this.hideBannerAd();
@@ -99,7 +99,7 @@ export default {
 
       const interBanner = ['anal'];
       if(this.routeNameMatches(interBanner)) {
-        console.log('Coco Melon');
+        //console.log('Coco Melon');
         this.showInterAd();
       }
     }
