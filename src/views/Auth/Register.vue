@@ -112,7 +112,7 @@ export default {
         }).catch((e) => {
           this.loading = false;
           Toast.show({ text: 'Error signing up' })
-          console.log(e)
+          //console.log(e)
         })
     },
     async login(token, data) {

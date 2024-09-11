@@ -132,7 +132,7 @@ export default {
     watch: {
         character: {
             handler(newVal) {
-                console.log('character: new value', newVal.name, newVal.voice_id)
+                //console.log('character: new value', newVal.name, newVal.voice_id)
                 this.voice = this.voices.find((s) => s.id === this.character.voice_id)
                 this.notify(this.character)
             },
@@ -142,25 +142,25 @@ export default {
     },
     methods: {
         handleNameChange(e, v) {
-            console.log('handleNameChange', { e, v }, e.target.value)
+            //console.log('handleNameChange', { e, v }, e.target.value)
             const character = JSON.parse(JSON.stringify(this.character))
             character.name = e.target.value
    
             this.notify(character)
         },
         handleSelfChange(val) {
-            console.log('handleSelfChange', val)
+            //console.log('handleSelfChange', val)
             const character = JSON.parse(JSON.stringify(this.character))
             character.is_self = val
    
             this.notify(character)
         },
         handleVoiceChange(e, v) {
-            console.log({ e, v }, e.target.value)
+            //console.log({ e, v }, e.target.value)
             const character = JSON.parse(JSON.stringify(this.character))
             character.voice_id = Number(e.target.value)
             this.voice = this.voices.find((s) => s.id === character.voice_id)
-            console.log('voice', this.voice)
+            //console.log('voice', this.voice)
             this.notify(character)
         },
         handleDelete(e) {
@@ -170,7 +170,7 @@ export default {
             }
             const character = JSON.parse(JSON.stringify(this.character))
             character.deleted = true
-            console.log('handleDelete', { e, character }, e.target.value)
+            ///console.log('handleDelete', { e, character }, e.target.value)
             this.$store.dispatch('scripts/deleteCharacter',this.character.reference)
                 .then(msg => {
                     //this.$router.go(0);
@@ -179,13 +179,11 @@ export default {
             this.notify(character)
         },
         notify(character) {
-            console.log('ready', character)
+            //console.log('ready', character)
             if(JSON.stringify(this.originalObj) !== JSON.stringify(character)) {
                 this.$emit('characterEdit', {updateIndex: this.charIndex, newVal: character})
-                console.log('notified', character)
-            } else {
-                console.log('not notified')
-            }
+                //console.log('notified', character)
+            } 
             this.character  = character
         }
     },

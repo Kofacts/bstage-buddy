@@ -69,7 +69,7 @@ export default {
     watch: {
         charactersEdit: {
             handler(newVal) {
-                console.log('emitting to parent')
+                //console.log('emitting to parent')
                 this.$emit('charactersChange', newVal)
             },
             deep: true
@@ -85,7 +85,7 @@ export default {
             this.step = 2
         }
         if(this.characters) {
-            console.log('ready')
+            //console.log('ready')
             Object.assign(this.charactersEdit, JSON.parse(JSON.stringify(this.characters)))
         }
     }

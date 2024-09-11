@@ -58,6 +58,7 @@
 <script>
 import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
+import { random } from '@/helpers/global'
 
 export default {
     data() {
@@ -71,11 +72,11 @@ export default {
     },
     methods: {
         autoRegister() {
-            console.log('was fired')
+            //console.log('was fired')
             this.button.autoRegister = true
             let payload = {
-                email: `${Date.now()}@backstagebuddy.com`,
-                password: `${Date.now()}`.substr(0, 8)
+                email: `${random(32)}@mybackstagebuddy.com`,
+                password: random(32)
             }
             this.$auth
                 .register({
@@ -85,7 +86,7 @@ export default {
                 }).catch((e) => {
                     this.button.autoRegister = false
                     Toast.show({ text: 'Error signing up' })
-                    console.log(e.message)
+                    //console.log(e.message)
                 })
         },
         async login(token, data) {

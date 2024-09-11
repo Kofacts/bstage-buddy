@@ -50,3 +50,7 @@ div {
   -ms-user-select: none; /* IE 10+ */
   user-select: none; /* Standard syntax */
 }
+
+button:disabled {
+  opacity: 0.5
+}
