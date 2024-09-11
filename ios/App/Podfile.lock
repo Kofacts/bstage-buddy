@@ -11,6 +11,8 @@ PODS:
   - CapacitorCordova (6.1.0)
   - CapacitorPreferences (6.0.0):
     - Capacitor
+  - CapacitorSplashScreen (6.0.2):
+    - Capacitor
   - CapacitorToast (6.0.0):
     - Capacitor
   - Google-Mobile-Ads-SDK (11.3.0):
@@ -26,6 +28,7 @@ DEPENDENCIES:
   - "CapacitorCommunityAdmob (from `../../node_modules/@capacitor-community/admob`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - "MozartecCapacitorMicrophone (from `../../node_modules/@mozartec/capacitor-microphone`)"
 
@@ -47,6 +50,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   MozartecCapacitorMicrophone:
@@ -59,11 +64,12 @@ SPEC CHECKSUMS:
   CapacitorCommunityAdmob: 59456f0c29033d710ef90ef81044ad0eeab3caf6
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
   CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
   Google-Mobile-Ads-SDK: 301a16c461c331ba34ff4dab40a22ab7c147af61
   GoogleUserMessagingPlatform: 6b4f48a370e77ce121d034c908cc6ee4fdafaf13
   MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
 
-PODFILE CHECKSUM: 8c8a6791d3dbc05784a25fdb348c37f88eaf377a
+PODFILE CHECKSUM: 62b11d564d0efdab93558be5aad0ce5d4e63469c
 
 COCOAPODS: 1.15.2

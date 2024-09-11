@@ -52,13 +52,10 @@
             <!-- <div class="h-[65px]w-full bg-black sticky top-0 pt-[23px] pl-[17px] pb-[23px] pr-[17px]"> 
                 Worse gang
             </div> -->
-
             <div id="script-wrapper" :class="{ 'pt-36': modeType == 'editScript' }"
                 class="h-[10000px] relative bg-nano-light flex flex-col gap-[10px] text-black pt-16 pl-[20px] pr-[20px]">
                 <!-- lines goes here depending on mode-->
-
-
-                <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
+                <div :class="`mt-${index}`" :style=" (index+1) == script.pages.length ? 'padding-bottom:150px' : 'padding-bottom:10px'" v-for="(page, index) in script.pages" :key="page.reference">
                     <div class="sticky top-20"> 
                         {{ index+1 }}/{{ script.pages?.length }}
                     </div>
@@ -87,13 +84,13 @@
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
 
-                    <draggable v-model="script.pages[index].lines" group="people" @start="drag = true"
+                    <draggable v-model="script.pages[index].lines" handle=".drag-handle" group="people" @start="drag = true"
                         @end="drag = false" @change="handleOrderChange" item-key="id">
                         <template #item="{ element }">
                             <div v-if="!element.deleted" class="relative"
                                 :class="{ 'ml-20': element.character?.is_self }">
                                 <button
-                                    class="absolute -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
+                                    class="absolute drag-handle -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
                                     <svg fill="black" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -139,11 +136,11 @@
                 </div>
             </div>
         </div>
-        <assign-role @closeCharModal="modeType = ''" @charactersChange="handleRoleChange" :key="currentScript.reference"
+        <assign-role @closeCharModal="modeType = 'editScript'" @charactersChange="handleRoleChange" :key="currentScript.reference"
             :voices="voices" :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
 
-        <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
+        <Modal :isVisible="isSavingModalVisible" @close="saveEdition()">
             <h3 class="text-[25px] text-center">Do you want to save the edition changes?</h3>
             <div class="flex flex-col mt-[78px] gap-[15px]">
                 <button @click="updateScript" :disabled="saving"
@@ -166,9 +163,9 @@
             </div>
         </Modal>
         
-        <div class="fixed h-[15vh] flex items-center justify-center   z-50 w-full bottom-0">
+        <div class="fixed h-[12vh] flex items-center justify-center   z-50 w-full bottom-0">
             <div
-                class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[24.5px] pl-[14px] pr-[14px]">
+                class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[20.5px] pl-[14px] pr-[14px]">
                 <!-- <button @click="modeType = 'editScript'"
                     class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +233,7 @@ export default {
             isDeleteModalVisible: false,
             isSavingModalVisible: false,
             isSaving: true,
-            modeType: 'edit',
+            modeType: 'editScript',
             showDialogue: false,
             script: {},
             addLine: {},
@@ -267,6 +264,10 @@ export default {
         }
     },
     methods: {
+        saveEdition() {
+            this.isSavingModalVisible = false; 
+            this.modeType= 'editScript';
+        },
         cancelUpdate() {
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
             this.script.pages = this.script.pages.map((_, i) => {
@@ -276,7 +277,7 @@ export default {
                 return this.script.pages[i]
             }).sort((a, b) => a.number - b.number)
             this.isSavingModalVisible = false;
-            this.modeType = 'edit'
+            this.modeType = 'editScript'
         },
         deleteLine(element, pageIndex) {
             let r = confirm('Are you sure to delete this line?')
@@ -325,7 +326,7 @@ export default {
                     const message = e?.data?.message || e.message || e.statusText || 'An error occurred'
                     Toast.show({ text: message })
                 }).finally(() => {
-                    this.modeType = ''
+                    this.modeType = 'editScript';
                     this.saving = false
 
                     console.log(this.modeType)
