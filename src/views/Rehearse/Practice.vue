@@ -508,7 +508,7 @@ export default {
         },
         lines() {
             let lines = []
-            let highestOrder = 0
+            let index = 0
             let pages = this.script.pages || []
             pages.sort((a, b) => a.number - b.number)
             pages.forEach((page) => {
