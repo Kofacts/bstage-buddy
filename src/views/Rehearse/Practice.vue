@@ -522,7 +522,7 @@ export default {
                     return line
                 })))
             })
-            lines.sort((a, b) => a.order - b.order)
+            //lines.sort((a, b) => a.order - b.order)
             return lines
         },
     },
