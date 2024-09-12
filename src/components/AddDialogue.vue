@@ -58,14 +58,14 @@ export default {
                 page: this.page,
             })
                 .then(({ data, message }) => {
-                    console.log({ data, message })
+                    //console.log({ data, message })
                     Toast.show({ text: message })
                     this.$emit('newLine', data)
                     this.$emit('closeDialogue')
                 }).catch((e) => {
                     const errors = Object.entries(e?.data.errors || {}).map((k, v) => `${k}: ${v.join(' ')}`).join(' ')
                     const message = errors || e?.data?.message || e.message || e.statusText || 'An error occured'
-                    console.log({ error: e, errors, message })
+                    //console.log({ error: e, errors, message })
                     Toast.show({ text: message })
                 }).finally(() => {
                     this.saving = false

@@ -1,7 +1,6 @@
 <template>
     <div :class="`relative${loaded ? '' : ' blur'}`">
-        <div
-            class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px]  pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
+        <div class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll p-[10px]  pl-0 pr-0 pb-0 flex flex-col bg-nano-dark">
             <div class="fixed top-8 w-full z-20 ">
                 <div class="flex items-center justify-between pl-[10px] pt-[99px] pr-[10px] pb-[15px] bg-nano-dark">
                     <svg @click="$router.go(-1)" width="14" height="23" viewBox="0 0 14 23" fill="none"
@@ -59,8 +58,8 @@
 
 
                 <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
-                    <div class="sticky top-20"> 
-                        {{ index+1 }}/{{ script.pages?.length }}
+                    <div class="sticky top-20">
+                        {{ index + 1 }}/{{ script.pages?.length }}
                     </div>
                     <div class="flex items-end gap-2  justify-end mb-4">
                         <button @click="modeType = 'assign'"
@@ -88,7 +87,7 @@
                     </div>
 
                     <draggable v-model="script.pages[index].lines" group="people" @start="drag = true"
-                        @end="drag = false" @change="handleOrderChange" item-key="id">
+                        @end="drag = false" @change="(val) => handleOrderChange(index, val)" item-key="id">
                         <template #item="{ element }">
                             <div v-if="!element.deleted" class="relative"
                                 :class="{ 'ml-20': element.character?.is_self }">
@@ -122,19 +121,6 @@
                         </template>
                     </draggable>
 
-                    <!-- <div class="flex flex-col relative mb-[10px]" :class="{ 'ml-20': line.character.is_self }"
-                            v-for="(line, i) in script.pages[index].lines" :key="line.reference">
-                            <button class="absolute left-0 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
-                                <svg fill="black" width="18" height="18"  clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m2.394 15.759s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm0-3.113s7.554 4.246 9.09 5.109c.165.093.333.132.492.132.178 0 .344-.049.484-.127 1.546-.863 9.155-5.113 9.155-5.113.246-.138.385-.393.385-.656 0-.566-.614-.934-1.116-.654 0 0-7.052 3.958-8.539 4.77-.211.115-.444.161-.722.006-1.649-.928-8.494-4.775-8.494-4.775-.502-.282-1.117.085-1.117.653 0 .262.137.517.382.655zm10.271-9.455c-.246-.128-.471-.191-.692-.191-.223 0-.443.065-.675.191l-8.884 5.005c-.276.183-.414.444-.414.698 0 .256.139.505.414.664l8.884 5.006c.221.133.447.203.678.203.223 0 .452-.065.689-.203l8.884-5.006c.295-.166.451-.421.451-.68 0-.25-.145-.503-.451-.682zm-8.404 5.686 7.721-4.349 7.72 4.349-7.72 4.35z" fill-rule="nonzero"/></svg>
-                            </button> -->
-                    <!-- <label class="pt-2">{{ line.character.name }}</label> -->
-                    <!-- <textarea @focus="() => currentPage = page.number" v-auto-resize
-                                class="w-[92%] mx-auto h-auto outline-none p-[10px] pb-0 rounded-[10px] text-center text-[16px] text-nano-dark"
-                                style="background:#DCE2B3" v-model="script.pages[index].lines[i].content"></textarea>
-                            <button class="absolute right-0 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
-                                <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z" fill-rule="nonzero"/></svg>
-                            </button>
-                        </div> -->
                     <hr>
                 </div>
             </div>
@@ -165,7 +151,7 @@
                 </button>
             </div>
         </Modal>
-        
+
         <div class="fixed h-[15vh] flex items-center justify-center   z-50 w-full bottom-0">
             <div
                 class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[24.5px] pl-[14px] pr-[14px]">
@@ -223,6 +209,7 @@ import AssignRole from '@/components/AssignRole.vue';
 import AddDialogue from '@/components/AddDialogue.vue';
 import { Toast } from '@capacitor/toast';
 import draggable from "vuedraggable";
+import { random } from '@/helpers/global';
 
 export default {
     components: { Carousel, Modal, CarouselPlaceholder, AssignRole, AddDialogue, draggable },
@@ -241,6 +228,7 @@ export default {
             script: {},
             addLine: {},
             drag: false,
+            prevPageIndex: false,
         }
     },
     directives: {
@@ -321,18 +309,18 @@ export default {
                     this.modeType = ''
                     // this.isSavingModalVisible = false;
                 }).catch((e) => {
-                    console.log(e)
+                    //console.log(e)
                     const message = e?.data?.message || e.message || e.statusText || 'An error occurred'
                     Toast.show({ text: message })
                 }).finally(() => {
                     this.modeType = ''
                     this.saving = false
 
-                    console.log(this.modeType)
+                    //console.log(this.modeType)
                 })
         },
         handleRoleChange(val) {
-            console.log('role change received', val)
+            //console.log('role change received', val)
             this.script.characters = val
         },
         triggerAddDialog(payload) {
@@ -340,10 +328,22 @@ export default {
             this.showDialogue = true
             this.addLine = payload
         },
-        handleOrderChange(a, b) {
+        handleOrderChange(pageIndex, { added, removed }) {
+
             this.script.pages = this.script.pages.map((page, i) => {
+                if (removed && pageIndex === i) {
+                    let line = JSON.parse(JSON.stringify(removed.element))
+                    line.deleted = true
+                    page.lines.push(line)
+                }
                 page.lines = page.lines.map((s, j) => {
-                    let line = s
+                    let line = JSON.parse(JSON.stringify(s))
+
+
+                    if (added?.element.reference === line.reference && pageIndex === i) {
+                        line._reference = random(32).toUpperCase()
+                        line.page = page.reference
+                    }
                     delete line.audio_url
                     line.order = i + 1 + j
                     return line
@@ -355,7 +355,7 @@ export default {
     },
     computed: {
         currentScript() {
-          return this.$store.getters['scripts/script']
+            return this.$store.getters['scripts/script']
         },
         voices() {
             return this.$store.getters['global/voices']

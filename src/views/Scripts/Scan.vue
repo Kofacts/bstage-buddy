@@ -206,7 +206,7 @@ export default {
     },
     methods: {
         deleteAndScan(index) {
-            console.log(index)
+            //console.log(index)
             // this.images.splice(index, 1);// First, remove the image
             if (this.images.length > 0) {
                 this.scanPhoto(index); // Scan the image that replaced the deleted one
@@ -247,7 +247,7 @@ export default {
                     resultType: CameraResultType.DataUrl
                 });
             } catch (e) {
-                console.log(e.message)
+                //console.log(e.message)
                 Toast.show({ text: e.message })
                 this.isSaving = false
                 return
@@ -286,7 +286,7 @@ export default {
             try {
                 this.pages = this.pages.length || await this.extractTexts(this.images)
             } catch (e) {
-                console.log('extractTexts', e)
+                //console.log('extractTexts', e)
                 Toast.show({ text: e.message })
                 this.isSaving = false
                 return
@@ -300,7 +300,7 @@ export default {
                 this.script = data
                 this.$router.push(`/scan/${data.reference}`)
             }).catch((e) => {
-                console.log('scripts/create', e)
+                //console.log('scripts/create', e)
                 const message = e?.data?.message || e?.message || e?.statusText || 'An error occurred'
                 Toast.show({ text: message })
             }).finally(() => {

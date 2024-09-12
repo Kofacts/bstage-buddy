@@ -170,30 +170,30 @@ export default {
                         
                             vm.base64 = await vm.convertBlobToBase64(vm.blob)
                             vm.duration = await vm.getAudioDuration(vm.blob)
-                            console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'Recording stopped')
+                            //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'Recording stopped')
                             vm.savePractice({
                                 reference: vm.currentLine.reference,
                                 audio: vm.base64,
                                 duration: vm.duration,
                                 total_duration: (Date.now() - vm.startTime) / 1000
                             })
-                            console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'Ready to run next loop')
+                            //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'Ready to run next loop')
                             vm.runLoop()
                         };
                         recorder.start();
-                        console.log(new Date().toLocaleString(), 'recording started. Will stop in ', vm.currentLine?.duration, 'seconds' )
+                        //console.log(new Date().toLocaleString(), 'recording started. Will stop in ', vm.currentLine?.duration, 'seconds' )
                         vm.recorder = recorder;
 
                         setTimeout((vm, recorder) => {
                             recorder.stop()
-                            console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'recording queued to stop')
+                            //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'recording queued to stop')
                         }, (vm.currentLine?.duration || 2) * 1000, vm, vm.recorder)
                     },
                     stopRecording: async (vm) => {
                         // stop recording
-                        console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'stopping recording')
+                        //console.log(new Date().toLocaleString(), vm.currentLine?.reference, 'stopping recording')
                         vm.recorder.stop()
-                        console.log(new Date().toLocaleString(), this.currentLine?.reference, 'recording stopped')
+                        //console.log(new Date().toLocaleString(), this.currentLine?.reference, 'recording stopped')
                     },
                 },
                 capacitor: {
@@ -218,7 +218,7 @@ export default {
                             await vm._recording.capacitor.checkPermissions()
                             await vm._recording.capacitor.requestPermissions()
                             vm.recording = await Microphone.startRecording();
-                            console.log('startRecordingResult: ' + JSON.stringify(this.recording));
+                            //console.log('startRecordingResult: ' + JSON.stringify(this.recording));
                         } catch (error) {
                             console.error('startRecordingResult Error: ' + JSON.stringify(error));
                         }
@@ -284,7 +284,7 @@ export default {
             });
         },
         getAudioDuration(file) {
-            console.log('getAudioDuration', file)
+            //console.log('getAudioDuration', file)
             return new Promise((resolve, reject) => {
                 const audio = new Audio();
                 audio.preload = 'metadata';
@@ -304,10 +304,10 @@ export default {
         savePractice(payload) {
             this.$store.dispatch('scripts/savePractice', payload)
                 .then(({ message }) => {
-                    console.log('message', message)
+                    //console.log('message', message)
                     Toast.show({ text: message })
                 }).catch((e) => {
-                    console.log('e', e)
+                    //console.log('e', e)
                     Toast.show({ text: e.message })
                 })
         },
@@ -340,22 +340,22 @@ export default {
 
         runLoop() {
             if (this.isEnded || !this.isPlayingAudio) {
-                console.log(new Date().toLocaleString(), 'already ended');
+                //console.log(new Date().toLocaleString(), 'already ended');
                 return;
             }
 
-            console.log('previous line', this.currentLine?.reference);
+            //console.log('previous line', this.currentLine?.reference);
             this.currentLine = this.lines[this.index++];
 
             if (this.currentLine) {
-                console.log(new Date().toLocaleString(), this.currentLine.reference, 'next line found');
+                //console.log(new Date().toLocaleString(), this.currentLine.reference, 'next line found');
                 const vm = this;
 
                 if (this.currentLine.character?.is_self) {
-                    console.log(new Date().toLocaleString(), this.currentLine.reference, 'is self: start recording');
+                    //console.log(new Date().toLocaleString(), this.currentLine.reference, 'is self: start recording');
                     this._recording[this.platform].startRecording(vm);
                 } else {
-                    console.log(new Date().toLocaleString(), this.currentLine?.reference, 'is AI: start playing');
+                    //console.log(new Date().toLocaleString(), this.currentLine?.reference, 'is AI: start playing');
                     const audio = new Audio(this.currentLine.audio_url);
                     audio.play();
                     audio.addEventListener("loadedmetadata", function () {
@@ -364,7 +364,7 @@ export default {
                     });
 
                     audio.addEventListener("ended", function () {
-                        console.log(new Date().toLocaleString(), vm.currentLine?.reference, "audio playing ended");
+                        //console.log(new Date().toLocaleString(), vm.currentLine?.reference, "audio playing ended");
                         vm.runLoop();
                     });
                 }
@@ -372,7 +372,7 @@ export default {
                 this.isEnded = true;
                 this.endTime = Date.now();
                 this.isPlayingAudio = false;
-                console.log(new Date().toLocaleString(), this.currentLine?.reference, 'Completed all lines');
+                //console.log(new Date().toLocaleString(), this.currentLine?.reference, 'Completed all lines');
                 this.$router.push({ path: `/stats/${this.script.reference}` });
             }
         },
@@ -380,7 +380,7 @@ export default {
     },
     watch: {
         isPlayingAudio(newVal) {
-            console.log(new Date().toLocaleString(), 'new val', newVal)
+            //console.log(new Date().toLocaleString(), 'new val', newVal)
 
             if (newVal) {
                 this.runLoop()
@@ -417,14 +417,21 @@ export default {
             this.$store.dispatch('scripts/fetchScript', this.$route.params.reference),
         ]).finally(() => {
             this.loaded = true
-            console.log(this.lines)
+            //console.log(this.lines)
         })
 
     },
     mounted() {
         console.log(window.Capacitor.platform)
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
+        if(this._recording[this.platform].checkPermissions) {
+            this._recording[this.platform].checkPermissions().then(() => {
 
+                if(this._recording[this.platform].requestPermissions) {
+                    this._recording[this.platform].requestPermissions()
+                }
+            })
+        }
     }
 }
 </script>

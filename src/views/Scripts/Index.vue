@@ -173,7 +173,7 @@ export default {
             this.isDeleteModalVisible = false;
         },
         triggerDelete(item) {
-            console.log('item', item)
+            //console.log('item', item)
             this.deleteItem = item;
             this.openDeleteModal()
         },
@@ -181,14 +181,14 @@ export default {
             this.loaded = false
             this.$store.dispatch('scripts/deleteScript', this.deleteItem.reference)
                 .then(({ data, message }) => {
-                    console.log('data', data, 'message', message)
+                    //console.log('data', data, 'message', message)
                     this.$store.dispatch('scripts/fetchScripts').finally(() => {
                         this.loaded = true
                         Toast.show({ text: message })
                     })
 
                 }).catch((e) => {
-                    console.log('e', e)
+                    //console.log('e', e)
                     this.loaded = true
                     Toast.show({ text: e.data?.message || e.message })
                 }).finally(() => {

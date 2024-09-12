@@ -45,7 +45,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string></string>
 		<string>audio</string>
 		<string>fetch</string>
 		<string>voip</string>
