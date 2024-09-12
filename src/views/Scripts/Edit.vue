@@ -330,7 +330,7 @@ export default {
             this.addLine = payload
         },
         handleOrderChange(pageIndex, val) {
-            console.log('handleOrderChange', val)
+            //console.log('handleOrderChange', val)
             const { added, removed } = val || {}
             this.script.pages = this.script.pages.map((page, i) => {
                 if (removed && pageIndex === i) {
