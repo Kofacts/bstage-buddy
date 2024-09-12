@@ -54,7 +54,7 @@
             <div id="script-wrapper" :class="{ 'pt-36': modeType == 'editScript' }"
                 class="h-[10000px] relative bg-nano-light flex flex-col gap-[10px] text-black pt-16 pl-[20px] pr-[20px]">
                 <!-- lines goes here depending on mode-->
-                <div :class="`mt-${index}`" :style=" (index+1) == script.pages.length ? 'padding-bottom:150px' : 'padding-bottom:10px'" v-for="(page, index) in script.pages" :key="page.reference">
+                <div :class="{'mt-24': index == 0}" :style=" (index+1) == script.pages.length ? 'padding-bottom:150px' : 'padding-bottom:10px'" v-for="(page, index) in script.pages" :key="page.reference">
                     <div class="sticky top-20"> 
                         {{ index+1 }}/{{ script.pages?.length }}
                     </div>
