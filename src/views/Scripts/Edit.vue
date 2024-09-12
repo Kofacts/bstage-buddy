@@ -84,7 +84,7 @@
                     </div>
 
                     <draggable v-model="script.pages[index].lines" handle=".drag-handle" group="people" @start="drag = true"
-                        @end="drag = false" @change="handleOrderChange" item-key="id">
+                        @end="drag = false" @change="(val) => handleOrderChange(index, val)" item-key="id">
                         <template #item="{ element }">
                             <div v-if="!element.deleted" class="relative"
                                 :class="{ 'ml-20': element.character?.is_self }">
@@ -330,6 +330,7 @@ export default {
             this.addLine = payload
         },
         handleOrderChange(pageIndex, val) {
+            console.log('handleOrderChange', val)
             const { added, removed } = val || {}
             this.script.pages = this.script.pages.map((page, i) => {
                 if (removed && pageIndex === i) {
