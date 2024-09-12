@@ -514,7 +514,7 @@ export default {
             pages.forEach((page) => {
                 lines = lines.concat(page.lines.map((e => {
                     let line = JSON.parse(JSON.stringify(e))
-                    line.index = index++
+                    line.index = line.order + index++
                     line.page = {
                         number: page.number,
                         reference: page.reference
@@ -522,7 +522,8 @@ export default {
                     return line
                 })))
             })
-            //lines.sort((a, b) => a.order - b.order)
+            lines.sort((a, b) => a.index - b.index)
+            console.log('lines', lines)
             return lines
         },
     },
