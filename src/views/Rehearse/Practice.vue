@@ -508,13 +508,14 @@ export default {
         },
         lines() {
             let lines = []
-            let index = 0
+            let highestOrder = 0
             let pages = this.script.pages || []
             pages.sort((a, b) => a.number - b.number)
             pages.forEach((page) => {
                 lines = lines.concat(page.lines.map((e => {
                     let line = JSON.parse(JSON.stringify(e))
-                    line.index = line.order + index++
+                    index++
+                    line.order = line.order + index
                     line.page = {
                         number: page.number,
                         reference: page.reference
@@ -522,7 +523,7 @@ export default {
                     return line
                 })))
             })
-            lines.sort((a, b) => a.index - b.index)
+            //lines.sort((a, b) => a.order - b.order)
             console.log('lines', lines)
             return lines
         },
