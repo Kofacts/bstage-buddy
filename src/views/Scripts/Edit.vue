@@ -329,8 +329,8 @@ export default {
             this.showDialogue = true
             this.addLine = payload
         },
-        handleOrderChange(pageIndex, { added, removed }) {
-
+        handleOrderChange(pageIndex, val) {
+            const { added, removed } = val || {}
             this.script.pages = this.script.pages.map((page, i) => {
                 if (removed && pageIndex === i) {
                     let line = JSON.parse(JSON.stringify(removed.element))
