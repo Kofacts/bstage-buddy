@@ -301,10 +301,11 @@ export default {
                     requestPermissions: async () => {
                         try {
                             const requestPermissionsResult = await Microphone.requestPermissions();
-                            return checkPermissionsResult.microphone === 'granted'
-                            //console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
+                            console.log('Osaka', requestPermissionsResult);
+                            return requestPermissionsResult.microphone === 'granted'
+                            // console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
                         } catch (error) {
-                            //console.error('requestPermissions Error: ' + JSON.stringify(error));
+                            console.error('requestPermissions Error: ' + JSON.stringify(error));
                             Toast.show({ text: 'Failed to request permission' })
                             return false
                         }
@@ -537,6 +538,7 @@ export default {
 
     },
     mounted() {
+        console.log("Platform:", window.Capacitor.platform); 
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
         if (this._recording[this.platform].checkPermissions) {
 

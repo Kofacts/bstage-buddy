@@ -10,7 +10,7 @@
                     <div>
                         <h6 class="text-[30px] text-semi" v-if="modeType !== 'editScript'">{{ script.title }}</h6>
                         <input v-else type="text"
-                            class="bg-[#4A232C] text-[30px] h-[33.674px] text-center outline-none text-semi"
+                            class="bg-[#4A232C] text-[30px] h-[44px] text-center outline-none text-semi"
                             v-model="script.title" />
                     </div>
                     <div>
@@ -106,13 +106,10 @@
                                 </div>
                                 <button @click="deleteLine(element, index)"
                                     class="absolute right-0 top-12 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
-                                    <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
-                                        stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z"
-                                            fill-rule="nonzero" />
+                                   <svg width="16" height="16" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.4623 4.00033H0.463135M6.53179 3.50036V2.93142C6.53179 1.865 7.3963 1.00049 8.46272 1.00049V1.00049C9.52915 1.00049 10.3937 1.865 10.3937 2.93142V3.50036M2.11822 4.00033L3.22161 18.9996H13.7038L14.8072 4.00033H2.11822Z" stroke="#FFF"/>
                                     </svg>
+
                                 </button>
                             </div>
                         </template>

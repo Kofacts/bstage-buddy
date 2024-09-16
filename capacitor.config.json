@@ -1,25 +1,30 @@
 {
-    "appId": "com.nanonebula.backstage",
-    "appName": "BackStageBuddy",
-    "webDir": "www",
-    "bundledWebRuntime": true,
-    "allowMixedContent": false,
-    "plugins": {
-        "SplashScreen": {
-          "launchShowDuration": 9000,   
-          "launchAutoHide": false, 
-          "backgroundColor": "#3E1821",
-          "androidScaleType": "CENTER_CROP",
-          "showSpinner": true,
-          "splashFullScreen": true,
-          "splashImmersive": true
-        }
-    },
-    "ios": {
-      "scheme": "BackStageBuddy"
-    },
-    "android": {
-      "allowMixedContent": false
+  "appId": "com.nanonebula.backstage",
+  "appName": "BackStageBuddy",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "allowMixedContent" :  true,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#3E1821",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": false,
+      "splashImmersive": false
     }
+  },
+  "ios": {
+    "scheme": "BackStageBuddy"
+  },
+  "android": {
+    "allowMixedContent": true 
+  },
+   "server": {
+    "url": "http://192.168.1.137:81/",
+    "allowNavigation": ["*.mybackstagebuddy.com"],
+    "androidScheme": "http",
+    "cleartext": true
   }
-  
+}

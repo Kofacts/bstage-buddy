@@ -50,7 +50,9 @@ div {
   -ms-user-select: none; /* IE 10+ */
   user-select: none; /* Standard syntax */
 }
-
+h3 {
+  line-height: 38.5px;
+}
 button:disabled {
   opacity: 0.5
 }

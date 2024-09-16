@@ -31,27 +31,18 @@
                 Buddy
             </div>
         </div>
-        <div>
-
-          <button @click="handleDelete"
-                                    class="mt-2 float-right flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
-                                    <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
-                                        stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z"
-                                            fill-rule="nonzero" />
-                                    </svg>
-                                </button>
-            <select @change="handleVoiceChange" :disabled="character.is_self"
+        <div v-show="!character.is_self">
+            <select @change="handleVoiceChange" 
                 class="bg-nano-light h-[40px] mt-[20px] w-full text-nano-dark outline-none text-[18px] pl-[15px] pr-[15px]">
                 <option :selected="voice.id === character.voice_id" v-for="voice in voices" :key="voice.reference" :value="voice.id">{{ voice.name }}
                 </option>
             </select>
-            
         </div>
         <div v-if="!character.is_self && voice?.audio_url" class="mt-[20px]">
             <audio-player :name="voice.name" :key="voice.id" :src="voice.audio_url"></audio-player>
+        </div>
+        <div> 
+            <svg @click="handleDelete" class="mt-2 float-right" id="delete" width="42" height="41" viewBox="0 0 42 41" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.46289" y="0.5" width="40" height="40" rx="10" fill="#E7EEBE"></rect><path d="M29.4626 14.5003H13.4634M19.532 14.0004V13.4314C19.532 12.365 20.3965 11.5005 21.463 11.5005V11.5005C22.5294 11.5005 23.3939 12.365 23.3939 13.4314V14.0004M15.1185 14.5003L16.2219 29.4996H26.7041L27.8075 14.5003H15.1185Z" stroke="#3E1821"></path></svg>
         </div>
 
         <div>
