@@ -145,7 +145,7 @@
                     fill="#E5EEB9" stroke="#E5EEB9" stroke-width="1.75" stroke-linejoin="round" />
             </svg> -->
             <img src="@/assets/star blink.gif" class="w-24" />
-            <h6 class="text-[25px] -mt-20">Analyzing Text...</h6>
+            <h6 class="text-[25px] -mt-20">Fetching Scripts...</h6>
         </div>
     </div>
 </template>
