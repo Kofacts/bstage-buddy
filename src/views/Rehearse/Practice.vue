@@ -413,7 +413,19 @@ export default {
                     // Toast.show({ text: e.message })
                 })
         },
+        startPractice() {
+            this.$store.dispatch('scripts/startPractice', {
+                reference: this.script.reference
+            })
+                .then(({ message }) => {
+                    console.log('cleared existing practice', message)
+                }).catch((e) => {
+                    console.log('startPractice', e)
+                    // Toast.show({ text: e.message })
+                })
+        },
         startRehearsal() {
+            this.startPractice()
             this.startTime = Date.now();
             this.isPlayingAudio = true
         },
@@ -538,7 +550,7 @@ export default {
 
     },
     mounted() {
-        console.log("Platform:", window.Capacitor.platform); 
+        console.log("Platform:", window.Capacitor.platform);
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
         if (this._recording[this.platform].checkPermissions) {
 
