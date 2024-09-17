@@ -279,7 +279,12 @@ export default {
             this.saving = true
             let payload = {}
             Object.assign(payload, this.script)
-
+            payload.characters = (payload.characters || []).map((character) => {
+                if(character.voice?.audio_url) {
+                    delete character.voice.audio_url
+                }
+                return character
+            })
             payload.pages = payload.pages.map((page) => {
                 page.lines = page.lines.map((line) => {
                     let newLine = {}
