@@ -31,7 +31,11 @@
                 </button>
             </div>
             <characters @characterEdit="({ updateIndex, newVal }) => charactersEdit[updateIndex] = newVal" v-for="(character,index) in charactersEdit.filter((s) => !s.deleted)" :voices="voices" :key="index" :char="character" :charIndex="index"></characters>
-
+            
+            <div class="flex items-center w-full justify-center gap-6"> 
+                <button @click="$emit('closeCharModal')" class="text-[19px]">Cancel</button>
+                <button @click="() => { $emit('saveChanges'); isSaving = true}"  class="rounded-[15px] bg-nano-light pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]" :disabled="isSaving">{{ isSaving ? 'Saving...' : 'Save Changes'}}</button>
+            </div>
             <div class="flex flex-col items-center justify-center gap-[20.25px] mt-[32px]" @click="charactersEdit.push({name: ''})"> 
                 <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="20.5" cy="20.2393" r="20" fill="#E7EEBE"/>
@@ -53,6 +57,7 @@ export default {
     data() {
         return {
             step: 1,
+            isSaving: false,
             values: [
                 {
                     name: 'Otilo',

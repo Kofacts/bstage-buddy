@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <assign-role @closeCharModal="modeType = 'editScript'" @charactersChange="handleRoleChange" :key="currentScript.reference"
+        <assign-role @saveChanges="updateScript" @closeCharModal="modeType = 'editScript'" @charactersChange="handleRoleChange" :key="currentScript.reference"
             :voices="voices" :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
 
