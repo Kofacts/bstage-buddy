@@ -14,6 +14,7 @@ import Login from '@/views/Auth/Login.vue';
 import Register from '@/views/Auth/Register.vue';
 import ForgotPassword from '@/views/Auth/ForgotPassword.vue';
 import ResetPassword from '@/views/Auth/ResetPassword.vue';
+import Contact from '@/views/Contact/Index.vue';
 // import About from '@/views/About.vue';
 
 const routes = [
@@ -117,6 +118,11 @@ const routes = [
     path: '/auth/reset-password',
     name: 'reset-password',
     component: ResetPassword,
+  },
+  {
+    path: '/test',
+    name: 'contact',
+    component: Contact,
   },
 ];
 

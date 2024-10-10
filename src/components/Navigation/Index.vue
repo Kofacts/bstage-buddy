@@ -1,5 +1,5 @@
 <template>
-    <div class="border-t-[0.1px] bg-nano-dark z-[999] border-nano-light fixed bottom-0 w-full pt-[15px] pl-[30px] pr-[30px] pb-[27px] flex justify-between items-center"> 
+    <div class="border-t-[0.1px] bg-nano-dark z-[999] border-nano-light fixed bottom-0 w-full pt-[15px] pl-[20px] pr-[20px] pb-[27px] flex justify-between items-center"> 
         <router-link :to="{name: 'home'}" class="flex items-center justify-center flex-col gap-[5px]"> 
             <svg width="27" height="28" viewBox="0 0 27 28" fill="none" xmlns="http://www.w3.org/2000/svg">
              <path d="M1 27V11.9032L13.61 1L25.8132 11.9032V27H1Z" stroke="#E7EEBE" stroke-width="1.25"/>
@@ -28,6 +28,10 @@
                 <path d="M21.1631 2.7248L24.9923 3.35454M24.9923 3.35454L24.3557 7.14252M24.9923 3.35454L9.36214 14.4084M4.18652 2.43043L4.18652 28.0303L35.2403 28.0303M10.0091 20.3503L10.0091 28.0303M22.9482 12.6704L22.9482 28.0303M29.4177 8.83038L29.4177 28.0303M16.4786 17.7903L16.4786 28.0303" stroke="#E7EEBE"/>
             </svg>
             <span class="text-[14px]">Stats</span>
+        </router-link>
+        <router-link :to="{name: 'contact'}" class="flex items-center justify-center flex-col gap-[5px]"> 
+            <svg width="39" height="39"  viewBox="0 0 39 33" xmlns="http://www.w3.org/2000/svg" fill="none" fill-rule="evenodd" clip-rule="evenodd"><path stroke-width="1%" stroke="#E7EEBE" d="M24 21h-24v-18h24v18zm-23-16.477v15.477h22v-15.477l-10.999 10-11.001-10zm21.089-.523h-20.176l10.088 9.171 10.088-9.171z"/></svg>
+            <span class="text-[14px]">Contact</span>
         </router-link>
     </div>
 </template>
