@@ -24,7 +24,7 @@
         <label class="block flex-col w-full mt-4">
           <span class="text-white-700 text-[18px] text-center w-full">Message <sup>*</sup></span>
           <input type="text" class="form-input mt-1 block w-full bg-[#4A232C] pt-[13.5px] pb-[13.5px] h-[66px] text-center rounded-md focus:border-yellow-600"
-            v-model="body.message" name="email" placeholder="Enter your Email" />
+            v-model="body.message" name="email" placeholder="Enter message" />
          
         </label>
 
