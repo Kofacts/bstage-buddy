@@ -14,16 +14,34 @@ import Navi from '@/components/Navigation/Index.vue'
 
 <script>
 import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+import { AppTrackingTransparency } from 'capacitor-plugin-app-tracking-transparency';
+
 export default {
   data() {
     return {
       loaded: false,
+      isPersonalized: false,
       namesWithBanner: [
         'home', 'scripts', 'rehearse-practice','scan-edit','rehearse','stats'
       ]
     };
   },
   methods: {
+    async requestTrackingPermission() {
+      try {
+        const status = await AppTrackingTransparency.requestPermission(); // Request permission
+        if (status === 'authorized') {
+          console.log('User authorized tracking');
+          this.isPersonalized = true;  // Set to true if user allowed tracking
+        } else {
+          console.log('User denied tracking');
+          this.isPersonalized = false;  // Set to false if user denied tracking
+        }
+      } catch (error) {
+        console.error('Tracking permission error:', error);
+        this.isPersonalized = false;  // Default to non-personalized ads if error occurs
+      }
+    },
     async showBannerAd() {
       try {
         const options = {
@@ -31,7 +49,8 @@ export default {
           adSize: BannerAdSize.FULL_BANNER,  // Options: BANNER, FULL_BANNER, LARGE_BANNER, LEADERBOARD, MEDIUM_RECTANGLE
           position: BannerAdPosition.TOP_CENTER,  // Options: TOP_CENTER, BOTTOM_CENTER
           margin: 0,
-          isTesting: true, // Set this to false when deploying to production
+          isTesting: false, // Set this to false when deploying to production
+          npa: this.isPersonalized ? 0 : 1,
         };
 
         await AdMob.showBanner(options);
@@ -46,7 +65,8 @@ export default {
           adSize: BannerAdSize.FULL_BANNER,  // Options: BANNER, FULL_BANNER, LARGE_BANNER, LEADERBOARD, MEDIUM_RECTANGLE
           position: BannerAdPosition.TOP_CENTER,  // Options: TOP_CENTER, BOTTOM_CENTER
           margin: 0,
-          isTesting: true, // Set this to false when deploying to production
+          isTesting: false, // Set this to false when deploying to production
+          npa: this.isPersonalized ? 0 : 1,
         };
 
         await AdMob.prepareInterstitial(options);
@@ -69,22 +89,27 @@ export default {
   computed: {
  
   },
-  mounted() {
-    this.$auth.load().then(() => {
-      //console.log('user', this.$auth.user(), this.$route.path)
-      if(this.$auth.user()?.email && this.$route.path == '/') {
-        this.$router.push('/home')
-      }
-      this.loaded = true
+  async mounted() {
+    try {
+      this.$auth.load().then(async () => {
+        if (this.$auth.user()?.email && this.$route.path == '/') {
+          this.$router.push('/home');
+        }
+        this.loaded = true;
 
-      let namesWithBanner = this.namesWithBanner // Define route names where the banner should appear
-        
-      if (this.routeNameMatches(namesWithBanner)) {
-          this.showBannerAd();
-      } else {
+        // Request tracking permission
+        await this.requestTrackingPermission();  // Set isPersonalized based on user consent
+
+        let namesWithBanner = this.namesWithBanner;
+        if (this.routeNameMatches(namesWithBanner)) {
+          this.showBannerAd();  // Show ads based on user permission
+        } else {
           this.hideBannerAd();
-      }
-  }).catch((e) => console.log('auth failed', e))
+        }
+      }).catch((e) => console.log('auth failed', e));
+    } catch (error) {
+      console.error('Mounting error:', error);
+    }
   },
   watch: {
     '$route.name'(newName) {

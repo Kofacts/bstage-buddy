@@ -40,6 +40,26 @@
                 </svg>
                 {{ button.autoRegister ? 'Loading...' : 'Skip Sign in' }}
             </button>
+            <button :disabled="button.autoRegister" @click="$router.push({name: 'register'})"
+                class="rounded-[15px] bg-nano-light mt-2 w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
+                <svg width="28" height="18" viewBox="0 0 28 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8.95166" cy="6.55273" r="3.55273" stroke="#3E1821" />
+                    <path
+                        d="M7.75981 10.1454C7.56236 10.6528 6.37076 11.5017 4.71453 12.4293C3.0583 13.3569 1.66918 16.0388 1.5 17.0821"
+                        stroke="#3E1821" />
+                    <path
+                        d="M9.87447 10.1454C10.0719 10.6528 11.2635 11.5017 12.9197 12.4293C14.576 13.3569 15.9651 16.0388 16.1343 17.0821"
+                        stroke="#3E1821" />
+                    <circle cx="18.9519" cy="5.05591" r="3.55273" stroke="#3E1821" />
+                    <path
+                        d="M17.7599 8.64856C17.5625 9.15603 16.3709 10.0049 14.7147 10.9325C14.1025 11.2754 13.5267 11.858 13.0356 12.5089"
+                        stroke="#3E1821" />
+                    <path
+                        d="M19.8747 8.64853C20.0722 9.156 21.2638 10.0049 22.92 10.9325C24.5762 11.8601 25.9653 14.542 26.1345 15.5853"
+                        stroke="#3E1821" />
+                </svg>
+                {{  'Create Account' }}
+            </button>
             <button  v-if="false"
                 class="rounded-[15px] mt-[14px] bg-nano-light w-full h-[66px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
