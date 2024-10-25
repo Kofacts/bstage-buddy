@@ -57,7 +57,7 @@
                     :class="{ 'pt-80': false, 'mt-32': index === 0, 'mt-24 pt-4': modeType == 'rehearse' && isPlayingAudio, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
                     <div class="sticky top-32 pl-4" :class="{ 'top-24': modeType == 'rehearse' && isPlayingAudio }">
-                        {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
+                        Page {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
                     </div>
                     <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"

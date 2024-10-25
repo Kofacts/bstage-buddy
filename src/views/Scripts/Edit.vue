@@ -56,7 +56,7 @@
                 <!-- lines goes here depending on mode-->
                 <div :class="{'mt-24': index == 0}" :style=" (index+1) == script.pages.length ? 'padding-bottom:150px' : 'padding-bottom:10px'" v-for="(page, index) in script.pages" :key="page.reference">
                     <div class="sticky top-20"> 
-                        {{ index+1 }}/{{ script.pages?.length }}
+                        Page {{ index+1 }}/{{ script.pages?.length }}
                     </div>
                     <div class="flex items-end gap-2  justify-end mb-4">
                         <button @click="modeType = 'assign'"

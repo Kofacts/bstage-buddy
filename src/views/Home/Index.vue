@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-[20px] pt-[10px] flex items-center justify-center">
+        <div class="p-[20px] pt-[10px] flex flex-col gap-2 items-center justify-center">
             <router-link :to="{ path: '/scan', query: { trigger: true } }"
                 class="rounded-[15px] bg-nano-light w-full h-[53px] w-[288px] flex items-center justify-center text-nano-dark gap-[15px]">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,6 +59,11 @@
                 </svg>
                 Scan a script
             </router-link>
+            <button
+                @click="logOut"
+                class="rounded-[15px] bg-transparent w-full h-[53px] w-[288px] flex items-center justify-center text-nano-light gap-[15px]">
+                Logout
+            </button>
             
         </div>
     </div>
@@ -67,6 +72,7 @@
 
 <script>
 import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+import { Toast } from '@capacitor/toast';
 export default {
     data() {
         return {
@@ -74,7 +80,21 @@ export default {
         }
     },
   methods: {
-
+      logOut() {
+            this.$auth
+                .logout({
+                makeRequest: false,
+                params: {}, // data: {} in axios
+                redirect: false,
+                // etc...
+                })
+                .finally(() => {
+                Toast.show({ text: 'You have been logged out successfully' })
+                localStorage.clear();
+                sessionStorage.clear();
+                this.$router.push({name:'login'})
+            });
+      }
   },
 }
 </script>
