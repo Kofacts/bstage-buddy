@@ -89,6 +89,20 @@ export default {
         });
     });
   },
+  startPractice(_state, payload) {
+    return new Promise((resolve, reject) => {
+      let url = `/scripts/${payload.reference}/practice`;
+      axios.patch(url, payload)
+        .then(async ({
+          data
+        }) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error.response)
+        });
+    });
+  },
   savePractice({ commit }, payload) {
     return new Promise((resolve, reject) => {
       let url = `/script_lines/${payload.reference}/practice`;

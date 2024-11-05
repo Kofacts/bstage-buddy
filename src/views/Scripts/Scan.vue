@@ -244,7 +244,9 @@ export default {
                 image = await Camera.getPhoto({
                     quality: 90,
                     allowEditing: true,
-                    resultType: CameraResultType.DataUrl
+                    resultType: CameraResultType.DataUrl,
+                    width: 600,
+                    height: 1200,
                 });
             } catch (e) {
                 //console.log(e.message)

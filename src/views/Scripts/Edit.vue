@@ -10,7 +10,7 @@
                     <div>
                         <h6 class="text-[30px] text-semi" v-if="modeType !== 'editScript'">{{ script.title }}</h6>
                         <input v-else type="text"
-                            class="bg-[#4A232C] text-[30px] h-[33.674px] text-center outline-none text-semi"
+                            class="bg-[#4A232C] text-[30px] h-[44px] text-center outline-none text-semi"
                             v-model="script.title" />
                     </div>
                     <div>
@@ -51,15 +51,12 @@
             <!-- <div class="h-[65px]w-full bg-black sticky top-0 pt-[23px] pl-[17px] pb-[23px] pr-[17px]"> 
                 Worse gang
             </div> -->
-
-            <div id="script-wrapper" :class="{ 'pt-36': modeType == 'editScript' }"
+            <div id="script-wrapper"
                 class="h-[10000px] relative bg-nano-light flex flex-col gap-[10px] text-black pt-16 pl-[20px] pr-[20px]">
                 <!-- lines goes here depending on mode-->
-
-
-                <div :class="`mt-${index} pb-[50px]`" v-for="(page, index) in script.pages" :key="page.reference">
-                    <div class="sticky top-20">
-                        {{ index + 1 }}/{{ script.pages?.length }}
+                <div :class="{'mt-24': index == 0}" :style=" (index+1) == script.pages.length ? 'padding-bottom:150px' : 'padding-bottom:10px'" v-for="(page, index) in script.pages" :key="page.reference">
+                    <div class="sticky top-20"> 
+                        Page {{ index+1 }}/{{ script.pages?.length }}
                     </div>
                     <div class="flex items-end gap-2  justify-end mb-4">
                         <button @click="modeType = 'assign'"
@@ -86,13 +83,13 @@
                         <span class="text-xs text-gray-500">Reorder lines by dragging each item</span>
                     </div>
 
-                    <draggable v-model="script.pages[index].lines" group="people" @start="drag = true"
+                    <draggable v-model="script.pages[index].lines" handle=".drag-handle" group="people" @start="drag = true"
                         @end="drag = false" @change="(val) => handleOrderChange(index, val)" item-key="id">
                         <template #item="{ element }">
                             <div v-if="!element.deleted" class="relative"
                                 :class="{ 'ml-20': element.character?.is_self }">
                                 <button
-                                    class="absolute -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
+                                    class="absolute drag-handle -left-3 top-12 flex items-center justify-center bg-[#f8ffd2] h-6 w-6 rounded-full">
                                     <svg fill="black" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
                                         stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -109,13 +106,10 @@
                                 </div>
                                 <button @click="deleteLine(element, index)"
                                     class="absolute right-0 top-12 flex items-center justify-center bg-red-700 h-6 rounded-full w-6">
-                                    <svg fill="white" width="18" height="18" clip-rule="evenodd" fill-rule="evenodd"
-                                        stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z"
-                                            fill-rule="nonzero" />
+                                   <svg width="16" height="16" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16.4623 4.00033H0.463135M6.53179 3.50036V2.93142C6.53179 1.865 7.3963 1.00049 8.46272 1.00049V1.00049C9.52915 1.00049 10.3937 1.865 10.3937 2.93142V3.50036M2.11822 4.00033L3.22161 18.9996H13.7038L14.8072 4.00033H2.11822Z" stroke="#FFF"/>
                                     </svg>
+
                                 </button>
                             </div>
                         </template>
@@ -125,11 +119,11 @@
                 </div>
             </div>
         </div>
-        <assign-role @closeCharModal="modeType = ''" @charactersChange="handleRoleChange" :key="currentScript.reference"
+        <assign-role @saveChanges="updateScript" @closeCharModal="modeType = 'editScript'" @charactersChange="handleRoleChange" :key="currentScript.reference"
             :voices="voices" :characters="currentScript.characters" v-if="modeType == 'assign'"></assign-role>
 
 
-        <Modal :isVisible="isSavingModalVisible" @close="isSavingModalVisible = false">
+        <Modal :isVisible="isSavingModalVisible" @close="saveEdition()">
             <h3 class="text-[25px] text-center">Do you want to save the edition changes?</h3>
             <div class="flex flex-col mt-[78px] gap-[15px]">
                 <button @click="updateScript" :disabled="saving"
@@ -151,10 +145,10 @@
                 </button>
             </div>
         </Modal>
-
-        <div class="fixed h-[15vh] flex items-center justify-center   z-50 w-full bottom-0">
+        
+        <div class="fixed h-[12vh] flex items-center justify-center   z-50 w-full bottom-0">
             <div
-                class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[24.5px] pl-[14px] pr-[14px]">
+                class="h-[100%] w-full flex flex-row items-center justify-center gap-[15px] relative -top-[10vh] bg-[#3e182166] rounded-t-[10px]  pb-[20.5px] pl-[14px] pr-[14px]">
                 <!-- <button @click="modeType = 'editScript'"
                     class="rounded-[15px] bg-nano-light w-full pt-[20px] pb-[20px] pl-[24px] pr-[24px] flex items-center justify-center text-nano-dark gap-[15px] text-[19px]">
                     <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,7 +217,7 @@ export default {
             isDeleteModalVisible: false,
             isSavingModalVisible: false,
             isSaving: true,
-            modeType: 'edit',
+            modeType: 'editScript',
             showDialogue: false,
             script: {},
             addLine: {},
@@ -255,6 +249,10 @@ export default {
         }
     },
     methods: {
+        saveEdition() {
+            this.isSavingModalVisible = false; 
+            this.modeType= 'editScript';
+        },
         cancelUpdate() {
             Object.assign(this.script, JSON.parse(JSON.stringify(this.currentScript)))
             this.script.pages = this.script.pages.map((_, i) => {
@@ -264,7 +262,7 @@ export default {
                 return this.script.pages[i]
             }).sort((a, b) => a.number - b.number)
             this.isSavingModalVisible = false;
-            this.modeType = 'edit'
+            this.modeType = 'editScript'
         },
         deleteLine(element, pageIndex) {
             let r = confirm('Are you sure to delete this line?')
@@ -281,7 +279,12 @@ export default {
             this.saving = true
             let payload = {}
             Object.assign(payload, this.script)
-
+            payload.characters = (payload.characters || []).map((character) => {
+                if(character.voice?.audio_url) {
+                    delete character.voice.audio_url
+                }
+                return character
+            })
             payload.pages = payload.pages.map((page) => {
                 page.lines = page.lines.map((line) => {
                     let newLine = {}
@@ -313,7 +316,7 @@ export default {
                     const message = e?.data?.message || e.message || e.statusText || 'An error occurred'
                     Toast.show({ text: message })
                 }).finally(() => {
-                    this.modeType = ''
+                    this.modeType = 'editScript';
                     this.saving = false
 
                     //console.log(this.modeType)
@@ -328,8 +331,9 @@ export default {
             this.showDialogue = true
             this.addLine = payload
         },
-        handleOrderChange(pageIndex, { added, removed }) {
-
+        handleOrderChange(pageIndex, val) {
+            //console.log('handleOrderChange', val)
+            const { added, removed } = val || {}
             this.script.pages = this.script.pages.map((page, i) => {
                 if (removed && pageIndex === i) {
                     let line = JSON.parse(JSON.stringify(removed.element))

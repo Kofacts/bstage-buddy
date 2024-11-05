@@ -9,7 +9,11 @@ PODS:
     - Capacitor
     - Google-Mobile-Ads-SDK (= 11.3.0)
   - CapacitorCordova (6.1.0)
+  - CapacitorPluginAppTrackingTransparency (2.0.5):
+    - Capacitor
   - CapacitorPreferences (6.0.0):
+    - Capacitor
+  - CapacitorSplashScreen (6.0.2):
     - Capacitor
   - CapacitorToast (6.0.0):
     - Capacitor
@@ -25,7 +29,9 @@ DEPENDENCIES:
   - "CapacitorClipboard (from `../../node_modules/@capacitor/clipboard`)"
   - "CapacitorCommunityAdmob (from `../../node_modules/@capacitor-community/admob`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - CapacitorPluginAppTrackingTransparency (from `../../node_modules/capacitor-plugin-app-tracking-transparency`)
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - "MozartecCapacitorMicrophone (from `../../node_modules/@mozartec/capacitor-microphone`)"
 
@@ -45,8 +51,12 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor-community/admob"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorPluginAppTrackingTransparency:
+    :path: "../../node_modules/capacitor-plugin-app-tracking-transparency"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
   MozartecCapacitorMicrophone:
@@ -58,12 +68,14 @@ SPEC CHECKSUMS:
   CapacitorClipboard: 80282f684154124b9019ebf401235b70b0cf4994
   CapacitorCommunityAdmob: 59456f0c29033d710ef90ef81044ad0eeab3caf6
   CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
+  CapacitorPluginAppTrackingTransparency: 2a2792623a5a72795f2e8f9ab3f1147573732fd8
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorSplashScreen: 250df9ef8014fac5c7c1fd231f0f8b1d8f0b5624
   CapacitorToast: ba573a7bc5dfd622e78d5be126a84ee221da4180
   Google-Mobile-Ads-SDK: 301a16c461c331ba34ff4dab40a22ab7c147af61
   GoogleUserMessagingPlatform: 6b4f48a370e77ce121d034c908cc6ee4fdafaf13
   MozartecCapacitorMicrophone: 43dd3a517756bbf909a5c47623b862fc518d92c4
 
-PODFILE CHECKSUM: 8c8a6791d3dbc05784a25fdb348c37f88eaf377a
+PODFILE CHECKSUM: 94010d077ca4dfdf02a2541ae949a7b234f10a58
 
 COCOAPODS: 1.15.2

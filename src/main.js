@@ -10,6 +10,7 @@ import App from './App.vue'
 import http        from './http';
 import store       from './store';
 import auth        from './plugins/auth';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 // import { AdMob } from '@capacitor-community/admob';
 
@@ -40,6 +41,13 @@ const initializeAdMob = async () => {
 //     testingDevices: ['YOUR_DEVICE_ID'], // Remove this in production
 //     initializeForTesting: true,
 //   });
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Your app initialization logic goes here
+
+  // Once your app is fully loaded, hide the splash screen
+  SplashScreen.hide();
+});
 
 app
 .use(http)

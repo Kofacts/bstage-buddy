@@ -53,11 +53,11 @@
                     </svg>
                 </div>
                 <!-- lines goes here depending on mode-->
-                <div class="mt-40 pb-[500px]"
-                    :class="{ 'pt-80': false, 'mt-24 pt-4': modeType == 'rehearse' && isPlayingAudio, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
+                <div class=" pb-[50px]"
+                    :class="{ 'pt-80': false, 'mt-32': index === 0, 'mt-24 pt-4': modeType == 'rehearse' && isPlayingAudio, 'border-b-[0.5px] border-nano-dark border-dashed': script.pages.length !== (index + 1) }"
                     v-for="(page, index) in script.pages" :key="index">
                     <div class="sticky top-32 pl-4" :class="{ 'top-24': modeType == 'rehearse' && isPlayingAudio }">
-                        {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
+                        Page {{ index + 1 || 1 }}/{{ script.pages?.length || 0 }}
                     </div>
                     <div :key="`op${index2}`" class="flex-col items-center justify-center flex mb-[10px]"
                         :class="{ 'bg-[#DCE2B3]': currentLine?.reference === line.reference, 'pl-10 pr-5': line.character?.is_self }"
@@ -301,10 +301,11 @@ export default {
                     requestPermissions: async () => {
                         try {
                             const requestPermissionsResult = await Microphone.requestPermissions();
-                            return checkPermissionsResult.microphone === 'granted'
-                            //console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
+                            console.log('Osaka', requestPermissionsResult);
+                            return requestPermissionsResult.microphone === 'granted'
+                            // console.log('requestPermissionsResult: ' + JSON.stringify(requestPermissionsResult));
                         } catch (error) {
-                            //console.error('requestPermissions Error: ' + JSON.stringify(error));
+                            console.error('requestPermissions Error: ' + JSON.stringify(error));
                             Toast.show({ text: 'Failed to request permission' })
                             return false
                         }
@@ -412,7 +413,19 @@ export default {
                     // Toast.show({ text: e.message })
                 })
         },
+        startPractice() {
+            this.$store.dispatch('scripts/startPractice', {
+                reference: this.script.reference
+            })
+                .then(({ message }) => {
+                    console.log('cleared existing practice', message)
+                }).catch((e) => {
+                    console.log('startPractice', e)
+                    // Toast.show({ text: e.message })
+                })
+        },
         startRehearsal() {
+            this.startPractice()
             this.startTime = Date.now();
             this.isPlayingAudio = true
         },
@@ -514,7 +527,8 @@ export default {
             pages.forEach((page) => {
                 lines = lines.concat(page.lines.map((e => {
                     let line = JSON.parse(JSON.stringify(e))
-                    line.index = index++
+                    index++
+                    line.order = line.order + index
                     line.page = {
                         number: page.number,
                         reference: page.reference
@@ -522,7 +536,8 @@ export default {
                     return line
                 })))
             })
-            lines.sort((a, b) => a.order - b.order)
+            //lines.sort((a, b) => a.order - b.order)
+            console.log('lines', lines)
             return lines
         },
     },
@@ -535,6 +550,7 @@ export default {
 
     },
     mounted() {
+        console.log("Platform:", window.Capacitor.platform);
         this.platform = window.Capacitor.platform === 'web' ? 'web' : 'capacitor'
         if (this._recording[this.platform].checkPermissions) {
 
