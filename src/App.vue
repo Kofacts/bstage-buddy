@@ -22,7 +22,7 @@ export default {
       loaded: false,
       isPersonalized: false,
       namesWithBanner: [
-        'home', 'scripts', 'rehearse-practice','scan-edit','rehearse','stats'
+        'home', 'scripts', 'rehearse-practice','scan-edit','rehearse','stats','stats-show'
       ]
     };
   },
@@ -75,6 +75,22 @@ export default {
         console.error('AdMob error:', error);
       }
     },
+    async showBigBannerAd() {
+      try {
+        const options = {
+          adId: 'ca-app-pub-4536763666052997/7534189018',  // Replace with your Ad Unit ID for the big banner
+          adSize: BannerAdSize.LARGE_BANNER,               // Options for larger banner sizes: FULL_BANNER, LARGE_BANNER, LEADERBOARD
+          position: BannerAdPosition.BOTTOM_CENTER,        // Position the banner at the bottom
+          margin: 0,
+          isTesting: false,                                // Set to false in production
+          npa: this.isPersonalized ? 0 : 1,
+        };
+
+        await AdMob.showBanner(options);
+      } catch (error) {
+        console.error('Big Banner AdMob error:', error);
+      }
+    },
     async hideBannerAd() {
       try {
         await AdMob.hideBanner();
@@ -102,8 +118,10 @@ export default {
 
         let namesWithBanner = this.namesWithBanner;
         if (this.routeNameMatches(namesWithBanner)) {
-          this.showBannerAd();  // Show ads based on user permission
-        } else {
+          this.showBannerAd(); 
+          // this.showBigBannerAd(); // Show ads based on user permission
+        }
+        else {
           this.hideBannerAd();
         }
       }).catch((e) => console.log('auth failed', e));

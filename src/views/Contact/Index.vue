@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col h-[100vh] max-h-[100vh] overflow-y-scroll pb-[60px] items-center justify-center pt-[29px] h-full">
-    <div class="t-[68.5px] w-full pl-[20px] pr-[20px] flex flex-col">
+    <div class="t-[68.5px] w-full pl-[20px] pt-[120px] pr-[20px] flex flex-col">
       <div> 
           <h3 class="text-[30px] text-semi text-center">Get in Touch</h3>
       </div>
     
+      <AdMob adId="ca-app-pub-4536763666052997/9968780669" />
 
-
-      <form class="flex-col w-full mt-[79px]" @submit.prevent="sendEmail">
+      <form class="flex-col w-full mt-[29px]" @submit.prevent="sendEmail">
         <div class="flex mt-4 gap-2 w-full">
           <label class="block flex-col w-full">
             <span class="text-white-700 text-[18px] text-center w-full">Name</span>
@@ -44,9 +44,10 @@
 import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import emailjs from 'emailjs-com';
-
+import AdMob from '@/components/AdMob.vue';
 export default {
   title: "Register",
+  components: {AdMob},
   data() {
     return {
       passwordType: "password",

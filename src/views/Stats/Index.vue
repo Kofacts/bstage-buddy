@@ -14,7 +14,7 @@
                 </router-link >
             </div>
         </div>
-
+        
         <div v-else class="flex flex-col justify-between h-[83.4vh] max-h-[83.4vh] overflow-y-scroll">
             <div>
                 <div class="flex items-center justify-center flex-col p-[20px] pt-[29px]"> 
@@ -33,7 +33,7 @@
                 </router-link >
             </div>
         </div>
-
+        <InterstitialAd ref="interstitialAd" adId="ca-app-pub-4536763666052997/9968780669" />
     
     </div>
    
@@ -43,8 +43,11 @@
 import Carousel from '@/components/Carousel.vue';
 import Modal from '@/components/Modal.vue'
 import CarouselPlaceholder from '@/components/CarouselPlaceholder.vue';
+// import AdBanner from '@/components/AdMob.vue';
+import InterstitialAd from '@/components/AdInter.vue';
+
 export default {
-    components: { Carousel, Modal, CarouselPlaceholder },
+    components: { Carousel, Modal, CarouselPlaceholder, InterstitialAd },
     data() {
         return {
             loaded: false,
@@ -66,8 +69,11 @@ export default {
             this.$store.dispatch('scripts/fetchScripts'),
         ]).finally(() => {
             this.loaded = true
+            this.$refs.interstitialAd.showInterstitialAd();
         })
-
     },
+    mounted() {
+        this.$refs.interstitialAd.showInterstitialAd();
+    }
 }
 </script>

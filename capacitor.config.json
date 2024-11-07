@@ -20,5 +20,9 @@
   },
   "android": {
     "allowMixedContent": false
+  },
+  "server": {
+    "url": "http://localhost:81", 
+    "cleartext": true
   }
 }
