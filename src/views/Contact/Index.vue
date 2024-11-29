@@ -5,7 +5,7 @@
           <h3 class="text-[30px] text-semi text-center">Get in Touch</h3>
       </div>
     
-      <AdMob adId="ca-app-pub-4536763666052997/9968780669" />
+      <AdMob adId="ca-app-pub-4536763666052997/7534189018" />
 
       <form class="flex-col w-full mt-[29px]" @submit.prevent="sendEmail">
         <div class="flex mt-4 gap-2 w-full">

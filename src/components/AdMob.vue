@@ -34,7 +34,7 @@ export default {
           adSize: this.adSize,
           position: this.adPosition,
           margin: 0,
-          isTesting: true, // Set to false in production
+          isTesting: false, // Set to false in production
         });
         this.adVisible = true;
       } catch (error) {

@@ -187,6 +187,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { Toast } from '@capacitor/toast';
 import AssignRole from '@/components/AssignRole.vue';
 import { createWorker } from 'tesseract.js';
+// import * as cv from "opencv.js";
 import { parseScript } from '@/helpers/global';
 
 export default {
@@ -248,6 +249,41 @@ export default {
                     width: 600,
                     height: 1200,
                 });
+
+                // Once the image is captured, process it with OpenCV
+                const imgElement = new Image();
+                imgElement.src = image.dataUrl;
+                await imgElement.decode();  // Wait until image is loaded
+
+                // Initialize OpenCV
+                cv.onRuntimeInitialized = () => {
+                    // Create a Mat object from the image
+                    const mat = cv.imread(imgElement);
+                    
+                    // Example OpenCV image processing: Convert to grayscale
+                    const grayMat = new cv.Mat();
+                    cv.cvtColor(mat, grayMat, cv.COLOR_RGBA2GRAY);
+
+                    // Optional: Apply additional OpenCV processing like edge detection or thresholding
+                    const edges = new cv.Mat();
+                    cv.Canny(grayMat, edges, 50, 150);
+
+                    // Convert the processed image back to Data URL for display or further use
+                    cv.imshow('canvasOutput', edges);  // Show the processed image on a canvas
+                    const processedImageDataUrl = document.getElementById('canvasOutput').toDataURL();
+                    
+                    // Proceed with OCR on the processed image
+                    this.imageToText(processedImageDataUrl);
+
+                    
+
+                    // Clean up
+                    mat.delete();
+                    grayMat.delete();
+                    edges.delete();
+                }
+
+
             } catch (e) {
                 //console.log(e.message)
                 Toast.show({ text: e.message })

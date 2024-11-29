@@ -5,15 +5,15 @@
   "bundledWebRuntime": true,
   "allowMixedContent": false,
   "plugins": {
-      "SplashScreen": {
-        "launchShowDuration": 9000,   
-        "launchAutoHide": false, 
-        "backgroundColor": "#3E1821",
-        "androidScaleType": "CENTER_CROP",
-        "showSpinner": true,
-        "splashFullScreen": true,
-        "splashImmersive": true
-      }
+    "SplashScreen": {
+      "launchShowDuration": 9000,   
+      "launchAutoHide": false, 
+      "backgroundColor": "#3E1821",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    }
   },
   "ios": {
     "scheme": "BackStageBuddy"
@@ -22,7 +22,7 @@
     "allowMixedContent": false
   },
   "server": {
-    "url": "http://localhost:81", 
+    "url": "http://192.168.0.111:81/", 
     "cleartext": true
   }
 }

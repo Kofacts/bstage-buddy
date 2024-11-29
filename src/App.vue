@@ -21,6 +21,7 @@ export default {
     return {
       loaded: false,
       isPersonalized: false,
+      isBannerShowing: false,
       namesWithBanner: [
         'home', 'scripts', 'rehearse-practice','scan-edit','rehearse','stats','stats-show'
       ]
@@ -42,39 +43,54 @@ export default {
         this.isPersonalized = false;  // Default to non-personalized ads if error occurs
       }
     },
-    async showBannerAd() {
-      try {
-        const options = {
-          adId: 'ca-app-pub-4536763666052997/7534189018',  // Replace with your actual Ad Unit ID
-          adSize: BannerAdSize.FULL_BANNER,  // Options: BANNER, FULL_BANNER, LARGE_BANNER, LEADERBOARD, MEDIUM_RECTANGLE
-          position: BannerAdPosition.TOP_CENTER,  // Options: TOP_CENTER, BOTTOM_CENTER
-          margin: 0,
-          isTesting: false, // Set this to false when deploying to production
-          npa: this.isPersonalized ? 0 : 1,
-        };
+async showBannerAd() {
+  try {
+    await AdMob.showBanner({
+      adId: 'ca-app-pub-4536763666052997/3848549621',
+      adSize: BannerAdSize.FULL_BANNER,
+      position: BannerAdPosition.TOP_CENTER,
+      isTesting: false,
+      npa: this.isPersonalized ? 0 : 1,
+    });
+    this.isBannerShowing = true; // Set flag to true
+    console.log('Banner ad shown');
+  } catch (error) {
+    console.error('Error showing banner ad:', error);
+  }
+},
 
-        await AdMob.showBanner(options);
-      } catch (error) {
-        console.error('AdMob error:', error);
-      }
-    },
-    async showInterAd() {
+async hideBannerAd() {
+  if (this.isBannerShowing) { // Check if banner is showing
+    setTimeout(async () => { // Delay hide action slightly
       try {
-        const options = {
-          adId: 'ca-app-pub-4536763666052997/9968780669',  // Replace with your actual Ad Unit ID
-          adSize: BannerAdSize.FULL_BANNER,  // Options: BANNER, FULL_BANNER, LARGE_BANNER, LEADERBOARD, MEDIUM_RECTANGLE
-          position: BannerAdPosition.TOP_CENTER,  // Options: TOP_CENTER, BOTTOM_CENTER
-          margin: 0,
-          isTesting: false, // Set this to false when deploying to production
-          npa: this.isPersonalized ? 0 : 1,
-        };
-
-        await AdMob.prepareInterstitial(options);
-        await AdMob.showInterstitial();
+        await AdMob.hideBanner();
+        this.isBannerShowing = false; // Reset flag to false
+        console.log('Banner ad hidden');
       } catch (error) {
-        console.error('AdMob error:', error);
+        console.error('Error hiding banner ad:', error);
       }
-    },
+    }, 1000); // 1-second delay
+  } else {
+    console.log('Banner ad is not currently showing, so hideBanner was not called');
+  }
+},
+    // async showInterAd() {
+    //   try {
+    //     const options = {
+    //       adId: 'ca-app-pub-4536763666052997/9968780669',  // Replace with your actual Ad Unit ID
+    //       adSize: BannerAdSize.FULL_BANNER,  // Options: BANNER, FULL_BANNER, LARGE_BANNER, LEADERBOARD, MEDIUM_RECTANGLE
+    //       position: BannerAdPosition.TOP_CENTER,  // Options: TOP_CENTER, BOTTOM_CENTER
+    //       margin: 0,
+    //       isTesting: false, // Set this to false when deploying to production
+    //       npa: this.isPersonalized ? 0 : 1,
+    //     };
+
+    //     await AdMob.prepareInterstitial(options);
+    //     await AdMob.showInterstitial();
+    //   } catch (error) {
+    //     console.error('AdMob error:', error);
+    //   }
+    // },
     async showBigBannerAd() {
       try {
         const options = {
@@ -91,13 +107,13 @@ export default {
         console.error('Big Banner AdMob error:', error);
       }
     },
-    async hideBannerAd() {
-      try {
-        await AdMob.hideBanner();
-      } catch (error) {
-        console.error('AdMob error:', error);
-      }
-    },
+    // async hideBannerAd() {
+    //   try {
+    //     await AdMob.hideBanner();
+    //   } catch (error) {
+    //     console.error('AdMob error:', error);
+    //   }
+    // },
     routeNameMatches(names) {
       return names.includes(this.$route.name);
     }

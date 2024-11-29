@@ -1,5 +1,6 @@
 <template>
     <div :class="{ blur: !loaded}">
+    <!-- <NativeAdvancedAd /> -->
         <div v-for="script in scripts" :key="script.reference" class="h-[83.4vh] max-h-[83.4vh] overflow-y-scroll pt-[99px] flex flex-col gap-[47px]" v-if="scripts.length > 0"> 
             <div class="flex flex-col gap-[45px] p-[35px] pt-0 pb-0"> 
                 <h3 class="text-[30px] text-semi text-center">My Performance</h3>
@@ -33,7 +34,8 @@
                 </router-link >
             </div>
         </div>
-        <InterstitialAd ref="interstitialAd" adId="ca-app-pub-4536763666052997/9968780669" />
+        <!-- <InterstitialAd ref="interstitialAd" adId="ca-app-pub-4536763666052997/9968780669" /> -->
+        
     
     </div>
    
@@ -45,6 +47,7 @@ import Modal from '@/components/Modal.vue'
 import CarouselPlaceholder from '@/components/CarouselPlaceholder.vue';
 // import AdBanner from '@/components/AdMob.vue';
 import InterstitialAd from '@/components/AdInter.vue';
+// import NativeAdvancedAd from '@/components/NativeAd.vue';
 
 export default {
     components: { Carousel, Modal, CarouselPlaceholder, InterstitialAd },
@@ -74,6 +77,11 @@ export default {
     },
     mounted() {
         this.$refs.interstitialAd.showInterstitialAd();
+    },
+    watch: {
+    '$route.name'(newName) {
+      this.$refs.interstitialAd.showInterstitialAd();
     }
+  }
 }
 </script>
